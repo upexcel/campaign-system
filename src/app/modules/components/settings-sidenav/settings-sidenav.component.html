@@ -1,0 +1,30 @@
+<div class="js-sidebar-content d-flex flex-column">
+  <header class="d-flex">
+    <img src="assets/img/company-logo.png" alt="Excellece Technologies" class="full-logo py-3 px-4 p-md-2" />
+    <img src="assets/img/compact-logo.png" alt="Excellece Technologies" class="compact-logo p-2">
+  </header>
+  <div class="d-flex flex-column flex-grow-1">
+    <ul class="sidebar-nav pb-0 mb-0">
+      <li [ngClass]="{'active' : (settingRoute1.isActive)}">
+        <a class="collapsed" data-target="#sidebar-settings" data-toggle="collapse" data-parent="#settings-sidebar"
+          (click)="openSideNavEmitter()">
+          <span class="icon">
+            <i class="glyphicon glyphicon-cog text-dark"></i>
+          </span> SETTINGS
+          <i class="toggle fa fa-angle-down"></i>
+        </a>
+        <ul id="sidebar-settings" class="collapse p-0">
+          <li>
+            <a class="d-flex justify-content-between pr-0 text-dark" routerLink="/settings/campaign-list"
+              routerLinkActive="route-active" #settingRoute1="routerLinkActive">
+              Campaign List
+            </a>
+          </li>
+        </ul>
+      </li>
+    </ul>
+    <div class="mt-auto">
+      <app-common-sidenav-items (openSideNav)="openSideNavEmitter()"></app-common-sidenav-items>
+    </div>
+  </div>
+</div>

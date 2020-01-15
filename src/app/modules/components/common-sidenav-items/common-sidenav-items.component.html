@@ -1,0 +1,22 @@
+<ul class="sidebar-nav bottom-nav bottom mb-0">
+  <li>
+    <a class="d-flex justify-content-between pr-0 text-dark" routerLink="/settings/my-account"
+      routerLinkActive="route-active" (click)="openSideNavEmitter()">
+      <span *ngIf="!userAvatar" class="icon">
+        <i class="fi flaticon-user-3 text-dark"></i>
+      </span>
+      <span class="rounded-circle thumb-sm icon">
+        <img class="rounded-circle" *ngIf="userAvatar" [src]="userAvatar" [alt]="userName">
+      </span>
+      {{userName}}
+    </a>
+  </li>
+  <li>
+    <a class="d-flex justify-content-between pr-0 text-dark" (click)="logout()">
+      <span class="icon" (click)="openSideNavEmitter()">
+        <i class="fi flaticon-exit text-dark"></i>
+      </span>
+      Log Out
+    </a>
+  </li>
+</ul>

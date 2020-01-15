@@ -1,13 +1,37 @@
 <!doctype html>
 <html lang="en">
+
 <head>
   <meta charset="utf-8">
-  <title>CampaignSystem</title>
+  <title>Campaign-System</title>
   <base href="/">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <link rel="icon" type="image/x-icon" href="favicon.ico">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+
+  <script src="https://cdn.ckeditor.com/4.5.11/full/ckeditor.js"></script>
+  <style>
+    .mainLoader {
+      position: absolute;
+      top: 40%;
+      right: 48%;
+    }
+
+    .size {
+      height: 8rem;
+      width: 8rem;
+    }
+  </style>
 </head>
+
 <body>
-  <app-root></app-root>
+  <app-root>
+    <div class="mainLoader">
+      <div class="spinner-border text-dark size" role="status">
+      </div>
+    </div>
+  </app-root>
 </body>
+
 </html>

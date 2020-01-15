@@ -1,0 +1,14 @@
+@import "../../../../global.scss";
+
+.bottom-nav>li>a {
+
+  &.route-active {
+    background: $bottom-sidenav-active;
+    font-weight: 600;
+  }
+
+  &:hover {
+    background: $bottom-sidenav-active;
+  }
+
+}
