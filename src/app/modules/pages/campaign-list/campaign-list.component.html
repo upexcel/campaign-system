@@ -1,0 +1,26 @@
+<div *ngIf="apiInProcess" class="spinner-border" role="status">
+    <span class="sr-only">Loading...</span>
+</div>
+<div *ngIf="!apiInProcess" class="campaignList mt-5">
+    <app-popup-message [message]="popUpValue"></app-popup-message>
+    <table class="table">
+        <thead>
+            <tr>
+                <th class="w-25">Campaign Name</th>
+                <th class="w-50">Campaign Description</th>
+                <th class="text-center">Active</th>
+                <th class="text-center">Delete</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let campaign of campaignList">
+                <td class="campaign-name cursor-pointer" (click)="openCampaign(campaign)">{{ campaign.Campaign_name }}
+                </td>
+                <td class="cursor-pointer" (click)="openCampaign(campaign)">{{ campaign.Campaign_description }}</td>
+                <td class="text-center"><i class="glyphicon glyphicon-off" [ngClass]="{'text-success':campaign.active,'text-danger':!campaign.active}"></i></td>
+                <td class="text-center"><button class="cursor" (click)="removeCampaign(campaign)"><i
+                            class="fa fa-trash"></i></button></td>
+            </tr>
+        </tbody>
+    </table>
+</div>

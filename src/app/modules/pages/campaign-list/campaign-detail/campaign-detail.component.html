@@ -1,0 +1,28 @@
+<div *ngIf="apiInProcess" class="spinner-border" role="status">
+    <span class="sr-only">Loading...</span>
+</div>
+<div *ngIf="!apiInProcess" class="campaignList mt-5">
+    <app-popup-message [message]="popUpValue"></app-popup-message>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Sr. No</th>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Sent On</th>
+                <th>Seen</th>
+                <th>Seen On</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let userDetail of userDetails;index as i">
+                <td>{{ i+1 }}</td>
+                <td>{{ userDetail.name }}</td>
+                <td>{{ userDetail.email }}</td>
+                <td>{{ userDetail.sended_date | date:'short'}}</td>
+                <td>{{ userDetail.seen}}</td>
+                <td>{{ userDetail.hit_details && userDetail.hit_details.seen_date | date:'short' }}</td>
+            </tr>
+        </tbody>
+    </table>
+</div>

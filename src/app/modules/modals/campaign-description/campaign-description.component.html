@@ -1,0 +1,11 @@
+<div class="clearfix">
+    <h2 class="float-left">Campaign Details</h2>
+    <a class="float-right" (click)="close()"><i class="glyphicon glyphicon-remove text-secondary"></i></a>
+</div>
+<div mat-dialog-content class="mt-2">
+    <form [formGroup]="viewCampaign">
+        <h6><b>Campaign Name:</b> {{data.campaignDetail.Campaign_name}}</h6>
+        <h6><b>Campaign Description:</b> {{ data.campaignDetail.Campaign_description || 'No description was provided' }}</h6>
+        <angular-editor formControlName="campaignDescription" [config]="editorConfig"></angular-editor>
+    </form>
+</div>
