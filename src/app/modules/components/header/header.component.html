@@ -12,7 +12,9 @@
 
 <h2 class="mr-auto">{{headingTitle}}</h2>
 <button *ngIf="campDetailPage" class="btn btn-primary mr-3" (click)=updateCampaign()>Update Campaign</button>
-<button *ngIf="campDetailPage" class="btn btn-primary" (click)=showCampaign()>View Campaign</button>
+<button *ngIf="campDetailPage" class="btn btn-primary mr-3" (click)=showCampaign()>View Campaign</button>
+<button *ngIf="campDetailPage" class="btn btn-primary mr-3" (click)=openUploadCsv()>Upload User Data</button>
+<button *ngIf="campDetailPage" class="btn btn-primary" (click)="sendMailToUsers()">Send Mail</button>
 
 <ul class="navbar-nav mr-3 flex-row align-items-center" (click)="$event.preventDefault()">
   <li class="nav-item" *ngIf="title =='inbox'">

@@ -16,12 +16,16 @@ import { AuthGuardService } from './services/auth-Guard/auth-guard.service';
 import { AngularEditorModule } from '@kolkov/angular-editor';
 import { CampaignDescriptionComponent } from './modules/modals/campaign-description/campaign-description.component';
 import { UpdateCampaignComponent } from './modules/modals/update-campaign/update-campaign.component';
+import { ConfirmationDialogComponent } from './modules/modals/confirmation-dialog/confirmation-dialog.component';
+import { UploadCsvComponent } from './modules/modals/upload-csv/upload-csv.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     CampaignDescriptionComponent,
     UpdateCampaignComponent,
+    ConfirmationDialogComponent,
+    UploadCsvComponent
   ],
 
   imports: [
@@ -50,6 +54,8 @@ import { UpdateCampaignComponent } from './modules/modals/update-campaign/update
   entryComponents: [
     CampaignDescriptionComponent,
     UpdateCampaignComponent,
+    ConfirmationDialogComponent,
+    UploadCsvComponent
   ],
   bootstrap: [AppComponent]
 })

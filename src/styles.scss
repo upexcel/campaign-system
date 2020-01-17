@@ -146,6 +146,14 @@ html {
   display: inline-block;
 }
 
+.spinner-border {
+  display: block;
+  position: fixed;
+  z-index: 1031;
+  top: calc(50% - (2rem / 2));
+  right: calc(50% - (2rem / 2));
+}
+
 @media screen and (max-width: $xs_max_width) {
 
   html {
