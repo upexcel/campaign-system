@@ -1,0 +1,24 @@
+<ul class="navbar-nav flex-row" (click)="$event.preventDefault()">
+  <li class="nav-item">
+    <a (click)="toggleSidebar('static')" class="nav-link d-none ml-3 d-md-flex toggleIcon" placement="bottom">
+      <i class="la la-bars la-lg"></i>
+    </a>
+    <a (click)="toggleSidebar('collapse')" class="d-md-none nav-link toggleIcon" data-html="true"
+      title="Show/hide<br>sidebar" data-placement="bottom">
+      <i class="la la-bars la-lg "></i>
+    </a>
+  </li>
+</ul>
+
+<h2 class="mr-auto">{{headingTitle}}</h2>
+<button *ngIf="campDetailPage" class="btn btn-primary mr-3" (click)=updateCampaign()>Update Campaign</button>
+<button *ngIf="campDetailPage" class="btn btn-primary" (click)=showCampaign()>View Campaign</button>
+
+<ul class="navbar-nav mr-3 flex-row align-items-center" (click)="$event.preventDefault()">
+  <li class="nav-item" *ngIf="title =='inbox'">
+    <button>Fetch</button>
+  </li>
+  <li>
+    <app-router-button [pageTitle]="headingTitle"></app-router-button>
+  </li>
+</ul>

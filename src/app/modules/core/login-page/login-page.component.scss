@@ -1,0 +1,224 @@
+@import "../../../../global.scss";
+
+.recruit-logo {
+  width: 60%;
+  margin-bottom: 50px;
+
+  img {
+    height: 50px;
+    width: 100%;
+  }
+}
+
+.row {
+  min-height: 100vh;
+}
+
+p {
+  margin: 0;
+}
+
+h4 {
+  margin: 0;
+  font-weight: 600;
+}
+
+h5 {
+  margin: 0;
+  font-weight: bold;
+}
+
+.column-1 {
+  padding-top: 120px;
+  padding-bottom: 100px;
+  background-color: #ffffff;
+}
+
+.column-2 {
+  padding: 120px 50px 100px 30px;
+  background-color: #fafbff;
+}
+
+input {
+  margin-top: 30px;
+  margin-right: 10px;
+  width: 60%;
+  border: 1px solid #e4e4e4;
+  border-bottom: 2px solid #e4e4e4;
+  border-radius: 3px;
+  padding: 3px;
+}
+
+.forget {
+  width: 60%;
+  font-size: 11px;
+  position: relative;
+  margin-top: 10px;
+  margin-bottom: 20px;
+}
+
+.radio {
+  width: auto;
+  margin-top: 12px;
+  margin-bottom: 28px;
+  top: 1px;
+  font-size: 30px;
+  vertical-align: sub;
+}
+
+.recruit-forget {
+  color: blue;
+  position: absolute;
+  right: 0px;
+  top: 10px;
+  cursor: pointer;
+}
+
+button {
+  color: white;
+  width: 60%;
+  background-color: #495058;
+}
+
+.para {
+  margin-top: 15px;
+  margin-bottom: 30px;
+}
+
+ul {
+  list-style: none;
+  margin: 0px;
+  padding: 0px;
+}
+
+ul li {
+  line-height: 23px;
+}
+
+.fa {
+  margin-right: 10px;
+  font-size: 8px;
+  color: #00b396;
+}
+
+.btn:hover:enabled {
+  background-color: #00b396;
+  color: #fff;
+}
+
+.btn:disabled {
+  cursor: not-allowed;
+  color: #fff;
+}
+
+.features {
+  margin-bottom: 20px;
+}
+
+input:focus {
+  outline: none;
+  border-bottom: 2px solid #00b396;
+}
+
+.errorMsg {
+  width: 60%;
+}
+
+@media only screen and (max-width: 1000px) {
+  .recruit-logo {
+    width: 100%;
+  }
+
+  input {
+    width: 100%;
+  }
+
+  .forget {
+    width: 100%;
+  }
+
+  button {
+    width: 100%;
+  }
+
+  .errorMsg {
+    width: 100%;
+  }
+}
+
+input[type="checkbox"].check-custom {
+  position: absolute;
+  left: -10000px;
+  top: auto;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+}
+
+input[type="checkbox"].check-custom~.check-toggle {
+  width: 1rem;
+  height: 1rem;
+  position: relative;
+  display: inline-block;
+  vertical-align: middle;
+  border: 1px solid #969696;
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+input[type="checkbox"].check-custom:hover~.check-toggle {
+  border-color: #4a4a4a;
+}
+
+input[type="checkbox"].check-custom:focus~.check-toggle {
+  border-color: #b0d5ff;
+  box-shadow: 0 0 0 2px rgba(23, 133, 255, 0.25);
+}
+
+input[type="checkbox"].check-custom:checked~.check-toggle {
+  border-color: #1785ff;
+  background: #1785ff url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxNiIgaGVpZ2h0PSIxNiIgdmlld0JveD0iMCAwIDI0IDI0IiBmaWxsPSJub25lIiBzdHJva2U9IiNmZmZmZmYiIHN0cm9rZS13aWR0aD0iMyIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBzdHJva2UtbGluZWpvaW49InJvdW5kIj48cG9seWxpbmUgcG9pbnRzPSIyMCA2IDkgMTcgNCAxMiI+PC9wb2x5bGluZT48L3N2Zz4=) center no-repeat;
+  background-size: 75%;
+}
+
+.lab {
+  margin-bottom: 0;
+  padding-bottom: 0px;
+  padding-top: 10px;
+}
+
+input:invalid {
+  border-bottom: 2px solid red;
+}
+
+.left {
+  max-width: 70%;
+  margin: auto;
+}
+
+@media only screen and (max-width: $max-width) {
+  .column-1 {
+    padding: 45px 37px 15px 37px;
+  }
+
+  .recruit-logo img {
+    height: 60px;
+  }
+
+  .column-2 {
+    padding-left: 37px;
+    padding-right: 37px;
+    padding-top: 20px;
+  }
+
+  input[type="password"] {
+    margin-top: 12px;
+  }
+
+  .left {
+    max-width: 100%;
+    margin: auto;
+    margin-top: 15px;
+  }
+
+}

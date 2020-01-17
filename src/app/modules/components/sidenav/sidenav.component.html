@@ -1,0 +1,65 @@
+<div class="js-sidebar-content d-flex flex-column">
+  <header class="d-flex">
+    <img src="assets/img/company-logo.png" alt="Excellece Technologies" class="full-logo py-3 px-4 p-md-2" />
+    <img src="assets/img/compact-logo.png" alt="Excellece Technologies" class="compact-logo p-2">
+  </header>
+  <div class="d-flex flex-column flex-grow-1">
+    <ul class="sidebar-nav pb-0 mb-0">
+      <li [ngClass]="{'active': inboxActive.length}">
+        <a class="collapsed" data-target="#sidebar-job-profiles" data-toggle="collapse" data-parent="#sidebar">
+          <span class="icon">
+            <i class="glyphicon glyphicon-download-alt"></i>
+          </span> INBOX
+          <i class="toggle fa fa-angle-down"></i>
+        </a>
+        <ul id="sidebar-job-profiles" class="collapse dashboard-sidenav p-0">
+          <li *ngFor="let inboxData of inbox">
+            <a (click)="getInbox(inboxData)" class="d-flex justify-content-between"
+              [ngClass]="{'route-active': inboxActive.includes(inboxData.title)}">
+              {{inboxData.title}}
+              <span *ngIf="inboxData.count>0 && inboxData.unread===0" class="badge badge-pill badge-gray m-0">
+                {{inboxData.count}}
+              </span>
+              <span *ngIf="inboxData.unread!==0" class="badge badge-pill badge-danger m-0">
+                {{inboxData.unread}}/{{inboxData.count}}
+              </span>
+            </a>
+          </li>
+          <li *ngIf="spamMails">
+            <a (click)="getSpam('spam')" class="d-flex justify-content-between"
+              [ngClass]="{'route-active': inboxActive.includes('spam')}">Spam
+              <span *ngIf="spamMails.count" class="badge badge-pill badge-secondary m-0">
+                {{spamMails.count}}
+              </span>
+            </a>
+          </li>
+        </ul>
+      </li>
+      <li [ngClass]="{'active': jobsActive.length}">
+        <a data-target="#sidebar-general-settings" data-toggle="collapse" data-parent="#sidebar" aria-expanded="true">
+          <span class="icon">
+            <i class="glyphicon glyphicon-list-alt"></i>
+          </span> JOBS
+          <span [routerLink]="['/settings/create-job']" class="add">
+            <i class="glyphicon glyphicon-plus"></i>
+          </span>
+          <i class="toggle fa fa-angle-down"></i>
+        </a>
+        <ul id="sidebar-general-settings" class="collapse dashboard-sidenav p-0">
+          <li *ngFor="let jobProfile of jobProfiles" class="d-flex justify-content-between">
+            <a class="d-flex justify-content-between flex-fill"
+              [ngClass]="{'route-active': jobsActive.includes(jobProfile.title)}"
+              (click)="selectJobProfile(jobProfile)">
+              <span>{{jobProfile.title}}</span>
+              <span><i class="fa fa-circle ml-1 text-{{jobProfile.active_status ? 'success' : 'danger'}}"
+                  (click)="openJobProfile(jobProfile)"></i></span>
+            </a>
+          </li>
+        </ul>
+      </li>
+    </ul>
+    <div class="mt-auto">
+      <app-common-sidenav-items (openSideNav)="openSideNavEmitter()"></app-common-sidenav-items>
+    </div>
+  </div>
+</div>
