@@ -1,0 +1,45 @@
+<div *ngIf="apiInProcess" class="spinner-border" role="status">
+  <span class="sr-only">Loading...</span>
+</div>
+
+<div *ngIf="!apiInProcess" class="mt-5 p-5 create-campaign">
+  <form [formGroup]="sendMailToAllForm">
+    <div class="row form-group">
+      <div class="col-md-2"><label class="control-label">Campaign Name</label></div>
+      <div class="col-md-10">
+        <input type="text" class="form-control" formControlName="campaign">
+        <div *ngIf="sendMailToAllForm.get('campaign').invalid && sendMailToAllForm.get('campaign').touched">
+          <small *ngIf="sendMailToAllForm.get('campaign').errors?.required" class="text-danger">Subject is
+            required</small>
+        </div>
+      </div>
+    </div>
+    <div class="row form-group">
+      <div class="col-md-2"><label class="control-label">Campaign Description</label></div>
+      <div class="col-md-10">
+        <input type="text" class="form-control" formControlName="campaignDescription">
+        <div
+          *ngIf="sendMailToAllForm.get('campaignDescription').invalid && sendMailToAllForm.get('campaignDescription').touched">
+          <small *ngIf="sendMailToAllForm.get('campaignDescription').errors?.required" class="text-danger">Campaign
+            Description is
+            required</small>
+        </div>
+      </div>
+    </div>
+    <div class="row form-group">
+      <div class="col-md-2"><label class="control-label">Template</label></div>
+      <div class="col-md-5">
+        <select formControlName="template" class="form-control" (change)="getTemplatePreview()">
+          <option *ngFor="let item of templateList" [ngValue]="item">{{ item.subject }}</option>
+        </select>
+      </div>
+    </div>
+    <angular-editor formControlName="message" [config]="editorConfig"></angular-editor>
+    <div *ngIf="sendMailToAllForm.get('message').invalid && sendMailToAllForm.get('message').touched">
+      <small *ngIf="sendMailToAllForm.get('message').errors?.required" class="text-danger">Message body is
+        required</small>
+    </div>
+  </form>
+  <button class="mt-2 float-right" type="submit" (click)="createCampaign(sendMailToAllForm.value)" [disabled]="!sendMailToAllForm.valid || createCampaignInProcess"
+    mat-raised-button color="accent">Create Campaign</button>
+</div>

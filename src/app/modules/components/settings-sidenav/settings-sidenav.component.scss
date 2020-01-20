@@ -20,6 +20,10 @@
 
 #sidebar-settings>li>a {
   border-right: 3px solid transparent;
+  position: relative;
+  border-top: 1px solid transparent;
+  padding-left: 50px;
+  line-height: 35px;
 
   &.route-active {
     font-weight: 600;
@@ -31,4 +35,20 @@
     background: $sidenav-active-bg;
   }
 
+}
+
+.sidebar-nav > li ul > li > a {
+  padding: 0;
+}
+
+.icon{
+    display: block;
+    position: absolute;
+    top: 3px;
+    left: 11px;
+    width: 28px;
+    height: 28px;
+    line-height: 28px;
+    text-align: center;
+    overflow: hidden;
 }
