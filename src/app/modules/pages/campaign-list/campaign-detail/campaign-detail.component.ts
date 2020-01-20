@@ -71,20 +71,20 @@ export class CampaignDetailComponent implements OnInit, OnDestroy {
 
   assignUsersWithCsv() {
     const dialog = this.dialog.open(UploadCsvComponent, {
-      width: '750px',
-      height: '80%',
+      width: '400px',
     });
-    // dialog.afterClosed().subscribe(userData => {
-    //   if (userData)
-
-    // })
+    dialog.afterClosed().subscribe(userData => {
+      if (userData) {
+        console.log(userData);
+      }
+    })
   }
 
   async updateCampaignDetails(campaignDetail) {
     const [template] = this.campaignDetails.Template;
     try {
       const res = await this.campaignListService.updateCampaign(campaignDetail, this.campaignDetails._id);
-      this.popUpValue = [res.MSG, false];
+      this.popUpValue = [res.message, false];
       await this.campaignListService.deleteTemplate({
         campaign_id: this.campaignDetails._id,
         template_id: template._id

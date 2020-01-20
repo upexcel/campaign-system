@@ -17,9 +17,8 @@
                 <td class="campaign-name cursor-pointer" (click)="openCampaign(campaign)">{{ campaign.Campaign_name }}
                 </td>
                 <td class="cursor-pointer" (click)="openCampaign(campaign)">{{ campaign.Campaign_description }}</td>
-                <td class="text-center"><i class="glyphicon glyphicon-off" [ngClass]="{'text-success':campaign.active,'text-danger':!campaign.active}"></i></td>
-                <td class="text-center"><button class="cursor" (click)="removeCampaign(campaign)"><i
-                            class="fa fa-trash"></i></button></td>
+                <td class="text-center"><i class="glyphicon glyphicon-off cursor-pointer" (click)="changeStatus(campaign)" [ngClass]="{'text-success':campaign.active,'text-danger':!campaign.active}"></i></td>
+                <td class="text-center"><button class="cursor" (click)="removeCampaign(campaign)"><i class="fa fa-trash"></i></button></td>
             </tr>
         </tbody>
     </table>

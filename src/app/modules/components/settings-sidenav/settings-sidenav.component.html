@@ -5,7 +5,7 @@
   </header>
   <div class="d-flex flex-column flex-grow-1">
     <ul class="sidebar-nav pb-0 mb-0">
-      <li [ngClass]="{'active' : (settingRoute1.isActive)}">
+      <li [ngClass]="{'active' : (settingRoute1.isActive) || (settingRoute2.isActive)}">
         <a class="collapsed" data-target="#sidebar-settings" data-toggle="collapse" data-parent="#settings-sidebar"
           (click)="openSideNavEmitter()">
           <span class="icon">
@@ -18,6 +18,12 @@
             <a class="d-flex justify-content-between pr-0 text-dark" routerLink="/settings/campaign-list"
               routerLinkActive="route-active" #settingRoute1="routerLinkActive">
               Campaign List
+            </a>
+          </li>
+          <li>
+            <a class="d-flex justify-content-between pr-0 text-dark" routerLink="/settings/manage-smtp"
+              routerLinkActive="route-active" #settingRoute2="routerLinkActive">
+              Manage Smtp
             </a>
           </li>
         </ul>

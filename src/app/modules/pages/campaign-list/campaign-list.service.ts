@@ -17,11 +17,7 @@ export class CampaignListService {
   }
 
   deleteCampaing(body): Promise<any> {
-    return this.http.put(`${environment.mailsystembaseapiurl}/update_campaign/${body._id}`, {
-      campaign_name: body.Campaign_name,
-      campaign_description: body.Campaign_description,
-      active: false
-    }).toPromise();
+    return this.http.delete(`${environment.mailsystembaseapiurl}/delete_campaign/${body._id}`).toPromise();
   }
 
   updateCampaign(body, id): Promise<any> {
@@ -29,6 +25,15 @@ export class CampaignListService {
       campaign_name: body.campaignName,
       campaign_description: body.campaignDescription,
       active: true
+    }).toPromise();
+  }
+
+
+  changeStatus(body, id): Promise<any> {
+    return this.http.put(`${environment.mailsystembaseapiurl}/update_campaign/${id}`, {
+      campaign_name: body.Campaign_name,
+      campaign_description: body.Campaign_description,
+      active: !body.active
     }).toPromise();
   }
 

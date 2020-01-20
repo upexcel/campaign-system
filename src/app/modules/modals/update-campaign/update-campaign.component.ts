@@ -40,11 +40,11 @@ export class UpdateCampaignComponent implements OnInit {
     if (this.data.campaignDetail.Template) {
       [template] = this.data.campaignDetail.Template
     }
-    this.templateId = template._id
+    this.templateId = template._id  
     this.updateCampaignForm = this.fb.group({
       campaignName: [this.data.campaignDetail.Campaign_name || null, Validators.required],
       campaignDescription: [this.data.campaignDetail.Campaign_description || null],
-      template: [template || null],
+      template: [null,Validators.required],
       message: [template.message || null, Validators.required]
     })
   }
