@@ -61,4 +61,15 @@ export class CampaignListComponent implements OnInit {
     }
   }
 
+  async changeStatus(campaignDetail) {
+    try {
+      const res = await this.campaignListService.changeStatus(campaignDetail, campaignDetail._id);
+      this.popUpValue = ['Status changed successfully', false];
+      this.getCampaignList();
+    } catch (error) {
+
+      this.commonService.handleError(error);
+    }
+  }
+
 }

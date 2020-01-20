@@ -2,9 +2,8 @@
     <h3 class="float-left">Assign users to campaign</h3>
     <a class="float-right" (click)="close()"><i class="glyphicon glyphicon-remove text-secondary"></i></a>
 </div><br/>
-<!-- <div mat-dialog-content> -->
     <div class="form-group row">
-        <div class="col-md-8 ">
+        <div class="col-md-12 ">
             <div class="fileinput fileinput-new input-group" data-provides="fileinput">
                 <div class="form-control" data-trigger="fileinput">
                     <i class="glyphicon glyphicon-file fileinput-exists"></i>
@@ -16,13 +15,10 @@
                     <input type="file" name="files" class="form-control" #uploads (change)="onChange(uploads.files)"
                         value="process" />
                 </span>
-                <a href="#" class="input-group-addon btn btn-default fileinput-exists"
-                    data-dismiss="fileinput">Remove</a>
             </div>
         </div>
     </div>
-
-<!-- </div> -->
 <div mat-dialog-actions align="end">
-    <button type="submit" mat-raised-button color="accent">Assign Users</button>
+    <button type="submit" [mat-dialog-close]="dataList" mat-raised-button color="accent">Assign Users</button>
 </div>
+
