@@ -1,11 +1,34 @@
 <div class="clearfix">
-    <h2 class="float-left">Campaign Details</h2>
+    <h2 class="float-left">Edit Campaign</h2>
     <a class="float-right" (click)="close()"><i class="glyphicon glyphicon-remove text-secondary"></i></a>
 </div>
 <div mat-dialog-content class="mt-2">
-    <form [formGroup]="viewCampaign">
-        <h6><b>Campaign Name:</b> {{data.campaignDetail.Campaign_name}}</h6>
-        <h6><b>Campaign Description:</b> {{ data.campaignDetail.Campaign_description || 'No description was provided' }}</h6>
-        <angular-editor formControlName="campaignDescription" [config]="editorConfig"></angular-editor>
+    <form [formGroup]="editCampaignForm">
+        <div class="row form-group">
+            <div class="col-md-2"><label class="control-label">Campaign Name</label></div>
+            <div class="col-md-10">
+                <input type="text" class="form-control" formControlName="campaignName">
+                <div
+                    *ngIf="editCampaignForm.get('campaignName').invalid && editCampaignForm.get('campaignName').touched">
+                    <small *ngIf="editCampaignForm.get('campaignName').errors?.required" class="text-danger">Campaign
+                        name is required</small>
+                </div>
+            </div>
+        </div>
+        <div class="row form-group">
+            <div class="col-md-2"><label class="control-label">Campaign Description</label></div>
+            <div class="col-md-10">
+                <input type="text" class="form-control" formControlName="campaignDescription">
+                <div
+                    *ngIf="editCampaignForm.get('campaignDescription').invalid && editCampaignForm.get('campaignDescription').touched">
+                    <small *ngIf="editCampaignForm.get('campaignDescription').errors?.required"
+                        class="text-danger">Campaign Description is required</small>
+                </div>
+            </div>
+        </div>
     </form>
+</div>
+<div mat-dialog-actions align="end">
+    <button type="submit" [mat-dialog-close]="editCampaignForm.value" [disabled]="!editCampaignForm.valid"
+        mat-raised-button color="accent">Save</button>
 </div>

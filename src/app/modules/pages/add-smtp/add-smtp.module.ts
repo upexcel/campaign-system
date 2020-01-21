@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { AddSmtpComponent } from './add-smtp.component';
 import { AddSmtpRoutingModule } from './add-smtp-routing.module';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
+import { PopUpMessageModule } from '../../components/popup-message/pop-up-message.module';
 
 
 
@@ -12,7 +13,8 @@ import { ReactiveFormsModule, FormsModule } from '@angular/forms';
     CommonModule,
     AddSmtpRoutingModule,
     ReactiveFormsModule,
-    FormsModule
+    FormsModule,
+    PopUpMessageModule
   ]
 })
 export class AddSmtpModule { }

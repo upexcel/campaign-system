@@ -17,6 +17,7 @@ export class AddSmtpComponent implements OnInit {
   alertMessage: boolean;
   message: any;
   src = DomainsDetails.find(domain => domain.name = "email.com").src;
+  popUpValue: any;
 
   constructor(
     private fb: FormBuilder,
@@ -68,27 +69,27 @@ export class AddSmtpComponent implements OnInit {
   async changeIcon() {
     try {
       let email = this.getFormControl('email').value;
-      if(email){
+      if (email) {
         this.alertMessage = false;
         this.existEmail = true;
-      }
-      let domain = email && DomainsDetails.find(domain => email.includes(domain.name));
-      if (domain) {
-        this.src = domain.src;
-        this.fetchForm.get("smtp_server").setValue(domain.smtp);
-        this.fetchForm.get("type").setValue(domain.smtpType);
-        this.fetchForm.get("server_port").setValue(domain.smtpPort);
-      } else {
-        const res = await this.addSmtpService.getDomain(email);
-        domain = res['message'] && DomainsDetails.find(domain => domain.name == res['message']);
-        this.src = domain.src
-        this.fetchForm.get("smtp_server").setValue(domain.smtp);
-        this.fetchForm.get("type").setValue(domain.smtpType);
-        this.fetchForm.get("server_port").setValue(domain.smtpPort);
+        let domain = email && DomainsDetails.find(domain => email.includes(domain.name));
+        if (domain) {
+          this.src = domain.src;
+          this.fetchForm.get("smtp_server").setValue(domain.smtp);
+          this.fetchForm.get("type").setValue(domain.smtpType);
+          this.fetchForm.get("server_port").setValue(domain.smtpPort);
+        } else {
+          const res = await this.addSmtpService.getDomain(email);
+          domain = res['message'] && DomainsDetails.find(domain => domain.name == res['message']);
+          this.src = domain.src
+          this.fetchForm.get("smtp_server").setValue(domain.smtp);
+          this.fetchForm.get("type").setValue(domain.smtpType);
+          this.fetchForm.get("server_port").setValue(domain.smtpPort);
+        }
       }
     } catch (error) {
       this.src = DomainsDetails.find(domain => domain.name = "email.com").src;
-      this.commonService.handleError(error);
+      this.popUpValue = ['Invalid email', true];
     }
   }
 

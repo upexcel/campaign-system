@@ -10,7 +10,8 @@ import * as Papa from 'papaparse';
 })
 export class UploadCsvComponent implements OnInit {
 
-  dataList:any
+  dataList: any
+  uploaded:any
 
   constructor(
     @Inject(MAT_DIALOG_DATA) public data,

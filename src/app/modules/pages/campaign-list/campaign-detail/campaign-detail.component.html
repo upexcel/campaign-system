@@ -1,7 +1,14 @@
 <div *ngIf="apiInProcess" class="spinner-border" role="status">
     <span class="sr-only">Loading...</span>
 </div>
-<div *ngIf="!apiInProcess" class="campaignList mt-5">
+<div *ngIf="!apiInProcess" class="mt-5">
+    <h6><b>Name: </b> {{campaignDetails.Campaign_name}}</h6>
+    <h6><b>Description: </b>{{campaignDetails.Campaign_description}}</h6>
+</div>
+<div *ngIf="sendMailInProcess" class="spinner-border" role="status">
+    <span class="sr-only">Loading...</span>
+</div>
+<div *ngIf="!apiInProcess" class="campaignList">
     <app-popup-message [message]="popUpValue"></app-popup-message>
     <table class="table">
         <thead>

@@ -16,7 +16,7 @@ export class CampaignDescriptionComponent implements OnInit {
     private dialogRef: MatDialogRef<any>) {
   }
 
-  viewCampaign: any
+  editCampaignForm: any
 
   editorConfig: AngularEditorConfig = {
     height: '230px',
@@ -24,16 +24,13 @@ export class CampaignDescriptionComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.getViewCampaignForm();
+    this.getEditCampaignForm();
   }
 
-  getViewCampaignForm() {
-    let template: any;
-    if (this.data.campaignDetail.Template) {
-      [template] = this.data.campaignDetail.Template;
-    }
-    this.viewCampaign = this.fb.group({
-      campaignDescription: [template.message || null, Validators.required]
+  getEditCampaignForm() {
+    this.editCampaignForm = this.fb.group({
+      campaignName: [this.data.campaignDetail.Campaign_name, Validators.required],
+      campaignDescription: [this.data.campaignDetail.Campaign_description || null],
     })
   }
 

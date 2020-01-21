@@ -36,16 +36,13 @@ export class UpdateCampaignComponent implements OnInit {
   }
 
   getUpdateCampaignForm() {
-    let template: any
-    if (this.data.campaignDetail.Template) {
-      [template] = this.data.campaignDetail.Template
-    }
-    this.templateId = template._id  
     this.updateCampaignForm = this.fb.group({
-      campaignName: [this.data.campaignDetail.Campaign_name || null, Validators.required],
-      campaignDescription: [this.data.campaignDetail.Campaign_description || null],
-      template: [null,Validators.required],
-      message: [template.message || null, Validators.required]
+      template1: [null, Validators.required],
+      template2: [null],
+      template3: [null],
+      message1: [null],
+      message2: [null],
+      message3: [null]
     })
   }
 
@@ -63,7 +60,9 @@ export class UpdateCampaignComponent implements OnInit {
   }
 
   getTemplatePreview() {
-    this.updateCampaignForm.get('message').setValue(this.updateCampaignForm.get('template').value.message);
+    this.updateCampaignForm.get('template1').value ? this.updateCampaignForm.get('message1').setValue(this.updateCampaignForm.get('template1').value.message) : '';
+    this.updateCampaignForm.get('template2').value ? this.updateCampaignForm.get('message2').setValue(this.updateCampaignForm.get('template2').value.message) : '';
+    this.updateCampaignForm.get('template3').value ? this.updateCampaignForm.get('message3').setValue(this.updateCampaignForm.get('template3').value.message) : '';
   }
 
   close() {

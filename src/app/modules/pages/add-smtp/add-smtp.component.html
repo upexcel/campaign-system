@@ -3,6 +3,7 @@
     <strong>Info!</strong> We're here to help you! Follow the steps for effective and efficient posting.
   </div>
   <div class="mt-4">
+    <app-popup-message [message]="popUpValue"></app-popup-message>
     <form [formGroup]="fetchForm" (ngSubmit)="onSubmit(fetchForm.value)">
       <div class="background p-3 rounded">
         <strong>Sending Mails</strong>

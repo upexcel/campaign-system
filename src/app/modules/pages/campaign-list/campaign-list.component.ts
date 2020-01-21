@@ -29,7 +29,7 @@ export class CampaignListComponent implements OnInit {
       this.campaignList = res;
       this.campaignList.forEach((item) => {
         if (!item.Campaign_description) {
-          item.Campaign_description = 'No description was provided';
+          item.Campaign_description = 'No description provided';
         }
       })
       if (this.campaignList.length === 0) {
