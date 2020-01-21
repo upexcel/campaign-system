@@ -27,6 +27,11 @@ const routes: Routes = [
         path: "add-smtp",
         loadChildren: () => import('../../pages/add-smtp/add-smtp.module').then(m => m.AddSmtpModule),
         data: { title: "Add Smtp" }
+      },
+      {
+        path: 'create-campaign',
+        loadChildren: () => import('../../pages/compose-email/compose-email.module').then(m => m.ComposeEmailModule),
+        data: { title: 'Create Campign' }
       }
     ]
   }

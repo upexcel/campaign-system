@@ -29,10 +29,13 @@ export class ManageSmtpComponent implements OnInit {
     }
   }
 
-  async removeUser(id: string) {
+  async removeUser(id:string) {
     try {
-      await this.manageSmtpService.deleteSmtp(id);
-      this.getSmtpList();
+      const res = await this.commonService.openConfirmationBox("Are you sure ?");
+      if (res == 'yes') {
+        await this.manageSmtpService.deleteSmtp(id);
+        this.getSmtpList();
+      }
     } catch (error) {
       this.commonService.handleError(error);
     }
