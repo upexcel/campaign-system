@@ -26,8 +26,9 @@
                 <td>{{ i+1 }}</td>
                 <td>{{ userDetail.name }}</td>
                 <td>{{ userDetail.email }}</td>
-                <td>{{ userDetail.sended_date | date:'short'}}</td>
-                <td>{{ userDetail.seen}}</td>
+                <td *ngIf="userDetail.send_status != true">{{ userDetail.send_status }}</td>
+                <td *ngIf="userDetail.send_status == true">{{ userDetail.sended_date | date:'short'}}</td>
+                <td><i *ngIf="userDetail.seen" class="fa fa-check"></i> <i *ngIf="!userDetail.seen" class="fa fa-times" aria-hidden="true"></i></td>   
                 <td>{{ userDetail.hit_details && userDetail.hit_details.seen_date | date:'short' }}</td>
             </tr>
         </tbody>

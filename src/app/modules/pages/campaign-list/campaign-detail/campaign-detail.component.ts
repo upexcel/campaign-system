@@ -81,9 +81,21 @@ export class CampaignDetailComponent implements OnInit, OnDestroy {
     });
     dialog.afterClosed().subscribe(userData => {
       if (userData) {
-        console.log(userData);
+        this.assignUsers({
+          "users": userData,
+          "campaign":this.campaignDetails._id
+        })
       }
     })
+  }
+
+  async assignUsers(body) {
+    try {
+      const res = await this.campaignListService.assignUser(body);
+      this.getUserDetails();
+    } catch (error) {
+      this.commonService.handleError(error);
+    }
   }
 
   async editCampaign(campaignDetail) {
@@ -159,12 +171,12 @@ export class CampaignDetailComponent implements OnInit, OnDestroy {
               item['seen'] = true;
             }
             else {
-              item.hit_details = null;
+              item.hit_details = 'Not Seen Yet';
               item['seen'] = false;
             }
           }
           else {
-            item.sended_date = 'Not Sended Yet'
+            item.send_status = 'Not Sended Yet';
           }
         })
       }

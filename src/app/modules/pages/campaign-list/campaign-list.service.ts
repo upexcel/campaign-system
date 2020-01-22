@@ -65,4 +65,8 @@ export class CampaignListService {
     return this.http.post(`${environment.mailsystembaseapiurl}/campaign_mails`, body).toPromise();
   }
 
+  assignUser(body) {
+    return this.http.post(`${environment.mailsystembaseapiurl}/user_list_campaign`, body).toPromise();
+  }
+
 }
