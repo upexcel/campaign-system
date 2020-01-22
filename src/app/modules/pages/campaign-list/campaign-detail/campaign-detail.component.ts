@@ -7,6 +7,7 @@ import { ActivatedRoute } from '@angular/router';
 import { UpdateCampaignComponent } from 'src/app/modules/modals/update-campaign/update-campaign.component';
 import { Subscription } from 'rxjs';
 import { UploadCsvComponent } from 'src/app/modules/modals/upload-csv/upload-csv.component';
+import { HitDetailsComponent } from 'src/app/modules/modals/hit-details/hit-details.component';
 
 @Component({
   selector: 'app-campaign-detail',
@@ -62,8 +63,8 @@ export class CampaignDetailComponent implements OnInit, OnDestroy {
 
   updateCampaign() {
     const dialog = this.dialog.open(UpdateCampaignComponent, {
-      width: '750px',
-      height: '90%',
+      width: '700px',
+      minHeight: '300px',
       data: {
         campaignDetail: this.campaignDetails
       }
@@ -83,7 +84,7 @@ export class CampaignDetailComponent implements OnInit, OnDestroy {
       if (userData) {
         this.assignUsers({
           "users": userData,
-          "campaign":this.campaignDetails._id
+          "campaign": this.campaignDetails._id
         })
       }
     })
@@ -111,23 +112,32 @@ export class CampaignDetailComponent implements OnInit, OnDestroy {
 
   async updateCampaignDetails(campaignDetail) {
     const assignedTemplate = this.campaignDetails.Template;
-    const templateList = new Array();
+    let templateList = new Array();
     let templateAleadyAssigned = false;
     templateList.push(campaignDetail.template1);
     templateList.push(campaignDetail.template2);
     templateList.push(campaignDetail.template3);
-    templateList.forEach((item) => {
-      if (item) {
-        assignedTemplate.forEach((template) => {
-          if (item._id === template._id) {
-            templateAleadyAssigned = true
+    templateList.forEach((item1) => {
+      if (item1) {
+        assignedTemplate.forEach((item2) => {
+          if (item1._id === item2._id) {
+            templateList = templateList.filter((item) => {
+              if (item)
+                return item._id != item1._id
+            })
           }
         })
-        if (templateAleadyAssigned === false) {
-          this.updateTemplate(item);
-        }
       }
     })
+    if (templateList.length === 0) {
+      this.popUpValue = ['Same templates are already assigned', true];
+    }
+    else {
+      templateList.forEach((item) => {
+        this.updateTemplate(item)
+      })
+      this.popUpValue = ['Template assigned successfully', false]
+    }
   }
 
   async updateTemplate(template) {
@@ -166,13 +176,14 @@ export class CampaignDetailComponent implements OnInit, OnDestroy {
         this.userDetails.forEach((item) => {
           if (item.send_status === true) {
             const [seenDetail] = item.hit_details;
-            if (seenDetail) {
+            if (seenDetail.seen) {
               item.hit_details = seenDetail;
               item['seen'] = true;
             }
             else {
-              item.hit_details = 'Not Seen Yet';
               item['seen'] = false;
+              item.hit_details = seenDetail;
+              item.hit_details.seen_date = 'Pending'
             }
           }
           else {
@@ -208,6 +219,16 @@ export class CampaignDetailComponent implements OnInit, OnDestroy {
       this.sendMailInProcess = false;
       this.commonService.handleError(error);
     }
+  }
+
+  openHitDetails(userDetails) {
+    const dialog = this.dialog.open(HitDetailsComponent, {
+      width: '680px',
+      data: {
+        campaignDetail: userDetails
+      }
+    });
+
   }
 
   ngOnDestroy() {

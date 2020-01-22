@@ -18,6 +18,8 @@ import { CampaignDescriptionComponent } from './modules/modals/campaign-descript
 import { UpdateCampaignComponent } from './modules/modals/update-campaign/update-campaign.component';
 import { ConfirmationDialogComponent } from './modules/modals/confirmation-dialog/confirmation-dialog.component';
 import { UploadCsvComponent } from './modules/modals/upload-csv/upload-csv.component';
+import { HitDetailsComponent } from './modules/modals/hit-details/hit-details.component';
+import { PopUpMessageModule } from './modules/components/popup-message/pop-up-message.module';
 
 @NgModule({
   declarations: [
@@ -25,7 +27,8 @@ import { UploadCsvComponent } from './modules/modals/upload-csv/upload-csv.compo
     CampaignDescriptionComponent,
     UpdateCampaignComponent,
     ConfirmationDialogComponent,
-    UploadCsvComponent
+    UploadCsvComponent,
+    HitDetailsComponent
   ],
 
   imports: [
@@ -39,6 +42,7 @@ import { UploadCsvComponent } from './modules/modals/upload-csv/upload-csv.compo
     CKEditorModule,
     TextMaskModule,
     AngularEditorModule,
+    PopUpMessageModule
   ],
   providers: [
     [AppConfig],
@@ -55,7 +59,8 @@ import { UploadCsvComponent } from './modules/modals/upload-csv/upload-csv.compo
     CampaignDescriptionComponent,
     UpdateCampaignComponent,
     ConfirmationDialogComponent,
-    UploadCsvComponent
+    UploadCsvComponent,
+    HitDetailsComponent
   ],
   bootstrap: [AppComponent]
 })

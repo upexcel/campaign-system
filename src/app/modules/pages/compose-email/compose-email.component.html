@@ -30,7 +30,7 @@
       <div class="col-md-2"><label class="control-label">Template</label></div>
       <div class="col-md-5">
         <select formControlName="template" class="form-control" (change)="getTemplatePreview()">
-          <option *ngFor="let item of templateList" [ngValue]="item">{{ item.subject }}</option>
+          <option *ngFor="let item of templateList" [ngValue]="item">{{ item.message_subject }}</option>
         </select>
       </div>
     </div>
