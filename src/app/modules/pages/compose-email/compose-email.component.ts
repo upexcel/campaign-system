@@ -43,7 +43,8 @@ export class ComposeEmailComponent implements OnInit {
       campaignDescription: [null],
       campaign: [null, Validators.required],
       template: [null, Validators.required],
-      message: [null, Validators.required]
+      message: [null, Validators.required],
+      subject: [{ value: null, disabled: true }, Validators.required]
     })
   }
 
@@ -61,6 +62,7 @@ export class ComposeEmailComponent implements OnInit {
 
   getTemplatePreview() {
     this.sendMailToAllForm.get('message').setValue(this.sendMailToAllForm.get('template').value.message);
+    this.sendMailToAllForm.get('subject').setValue(this.sendMailToAllForm.get('template').value.message_key);
   }
 
   async createCampaign(body) {

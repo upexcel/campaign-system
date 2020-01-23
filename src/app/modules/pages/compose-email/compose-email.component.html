@@ -30,8 +30,14 @@
       <div class="col-md-2"><label class="control-label">Template</label></div>
       <div class="col-md-5">
         <select formControlName="template" class="form-control" (change)="getTemplatePreview()">
-          <option *ngFor="let item of templateList" [ngValue]="item">{{ item.message_subject }}</option>
+          <option *ngFor="let item of templateList" [ngValue]="item">{{ item.message_key }}</option>
         </select>
+      </div>
+    </div>
+    <div class="row form-group">
+      <div class="col-md-2"><label class="control-label">Subject</label></div>
+      <div class="col-md-5">
+        <input type="text" class="form-control" formControlName="subject">
       </div>
     </div>
     <angular-editor formControlName="message" [config]="editorConfig"></angular-editor>
@@ -40,6 +46,7 @@
         required</small>
     </div>
   </form>
-  <button class="mt-2 float-right" type="submit" (click)="createCampaign(sendMailToAllForm.value)" [disabled]="!sendMailToAllForm.valid || createCampaignInProcess"
-    mat-raised-button color="accent">Create Campaign</button>
+  <button class="mt-2 float-right" type="submit" (click)="createCampaign(sendMailToAllForm.value)"
+    [disabled]="!sendMailToAllForm.valid || createCampaignInProcess" mat-raised-button color="accent">Create
+    Campaign</button>
 </div>

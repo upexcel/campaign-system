@@ -23,7 +23,6 @@ export class HitDetailsComponent implements OnInit {
 
   ngOnInit() {
     this.getHitDetailsForm();
-    console.log(this.data)
   }
 
   getHitDetailsForm() {

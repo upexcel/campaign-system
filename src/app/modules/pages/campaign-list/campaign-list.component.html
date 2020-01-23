@@ -6,9 +6,10 @@
     <table class="table">
         <thead>
             <tr>
-                <th class="w-25">Campaign Name</th>
-                <th class="w-50">Campaign Description</th>
-                <th class="text-center">Active</th>
+                <th>Campaign Name</th>
+                <th>Campaign Description</th>
+                <th>Creation Date</th>
+                <th class="text-center">Status</th>
                 <th class="text-center">Delete</th>
             </tr>
         </thead>
@@ -17,8 +18,18 @@
                 <td class="campaign-name cursor-pointer" (click)="openCampaign(campaign)">{{ campaign.Campaign_name }}
                 </td>
                 <td class="cursor-pointer" (click)="openCampaign(campaign)">{{ campaign.Campaign_description }}</td>
-                <td class="text-center"><i class="glyphicon glyphicon-off cursor-pointer" (click)="changeStatus(campaign)" [ngClass]="{'text-success':campaign.active,'text-danger':!campaign.active}"></i></td>
-                <td class="text-center"><button class="cursor" (click)="removeCampaign(campaign)"><i class="fa fa-trash"></i></button></td>
+                <td>{{campaign.creation_date | date:'short'}}</td>
+                <td *ngIf="(campaign.status === 'Idle') || (campaign.status === 'Completed')" class="text-center">
+                    {{campaign.status}}
+                </td>
+                <td class="cursor-pointer text-center " *ngIf="(campaign.status === 'Running') || (campaign.status === 'Paused')">
+                    <i *ngIf="campaign.status === 'Running'" class="fa fa-stop-circle"
+                        (click)="changeStatus(campaign)"></i>
+                    <i *ngIf="campaign.status === 'Paused'" class="fa fa-play-circle"
+                        (click)="changeStatus(campaign)"></i>
+                </td>
+                <td class="text-center"><button class="cursor" (click)="removeCampaign(campaign)"><i
+                            class="fa fa-trash"></i></button></td>
             </tr>
         </tbody>
     </table>

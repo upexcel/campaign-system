@@ -1,0 +1,22 @@
+<div class="clearfix">
+    <h2 class="float-left">Send Test Mail</h2>
+    <a class="float-right" (click)="close()"><i class="glyphicon glyphicon-remove text-secondary"></i></a>
+</div>
+<div mat-dialog-content class="mt-2">
+    <form [formGroup]="testMailForm">
+        <div class="row form-group">
+            <div class="col-md-2"><label class="control-label">Email</label></div>
+            <div class="col-md-10">
+                <input type="text" class="form-control form-control-sm" formControlName="email">
+                <div *ngIf="testMailForm.get('email').invalid && testMailForm.get('email').touched">
+                    <small *ngIf="testMailForm.get('email').errors?.required" class="text-danger">Email is
+                        required</small>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+<div mat-dialog-actions align="end">
+    <button type="submit" [mat-dialog-close]="testMailForm.value" [disabled]="!testMailForm.valid" mat-raised-button
+        color="accent">Send</button>
+</div>

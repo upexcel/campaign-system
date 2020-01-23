@@ -20,6 +20,9 @@ import { ConfirmationDialogComponent } from './modules/modals/confirmation-dialo
 import { UploadCsvComponent } from './modules/modals/upload-csv/upload-csv.component';
 import { HitDetailsComponent } from './modules/modals/hit-details/hit-details.component';
 import { PopUpMessageModule } from './modules/components/popup-message/pop-up-message.module';
+import { AddUserComponent } from './modules/modals/add-user/add-user.component';
+import { TestMailComponent } from './modules/modals/test-mail/test-mail.component';
+import { SendMailConfigurationComponent } from './modules/modals/send-mail-configuration/send-mail-configuration.component';
 
 @NgModule({
   declarations: [
@@ -28,7 +31,10 @@ import { PopUpMessageModule } from './modules/components/popup-message/pop-up-me
     UpdateCampaignComponent,
     ConfirmationDialogComponent,
     UploadCsvComponent,
-    HitDetailsComponent
+    HitDetailsComponent,
+    AddUserComponent,
+    TestMailComponent,
+    SendMailConfigurationComponent
   ],
 
   imports: [
@@ -60,7 +66,10 @@ import { PopUpMessageModule } from './modules/components/popup-message/pop-up-me
     UpdateCampaignComponent,
     ConfirmationDialogComponent,
     UploadCsvComponent,
-    HitDetailsComponent
+    HitDetailsComponent,
+    AddUserComponent,
+    TestMailComponent,
+    SendMailConfigurationComponent
   ],
   bootstrap: [AppComponent]
 })

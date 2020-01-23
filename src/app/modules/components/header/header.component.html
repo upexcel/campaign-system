@@ -14,8 +14,9 @@
 <button *ngIf="campDetailPage" class="btn btn-primary mr-3" (click)=updateCampaign()>Update Email</button>
 <button *ngIf="campDetailPage" class="btn btn-primary mr-3" (click)=showCampaign()>Edit</button>
 <button *ngIf="campDetailPage" class="btn btn-primary mr-3" (click)=openUploadCsv()>Add Bulk User</button>
-<button *ngIf="campDetailPage" class="btn btn-primary" (click)="sendMailToUsers()">Send Mail</button>
-
+<button *ngIf="campDetailPage" class="btn btn-primary mr-3" (click)=addUser()>Add User</button>
+<button *ngIf="campDetailPage" class="btn btn-primary mr-3" (click)="sendMailToUsers()">Send Mail</button>
+<button *ngIf="campDetailPage" class="btn btn-primary" (click)="sendTestMail()">Send Test Mail</button>
 <ul class="navbar-nav mr-3 flex-row align-items-center" (click)="$event.preventDefault()">
   <li class="nav-item" *ngIf="title =='inbox'">
     <button>Fetch</button>

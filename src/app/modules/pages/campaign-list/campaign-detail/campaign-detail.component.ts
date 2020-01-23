@@ -8,6 +8,9 @@ import { UpdateCampaignComponent } from 'src/app/modules/modals/update-campaign/
 import { Subscription } from 'rxjs';
 import { UploadCsvComponent } from 'src/app/modules/modals/upload-csv/upload-csv.component';
 import { HitDetailsComponent } from 'src/app/modules/modals/hit-details/hit-details.component';
+import { AddUserComponent } from 'src/app/modules/modals/add-user/add-user.component';
+import { TestMailComponent } from 'src/app/modules/modals/test-mail/test-mail.component';
+import { SendMailConfigurationComponent } from 'src/app/modules/modals/send-mail-configuration/send-mail-configuration.component';
 
 @Component({
   selector: 'app-campaign-detail',
@@ -37,6 +40,13 @@ export class CampaignDetailComponent implements OnInit, OnDestroy {
       }
       else if (item === 'sendMail') {
         this.sendMailToUsers();
+        // this.openSendMailConfiguration();
+      }
+      else if (item === 'addUser') {
+        this.addUser();
+      }
+      else if (item === 'sendTestMail') {
+        this.openSendTestMail();
       }
       else {
         this.assignUsersWithCsv()
@@ -91,10 +101,13 @@ export class CampaignDetailComponent implements OnInit, OnDestroy {
   }
 
   async assignUsers(body) {
+    this.sendMailInProcess = true;
     try {
       const res = await this.campaignListService.assignUser(body);
       this.getUserDetails();
+      this.sendMailInProcess = false;
     } catch (error) {
+      this.sendMailInProcess = false;
       this.commonService.handleError(error);
     }
   }
@@ -113,7 +126,6 @@ export class CampaignDetailComponent implements OnInit, OnDestroy {
   async updateCampaignDetails(campaignDetail) {
     const assignedTemplate = this.campaignDetails.Template;
     let templateList = new Array();
-    let templateAleadyAssigned = false;
     templateList.push(campaignDetail.template1);
     templateList.push(campaignDetail.template2);
     templateList.push(campaignDetail.template3);
@@ -134,6 +146,7 @@ export class CampaignDetailComponent implements OnInit, OnDestroy {
     }
     else {
       templateList.forEach((item) => {
+        if(item)
         this.updateTemplate(item)
       })
       this.popUpValue = ['Template assigned successfully', false]
@@ -210,14 +223,14 @@ export class CampaignDetailComponent implements OnInit, OnDestroy {
         this.popUpValue = ['Please add users to send mail', true];
       }
       else {
-        await this.campaignListService.sendMail(userIds);
+        await this.campaignListService.sendMail(userIds, this.campaignDetails._id);
         this.getUserDetails();
         this.sendMailInProcess = false;
         this.popUpValue = ['Emails sent successfully', false];
       }
     } catch (error) {
       this.sendMailInProcess = false;
-      this.commonService.handleError(error);
+      this.popUpValue = [error.error, true];
     }
   }
 
@@ -230,6 +243,51 @@ export class CampaignDetailComponent implements OnInit, OnDestroy {
     });
 
   }
+
+  addUser() {
+    const dialog = this.dialog.open(AddUserComponent, {
+      width: '400px',
+    })
+    dialog.afterClosed().subscribe((userDetails) => {
+      if (userDetails) {
+        this.assignUsers({
+          "users": [userDetails],
+          "campaign": this.campaignDetails._id
+        })
+      }
+    })
+  }
+
+  openSendTestMail() {
+    const dialog = this.dialog.open(TestMailComponent, {
+      width: '400px'
+    })
+    dialog.afterClosed().subscribe((email) => {
+      if (email)
+        this.sendTestMail(email);
+    })
+  }
+
+  async sendTestMail(email) {
+    try {
+      const res = await this.campaignListService.sendTestMail(email);
+      this.popUpValue = [res['message'], false];
+    } catch (error) {
+      this.commonService.handleError(error);
+    }
+  }
+
+  openSendMailConfiguration() {
+    const dialog = this.dialog.open(SendMailConfigurationComponent, {
+      width: '400px',
+      minHeight: '300px'
+    });
+    dialog.afterClosed().subscribe((formValue) => {
+      if (formValue)
+        console.log(formValue);
+    })
+  }
+
 
   ngOnDestroy() {
     this.dialogSubs.unsubscribe();

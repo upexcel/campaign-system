@@ -185,5 +185,12 @@ export class HeaderComponent implements OnInit, OnDestroy, OnChanges {
     this.campaignListService.setEventValue('sendMail');
   }
 
+  sendTestMail() {
+    this.campaignListService.setEventValue('sendTestMail');
+  }
+
+  addUser() {
+    this.campaignListService.setEventValue('addUser');
+  }
 
 }

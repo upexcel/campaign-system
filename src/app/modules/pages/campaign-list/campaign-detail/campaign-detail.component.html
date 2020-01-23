@@ -18,7 +18,6 @@
                 <th>Email</th>
                 <th>Sent On</th>
                 <th class="text-center">Seen</th>
-                <th class="text-center">Seen On</th>
             </tr>
         </thead>
         <tbody>
@@ -28,10 +27,11 @@
                 <td (click)="openHitDetails(userDetail)" class="cursor-pointer"> {{ userDetail.email }}</td>
                 <td *ngIf="userDetail.send_status != true">{{ userDetail.send_status }}</td>
                 <td *ngIf="userDetail.send_status == true">{{ userDetail.sended_date | date:'short'}}</td>
-                <td class="text-center"><i *ngIf="userDetail.seen" class="fa fa-check"></i> <i *ngIf="!userDetail.seen" class="fa fa-times"
-                        aria-hidden="true"></i></td>
-                <td *ngIf="userDetail.seen" class="text-center">{{ userDetail.hit_details && userDetail.hit_details.seen_date | date:'short' }}</td>
-                <td *ngIf="!userDetail.seen" class="text-center">{{ userDetail.hit_details.seen_date }}</td>
+                <td class="text-center">
+                    <span *ngIf="userDetail.seen">
+                        {{ userDetail.hit_details && userDetail.hit_details.seen_date | date:'short' }}</span>
+                    <i *ngIf="!userDetail.seen" class="fa fa-times" aria-hidden="true"></i>
+                </td>
             </tr>
         </tbody>
     </table>

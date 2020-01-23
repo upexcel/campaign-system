@@ -14,7 +14,7 @@
           <select formControlName="template1" class="form-control" (change)="getTemplatePreview()">
             <option *ngFor="let item of templateList" [ngValue]="item"
               [selected]="(item._id == templateId)? true : null">
-              {{ item.message_subject }}</option>
+              {{ item.message_key }}</option>
           </select>
         </div>
       </div>
@@ -24,7 +24,7 @@
           <select formControlName="template2" class="form-control" (change)="getTemplatePreview()">
             <option *ngFor="let item of templateList" [ngValue]="item"
               [selected]="(item._id == templateId)? true : null">
-              {{ item.message_subject }}</option>
+              {{ item.message_key }}</option>
           </select>
         </div>
       </div>
@@ -34,7 +34,7 @@
           <select formControlName="template3" class="form-control" (change)="getTemplatePreview()">
             <option *ngFor="let item of templateList" [ngValue]="item"
               [selected]="(item._id == templateId)? true : null">
-              {{ item.message_subject }}</option>
+              {{ item.message_key }}</option>
           </select>
         </div>
       </div>
