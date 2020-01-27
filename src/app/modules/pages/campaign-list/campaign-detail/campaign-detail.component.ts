@@ -39,8 +39,8 @@ export class CampaignDetailComponent implements OnInit, OnDestroy {
         this.updateCampaign();
       }
       else if (item === 'sendMail') {
-        this.sendMailToUsers();
-        // this.openSendMailConfiguration();
+        // this.sendMailToUsers();
+        this.openSendMailConfiguration();
       }
       else if (item === 'addUser') {
         this.addUser();
@@ -76,7 +76,7 @@ export class CampaignDetailComponent implements OnInit, OnDestroy {
       width: '700px',
       minHeight: '300px',
       data: {
-        campaignDetail: this.campaignDetails
+        campaignId: this.campaignDetails._id
       }
     });
     dialog.afterClosed().subscribe(campaignDetails => {
@@ -124,41 +124,26 @@ export class CampaignDetailComponent implements OnInit, OnDestroy {
   }
 
   async updateCampaignDetails(campaignDetail) {
-    const assignedTemplate = this.campaignDetails.Template;
-    let templateList = new Array();
+    let templateList = [];
+    let templateIds = [];
     templateList.push(campaignDetail.template1);
     templateList.push(campaignDetail.template2);
     templateList.push(campaignDetail.template3);
-    templateList.forEach((item1) => {
-      if (item1) {
-        assignedTemplate.forEach((item2) => {
-          if (item1._id === item2._id) {
-            templateList = templateList.filter((item) => {
-              if (item)
-                return item._id != item1._id
-            })
-          }
-        })
-      }
+    templateList.forEach((item) => {
+      if (item)
+        templateIds.push(item._id);
     })
-    if (templateList.length === 0) {
-      this.popUpValue = ['Same templates are already assigned', true];
-    }
-    else {
-      templateList.forEach((item) => {
-        if(item)
-        this.updateTemplate(item)
-      })
-      this.popUpValue = ['Template assigned successfully', false]
-    }
+    this.updateTemplate(templateIds);
   }
 
-  async updateTemplate(template) {
+  async updateTemplate(templateIds) {
+    console.log(templateIds);
     try {
-      await this.campaignListService.assignTemplate({
+      const res = await this.campaignListService.assignTemplate({
         campaign_id: this.campaignDetails._id,
-        template_id: template._id
+        template: { templates: templateIds }
       });
+      this.popUpValue = [res.message, false];
     } catch (error) {
       this.commonService.handleError(error);
     }
@@ -211,26 +196,48 @@ export class CampaignDetailComponent implements OnInit, OnDestroy {
     }
   }
 
-  async sendMailToUsers() {
-    const userIds = { ids: [] };
-    this.sendMailInProcess = true;
-    try {
-      this.userDetails.forEach((item) => {
-        userIds.ids.push(item._id);
-      })
-      if (userIds.ids.length === 0) {
+
+  openSendMailConfiguration() {
+    const dialog = this.dialog.open(SendMailConfigurationComponent, {
+      width: '400px',
+      minHeight: '300px',
+      panelClass: 'custom-dialog-container'
+    });
+    dialog.afterClosed().subscribe((formValue) => {
+      if (formValue)
+        this.sendMailToUsers(formValue);
+    })
+  }
+
+  async sendMailToUsers(smtps) {
+    smtps.selectedSmtp = smtps.selectedSmtp.filter(item => item !== false);
+    if (smtps.selectedSmtp.length > 0) {
+      const smtpIds = [];
+      smtps.selectedSmtp.forEach(item => smtpIds.push(item._id))
+      const sendMailConfig = { ids: [], delay: smtps.interval, smtps: smtpIds };
+      this.sendMailInProcess = true;
+      try {
+        this.userDetails.forEach((item) => {
+          sendMailConfig.ids.push(item._id);
+        })
+        if (sendMailConfig.ids.length === 0) {
+          const res = await this.campaignListService.sendMail(sendMailConfig, this.campaignDetails._id);
+          this.sendMailInProcess = false;
+          this.popUpValue = ['Please add users to send mail', true];
+        }
+        else {
+          const res = await this.campaignListService.sendMail(sendMailConfig, this.campaignDetails._id);
+          this.getUserDetails();
+          this.sendMailInProcess = false;
+          this.popUpValue = [res['Message'], false];
+        }
+      } catch (error) {
         this.sendMailInProcess = false;
-        this.popUpValue = ['Please add users to send mail', true];
+        this.popUpValue = [error.error, true];
       }
-      else {
-        await this.campaignListService.sendMail(userIds, this.campaignDetails._id);
-        this.getUserDetails();
-        this.sendMailInProcess = false;
-        this.popUpValue = ['Emails sent successfully', false];
-      }
-    } catch (error) {
-      this.sendMailInProcess = false;
-      this.popUpValue = [error.error, true];
+    }
+    else {
+      this.popUpValue = ['Please select minimum one smtp to send mail', true];
     }
   }
 
@@ -276,18 +283,6 @@ export class CampaignDetailComponent implements OnInit, OnDestroy {
       this.commonService.handleError(error);
     }
   }
-
-  openSendMailConfiguration() {
-    const dialog = this.dialog.open(SendMailConfigurationComponent, {
-      width: '400px',
-      minHeight: '300px'
-    });
-    dialog.afterClosed().subscribe((formValue) => {
-      if (formValue)
-        console.log(formValue);
-    })
-  }
-
 
   ngOnDestroy() {
     this.dialogSubs.unsubscribe();

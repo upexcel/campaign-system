@@ -24,6 +24,7 @@ export class ComposeEmailComponent implements OnInit {
   interviewTagId: number;
   assignUserData = new Array();
   createCampaignInProcess: boolean;
+  attachment: false;
 
   constructor(
     private fb: FormBuilder,
@@ -42,9 +43,9 @@ export class ComposeEmailComponent implements OnInit {
     this.sendMailToAllForm = this.fb.group({
       campaignDescription: [null],
       campaign: [null, Validators.required],
-      template: [null, Validators.required],
+      template: [null],
       message: [null, Validators.required],
-      subject: [{ value: null, disabled: true }, Validators.required]
+      subject: [null, Validators.required]
     })
   }
 
@@ -61,31 +62,59 @@ export class ComposeEmailComponent implements OnInit {
   }
 
   getTemplatePreview() {
+    this.attachment = false;
     this.sendMailToAllForm.get('message').setValue(this.sendMailToAllForm.get('template').value.message);
-    this.sendMailToAllForm.get('subject').setValue(this.sendMailToAllForm.get('template').value.message_key);
+    this.sendMailToAllForm.get('subject').setValue(this.sendMailToAllForm.get('template').value.message_subject);
   }
 
   async createCampaign(body) {
+    let res;
     this.createCampaignInProcess = true;
     try {
-      const res = await this.composeEmailService.createCampaign(body);
-      if (res) {
+      if (body.template) {
+        res = await this.composeEmailService.createCampaign({
+          "campaign_name": body.campaign,
+          "campaign_description": body.campaignDescription,
+          "message": '',
+          "message_subject": '',
+          "active": true
+        });
+        let selectedTemplate = this.templateList.find(item => item._id === body.template._id);
         try {
-          if (body.template) {
-            await this.composeEmailService.assignTemplate({
-              template_id: body.template._id,
-              campaign_id: res
-            });
+          if ((selectedTemplate.message_subject !== body.subject) || (selectedTemplate.message !== body.message)) {
+            await this.composeEmailService.editTemplate({
+              "message": body.message,
+              "message_subject": body.subject
+            }, body.template._id);
           }
-          this.createCampaignInProcess = false;
-          this.router.navigate(['settings/campaign-list']);
+          await this.composeEmailService.assignTemplate({
+            template: { templates: [body.template._id] },
+            campaign_id: res
+          });
         }
         catch (error) { this.commonService.handleError(error) }
       }
+      else {
+        res = await this.composeEmailService.createCampaign({
+          "campaign_name": body.campaign,
+          "campaign_description": body.campaignDescription,
+          "message": body.message,
+          "message_subject": body.subject,
+          "active": true
+        });
+      }
+      this.createCampaignInProcess = false;
+      this.router.navigate(['settings/campaign-list']);
     }
     catch (error) {
       this.commonService.handleError(error);
     }
+  }
+
+  attachFile(files: File[]) {
+    console.log(files[0]);
+    let formData = new FormData();
+    formData.append('file', files[0]);
   }
 
 }

@@ -16,19 +16,19 @@ export class ComposeEmailService {
   }
 
   createCampaign(body): Promise<any> {
-    return this.http.post(`${environment.mailsystembaseapiurl}/create_campaign`, {
-      "campaign_name": body.campaign,
-      "campaign_description": body.campaignDescription,
-      "active": true
-    }).toPromise();
+    return this.http.post(`${environment.mailsystembaseapiurl}/create_campaign`, body).toPromise();
   }
 
   assignTemplate(body): Promise<any> {
-    return this.http.put(`${environment.mailsystembaseapiurl}/assign_template/${body.campaign_id}/${body.template_id}`, '').toPromise();
+    return this.http.put(`${environment.mailsystembaseapiurl}/assign_template/${body.campaign_id}`, body.template).toPromise();
   }
 
   assignUser(body): Promise<any> {
     return this.http.post(`${environment.mailsystembaseapiurl}/user_list_campaign`, body).toPromise();
+  }
+
+  editTemplate(body, id) {
+    return this.http.post(`${environment.mailsystembaseapiurl}/edit_templates/${id}`, body).toPromise();
   }
 
 }

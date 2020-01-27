@@ -19,10 +19,12 @@
                 </td>
                 <td class="cursor-pointer" (click)="openCampaign(campaign)">{{ campaign.Campaign_description }}</td>
                 <td>{{campaign.creation_date | date:'short'}}</td>
-                <td *ngIf="(campaign.status === 'Idle') || (campaign.status === 'Completed')" class="text-center">
+                <td *ngIf="(campaign.status === 'Idle') || (campaign.status === 'Completed') || (campaign.status === 'Error spawned')"
+                    class="text-center" [ngClass]="{'text-danger':campaign.status === 'Error spawned'}">
                     {{campaign.status}}
                 </td>
-                <td class="cursor-pointer text-center " *ngIf="(campaign.status === 'Running') || (campaign.status === 'Paused')">
+                <td class="cursor-pointer text-center "
+                    *ngIf="(campaign.status === 'Running') || (campaign.status === 'Paused')">
                     <i *ngIf="campaign.status === 'Running'" class="fa fa-stop-circle"
                         (click)="changeStatus(campaign)"></i>
                     <i *ngIf="campaign.status === 'Paused'" class="fa fa-play-circle"

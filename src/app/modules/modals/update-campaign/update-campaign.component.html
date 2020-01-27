@@ -7,50 +7,33 @@
     <a class="float-right" (click)="close()"><i class="glyphicon glyphicon-remove text-secondary"></i></a>
   </div>
   <div mat-dialog-content class="mt-4">
+    <app-popup-message [message]="popUpValue"></app-popup-message>
     <form [formGroup]="updateCampaignForm">
-      <div class="row form-group">
-        <div class="col-md-2"><label class="control-label">Template 1</label></div>
-        <div class="col-md-5">
-          <select formControlName="template1" class="form-control" (change)="getTemplatePreview()">
-            <option *ngFor="let item of templateList" [ngValue]="item"
-              [selected]="(item._id == templateId)? true : null">
-              {{ item.message_key }}</option>
-          </select>
+      <div *ngFor="let item of templateOptions; index as i">
+        <div class="row form-group">
+          <div class="col-md-2"><label class="control-label">Template {{i+1}}</label></div>
+          <div class="col-md-5">
+            <select formControlName="template{{i+1}}" class="form-control" (change)="getTemplatePreview()">
+              <option *ngFor="let item of templateList" [ngValue]="item">{{ item.message_key }}</option>
+            </select>
+          </div>
         </div>
-      </div>
-      <div class="row form-group">
-        <div class="col-md-2"><label class="control-label">Template 2</label></div>
-        <div class="col-md-5">
-          <select formControlName="template2" class="form-control" (change)="getTemplatePreview()">
-            <option *ngFor="let item of templateList" [ngValue]="item"
-              [selected]="(item._id == templateId)? true : null">
-              {{ item.message_key }}</option>
-          </select>
+        <div class="row form-group"
+          [ngClass]="{'d-none':this.updateCampaignForm.get(['message' + (i+1)]).value === null}">
+          <div class="col-md-2"><label class="control-label">Subject</label></div>
+          <div class="col-md-5">
+            <input type="text" class="form-control" formControlName="subject{{i+1}}">
+          </div>
         </div>
+        <angular-editor id="editor{{i+1}}" formControlName="message{{i+1}}"
+          [ngClass]="{'d-none':this.updateCampaignForm.get(['message' + (i+1)]).value === null}"
+          [config]="editorConfig">
+        </angular-editor><br />
       </div>
-      <div class="row form-group">
-        <div class="col-md-2"><label class="control-label">Template 3</label></div>
-        <div class="col-md-5">
-          <select formControlName="template3" class="form-control" (change)="getTemplatePreview()">
-            <option *ngFor="let item of templateList" [ngValue]="item"
-              [selected]="(item._id == templateId)? true : null">
-              {{ item.message_key }}</option>
-          </select>
-        </div>
-      </div>
-      <angular-editor formControlName="message1"
-        [ngClass]="{'d-none':this.updateCampaignForm.get('message1').value === null}" [config]="editorConfig">
-      </angular-editor><br />
-      <angular-editor formControlName="message2"
-        [ngClass]="{'d-none':this.updateCampaignForm.get('message2').value === null}" [config]="editorConfig">
-      </angular-editor><br />
-      <angular-editor formControlName="message3"
-        [ngClass]="{'d-none':this.updateCampaignForm.get('message3').value === null}" [config]="editorConfig">
-      </angular-editor>
     </form>
   </div>
   <div mat-dialog-actions align="end">
-    <button type="submit" [mat-dialog-close]="updateCampaignForm.value" [disabled]="!updateCampaignForm.valid"
+    <button type="submit" (click)="sendDataToParent(updateCampaignForm.value)" [disabled]="!updateCampaignForm.valid"
       mat-raised-button color="accent">Update</button>
   </div>
 </div>

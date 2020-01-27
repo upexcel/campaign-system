@@ -99,14 +99,7 @@ export class HeaderComponent implements OnInit, OnDestroy, OnChanges {
 
 
   ngOnInit(): void {
-    // this.$el.find('.input-group-addon + .form-control').on('blur focus', function (e): void {
-    //   jQuery(this).parents('.input-group')
-    //   [e.type === 'focus' ? 'addClass' : 'removeClass']('focus');
-    // });
-    // this.getUserDetails();
-    // if (this.selectedProfile) {
-    //   this.headingTitle = this.selectedProfile['title']
-    // } else {
+
     let root = this.router.routerState.snapshot.root;
     while (root) {
       if (root['_routerState'].url.includes('campaign-detail')) {

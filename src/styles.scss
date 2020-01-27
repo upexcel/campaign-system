@@ -154,6 +154,10 @@ html {
   right: calc(50% - (2rem / 2));
 }
 
+.custom-dialog-container .mat-dialog-container {
+  position: relative;
+}
+
 @media screen and (max-width: $xs_max_width) {
 
   html {

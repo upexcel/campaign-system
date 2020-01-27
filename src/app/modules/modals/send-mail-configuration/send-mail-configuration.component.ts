@@ -28,8 +28,9 @@ export class SendMailConfigurationComponent implements OnInit {
 
   getAddUserForm() {
     this.sendMailConfiguration = this.fb.group({
-      interval: [30, Validators.required],
-      smtps: this.createSmtp(this.smtpList)
+      interval: [3, Validators.required],
+      smtps: this.createSmtp(this.smtpList),
+      reminder: [false]
     })
   }
 
@@ -61,10 +62,10 @@ export class SendMailConfigurationComponent implements OnInit {
 
   passDataToParent() {
     this.getSelectedsmtp();
-    this.dialogRef.close([
-      { interval: this.sendMailConfiguration.get('interval').value },
-      { selectedSmtp: this.selectedSmtp }
-    ])
+    this.dialogRef.close({
+      interval: this.sendMailConfiguration.get('interval').value,
+      selectedSmtp: this.selectedSmtp,
+    })
   }
 
   close() {

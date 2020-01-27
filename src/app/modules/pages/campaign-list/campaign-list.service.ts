@@ -49,7 +49,7 @@ export class CampaignListService {
   }
 
   assignTemplate(body): Promise<any> {
-    return this.http.put(`${environment.mailsystembaseapiurl}/assign_template/${body.campaign_id}/${body.template_id}`, '').toPromise();
+    return this.http.put(`${environment.mailsystembaseapiurl}/assign_template/${body.campaign_id}`, body.template).toPromise();
   }
 
   sendMail(body, id) {

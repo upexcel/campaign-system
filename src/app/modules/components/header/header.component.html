@@ -11,16 +11,22 @@
 </ul>
 
 <h2 class="mr-auto">{{headingTitle}}</h2>
-<button *ngIf="campDetailPage" class="btn btn-primary mr-3" (click)=updateCampaign()>Update Email</button>
-<button *ngIf="campDetailPage" class="btn btn-primary mr-3" (click)=showCampaign()>Edit</button>
-<button *ngIf="campDetailPage" class="btn btn-primary mr-3" (click)=openUploadCsv()>Add Bulk User</button>
-<button *ngIf="campDetailPage" class="btn btn-primary mr-3" (click)=addUser()>Add User</button>
-<button *ngIf="campDetailPage" class="btn btn-primary mr-3" (click)="sendMailToUsers()">Send Mail</button>
-<button *ngIf="campDetailPage" class="btn btn-primary" (click)="sendTestMail()">Send Test Mail</button>
+
+<button *ngIf="campDetailPage" class="btn btn-transparent btn-hover d-flex align-items-center" (click)=updateCampaign()>
+  <i class="fa fa-plus"></i><span class="font-weight-bold">Update Email</span></button>
+<button *ngIf="campDetailPage" class="btn btn-transparent btn-hover d-flex align-items-center" (click)=showCampaign()><i
+    class="fa fa-edit"></i><span class="font-weight-bold">Edit</span></button>
+<button *ngIf="campDetailPage" class="btn btn-transparent btn-hover d-flex align-items-center"
+  (click)=openUploadCsv()><i class="fa fa-users"></i><span class="font-weight-bold">Add Bulk User</span></button>
+<button *ngIf="campDetailPage" class="btn btn-transparent btn-hover d-flex align-items-center" (click)=addUser()>
+  <i class="fa fa-user"></i><span class="font-weight-bold">Add User</span></button>
+<button *ngIf="campDetailPage" class="btn btn-transparent btn-hover d-flex align-items-center"
+  (click)="sendMailToUsers()"><i class="fa fa-share"></i> <span class="font-weight-bold">Send Mail</span></button>
+<button *ngIf="campDetailPage" class="btn btn-transparent btn-hover d-flex align-items-center"
+  (click)="sendTestMail()"><i class="fa fa-paper-plane"></i><span class="font-weight-bold">Send Test
+    Mail</span></button>
+
 <ul class="navbar-nav mr-3 flex-row align-items-center" (click)="$event.preventDefault()">
-  <li class="nav-item" *ngIf="title =='inbox'">
-    <button>Fetch</button>
-  </li>
   <li>
     <app-router-button [pageTitle]="headingTitle"></app-router-button>
   </li>
