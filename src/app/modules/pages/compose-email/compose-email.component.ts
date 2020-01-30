@@ -25,6 +25,8 @@ export class ComposeEmailComponent implements OnInit {
   assignUserData = new Array();
   createCampaignInProcess: boolean;
   attachment: false;
+  formData = new FormData();
+
 
   constructor(
     private fb: FormBuilder,
@@ -45,7 +47,8 @@ export class ComposeEmailComponent implements OnInit {
       campaign: [null, Validators.required],
       template: [null],
       message: [null, Validators.required],
-      subject: [null, Validators.required]
+      subject: [null, Validators.required],
+      attachment: [null]
     })
   }
 
@@ -65,6 +68,11 @@ export class ComposeEmailComponent implements OnInit {
     this.attachment = false;
     this.sendMailToAllForm.get('message').setValue(this.sendMailToAllForm.get('template').value.message);
     this.sendMailToAllForm.get('subject').setValue(this.sendMailToAllForm.get('template').value.message_subject);
+  }
+
+  previewHtmlCode() {
+        const templateCode = document.getElementsByClassName('angular-editor-textarea')[0] as HTMLElement;
+    this.sendMailToAllForm.get('message').setValue(templateCode.innerText);
   }
 
   async createCampaign(body) {
@@ -102,6 +110,12 @@ export class ComposeEmailComponent implements OnInit {
           "message_subject": body.subject,
           "active": true
         });
+        if (body.attachment) {
+          await this.composeEmailService.addAttachment({
+            id: res,
+            file: this.formData
+          })
+        }
       }
       this.createCampaignInProcess = false;
       this.router.navigate(['settings/campaign-list']);
@@ -112,9 +126,7 @@ export class ComposeEmailComponent implements OnInit {
   }
 
   attachFile(files: File[]) {
-    console.log(files[0]);
-    let formData = new FormData();
-    formData.append('file', files[0]);
+    this.formData.append('attachment_file', files[0]);
   }
 
 }

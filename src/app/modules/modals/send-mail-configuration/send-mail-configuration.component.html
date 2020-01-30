@@ -28,9 +28,14 @@
                     <div *ngFor="let smtp of sendMailConfiguration.controls.smtps.controls; let i=index;">
                         <input type="checkbox" [formControl]="smtp">
                         {{smtpList[i].mail_username}}
+                        <div class="text-danger ml-3"
+                            *ngIf="data.sendMailError && smtpList[i].mail_username === data.sendMailError.mail">
+                            {{data.sendMailError.message}}
+                        </div>                                                                                                                                                                      
                     </div>
                 </div>
             </div>
+
         </form>
     </div>
     <div mat-dialog-actions align="end">

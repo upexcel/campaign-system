@@ -1,34 +1,84 @@
-<div class="clearfix">
-    <h2 class="float-left">Edit Campaign</h2>
-    <a class="float-right" (click)="close()"><i class="glyphicon glyphicon-remove text-secondary"></i></a>
+<div *ngIf="apiInProcess" class="spinner-border" role="status">
+    <span class="sr-only">Loading...</span>
 </div>
-<div mat-dialog-content class="mt-2">
-    <form [formGroup]="editCampaignForm">
-        <div class="row form-group">
-            <div class="col-md-2"><label class="control-label">Campaign Name</label></div>
-            <div class="col-md-10">
-                <input type="text" class="form-control" formControlName="campaignName">
-                <div
-                    *ngIf="editCampaignForm.get('campaignName').invalid && editCampaignForm.get('campaignName').touched">
-                    <small *ngIf="editCampaignForm.get('campaignName').errors?.required" class="text-danger">Campaign
-                        name is required</small>
+<div *ngIf="!apiInProcess">
+    <div class="clearfix">
+        <h2 class="float-left">Edit Campaign</h2>
+        <a class="float-right" (click)="close()"><i class="glyphicon glyphicon-remove text-secondary"></i></a>
+    </div>
+    <div mat-dialog-content class="mt-2">
+        <form [formGroup]="editCampaignForm">
+            <div class="row form-group">
+                <div class="col-md-2"><label class="control-label">Campaign Name</label></div>
+                <div class="col-md-10">
+                    <input type="text" class="form-control" formControlName="campaignName">
+                    <div
+                        *ngIf="editCampaignForm.get('campaignName').invalid && editCampaignForm.get('campaignName').touched">
+                        <small *ngIf="editCampaignForm.get('campaignName').errors?.required"
+                            class="text-danger">Campaign
+                            name is required</small>
+                    </div>
                 </div>
             </div>
-        </div>
-        <div class="row form-group">
-            <div class="col-md-2"><label class="control-label">Campaign Description</label></div>
-            <div class="col-md-10">
-                <input type="text" class="form-control" formControlName="campaignDescription">
-                <div
-                    *ngIf="editCampaignForm.get('campaignDescription').invalid && editCampaignForm.get('campaignDescription').touched">
-                    <small *ngIf="editCampaignForm.get('campaignDescription').errors?.required"
-                        class="text-danger">Campaign Description is required</small>
+            <div class="row form-group">
+                <div class="col-md-2"><label class="control-label">Campaign Description</label></div>
+                <div class="col-md-10">
+                    <input type="text" class="form-control" formControlName="campaignDescription">
+                    <div
+                        *ngIf="editCampaignForm.get('campaignDescription').invalid && editCampaignForm.get('campaignDescription').touched">
+                        <small *ngIf="editCampaignForm.get('campaignDescription').errors?.required"
+                            class="text-danger">Campaign Description is required</small>
+                    </div>
                 </div>
             </div>
-        </div>
-    </form>
-</div>
-<div mat-dialog-actions align="end">
-    <button type="submit" [mat-dialog-close]="editCampaignForm.value" [disabled]="!editCampaignForm.valid"
-        mat-raised-button color="accent">Save</button>
+            <div class="row form-group">
+                <div class="col-md-2"><label class="control-label">Attachment</label></div>
+                <div class="col-md-10">
+                    <div *ngIf="!campaignDetails.attachment_file_name">
+                        <div class="fileinput fileinput-new input-group" data-provides="fileinput">
+                            <div class="form-control" data-trigger="fileinput">
+                                <i class="glyphicon glyphicon-file fileinput-exists"></i>
+                                <span class="fileinput-filename"></span>
+                            </div>
+                            <span class="input-group-addon btn btn-default btn-file">
+                                <span class="fileinput-new"><i class="fa fa-paperclip" aria-hidden="true"></i></span>
+                                <span class="fileinput-exists">Change</span>
+                                <input type="file" name="files" class="form-control form-control-sm" #uploads
+                                    formControlName="attachment" (change)="attachFile(uploads.files)" value="process" />
+                            </span>
+                        </div>
+                    </div>
+                    <div *ngIf="campaignDetails.attachment_file_name">
+                        <div>{{campaignDetails.attachment_file_name}} <button
+                                (click)="removeAttachment(campaignDetails._id)" class="btn btn-danger btn-sm">Remove</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row form-group">
+                <div class="col-md-2"><label class="control-label">Assigned Templates</label></div>
+                <div *ngIf="templateList" class="col-md-5">
+                    <select formControlName="templates" class="form-control" (change)="getTemplatePreview()">
+                        <option *ngFor="let item of templateList" [ngValue]="item">{{ item.message_key }}</option>
+                    </select>
+                </div>
+                <div *ngIf="!templateList" class="alert alert-default col-md-5 ml-3">
+                    <strong>Do not have any assigned template</strong>
+                </div>
+            </div>
+            <div class="row form-group" [ngClass]="{'d-none':this.editCampaignForm.get('message').value === null}">
+                <div class="col-md-2"><label class="control-label">Subject</label></div>
+                <div class="col-md-5">
+                    <input type="text" class="form-control" formControlName="subject">
+                </div>
+            </div>
+            <angular-editor formControlName="message"
+                [ngClass]="{'d-none':this.editCampaignForm.get('message').value === null}" [config]="editorConfig">
+            </angular-editor>
+        </form>
+    </div>
+    <div mat-dialog-actions align="end">
+        <button type="submit" (click)="sendDataToParent(editCampaignForm.value)" [disabled]="!editCampaignForm.valid"
+            mat-raised-button color="accent">Save</button>
+    </div>
 </div>

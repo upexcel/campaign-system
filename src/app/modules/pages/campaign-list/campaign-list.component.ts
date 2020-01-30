@@ -31,6 +31,9 @@ export class CampaignListComponent implements OnInit {
         if (!item.Campaign_description) {
           item.Campaign_description = 'No description provided';
         }
+        if (item.status.includes('Exception')) {
+          item.status = item.status.split("'")[1];
+        }
       })
       if (this.campaignList.length === 0) {
         this.popUpValue = ["Do not have any campaign available", true];

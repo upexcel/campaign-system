@@ -26,6 +26,8 @@ export class CampaignDetailComponent implements OnInit, OnDestroy {
   apiInProcess: boolean;
   templateList: any;
   sendMailInProcess: any;
+  sendMailError: any;
+  errorMsg: any;
 
   constructor(public dialog: MatDialog,
     private campaignListService: CampaignListService,
@@ -39,7 +41,6 @@ export class CampaignDetailComponent implements OnInit, OnDestroy {
         this.updateCampaign();
       }
       else if (item === 'sendMail') {
-        // this.sendMailToUsers();
         this.openSendMailConfiguration();
       }
       else if (item === 'addUser') {
@@ -61,6 +62,7 @@ export class CampaignDetailComponent implements OnInit, OnDestroy {
   editCampaignDialog() {
     const dialogRef = this.dialog.open(CampaignDescriptionComponent, {
       width: '700px',
+      minHeight: '300px',
       data: {
         campaignDetail: this.campaignDetails
       }
@@ -114,7 +116,7 @@ export class CampaignDetailComponent implements OnInit, OnDestroy {
 
   async editCampaign(campaignDetail) {
     try {
-      const res = await this.campaignListService.updateCampaign(campaignDetail, this.campaignDetails._id);
+      const res = await this.campaignListService.updateCampaign(campaignDetail, this.campaignDetails);
       this.popUpValue = [res.message, false];
       this.campaignDetails.Campaign_name = campaignDetail.campaignName;
       this.campaignDetails.Campaign_description = campaignDetail.campaignDescription || 'No Description Provided';
@@ -137,7 +139,6 @@ export class CampaignDetailComponent implements OnInit, OnDestroy {
   }
 
   async updateTemplate(templateIds) {
-    console.log(templateIds);
     try {
       const res = await this.campaignListService.assignTemplate({
         campaign_id: this.campaignDetails._id,
@@ -156,6 +157,8 @@ export class CampaignDetailComponent implements OnInit, OnDestroy {
       this.campaignDetails = res.find(item => {
         return item._id == this.route.snapshot.paramMap.get('id')
       })
+      if (!this.campaignDetails.Campaign_description)
+        this.campaignDetails.Campaign_description = 'No Description Provided';
       this.getUserDetails();
     } catch (error) {
       this.commonService.handleError(error);
@@ -201,8 +204,10 @@ export class CampaignDetailComponent implements OnInit, OnDestroy {
     const dialog = this.dialog.open(SendMailConfigurationComponent, {
       width: '400px',
       minHeight: '300px',
-      panelClass: 'custom-dialog-container'
+      panelClass: 'custom-dialog-container',
+      data: { sendMailError: this.sendMailError }
     });
+    this.errorMsg = false;
     dialog.afterClosed().subscribe((formValue) => {
       if (formValue)
         this.sendMailToUsers(formValue);
@@ -229,11 +234,13 @@ export class CampaignDetailComponent implements OnInit, OnDestroy {
           const res = await this.campaignListService.sendMail(sendMailConfig, this.campaignDetails._id);
           this.getUserDetails();
           this.sendMailInProcess = false;
-          this.popUpValue = [res['Message'], false];
+          this.popUpValue = [res['message'], false];
         }
       } catch (error) {
         this.sendMailInProcess = false;
-        this.popUpValue = [error.error, true];
+        console.log(error);
+        this.sendMailError = error.error;
+        this.errorMsg = `${error.error.message} of ${error.error.mail}`;
       }
     }
     else {
@@ -280,7 +287,7 @@ export class CampaignDetailComponent implements OnInit, OnDestroy {
       const res = await this.campaignListService.sendTestMail(email);
       this.popUpValue = [res['message'], false];
     } catch (error) {
-      this.commonService.handleError(error);
+      this.popUpValue = [`${error.error.message} of ${error.error.mail}`, true]
     }
   }
 

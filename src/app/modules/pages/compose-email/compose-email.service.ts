@@ -31,4 +31,12 @@ export class ComposeEmailService {
     return this.http.post(`${environment.mailsystembaseapiurl}/edit_templates/${id}`, body).toPromise();
   }
 
+  addAttachment(body) {
+    return this.http.post(`${environment.mailsystembaseapiurl}/attached_file/${body.id}`, body.file).toPromise();
+  }
+
+  delAttachment(id) {
+    return this.http.delete(`${environment.mailsystembaseapiurl}/attached_file/${id}`).toPromise();
+  }
+
 }

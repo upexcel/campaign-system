@@ -62,7 +62,7 @@ export class AddSmtpComponent implements OnInit {
     } catch (error) {
       this.apiInProgress = false;
       this.alertMessage = true;
-      this.message = error.error.MSG;
+      this.message = error.error.message;
     }
   }
 

@@ -26,21 +26,20 @@
         </div>
       </div>
     </div>
-    <div class="row form-group">
+    <!-- <div class="row form-group">
       <div class="col-md-2"><label class="control-label">Template</label></div>
       <div class="col-md-5">
         <select formControlName="template" class="form-control form-control-sm" (change)="getTemplatePreview()">
           <option *ngFor="let item of templateList" [ngValue]="item">{{ item.message_key }}</option>
         </select>
       </div>
-    </div>
+    </div> -->
     <div class="row form-group">
       <div class="col-md-2"><label class="control-label">Subject</label></div>
       <div class="col-md-5">
         <input type="text" class="form-control" formControlName="subject">
       </div>
     </div>
-
 
     <div class="row form-group" [ngClass]="{'d-none':attachment === false}">
       <div class="col-md-2"><label class="control-label">Attachment</label></div>
@@ -53,20 +52,26 @@
           <span class="input-group-addon btn btn-default btn-file">
             <span class="fileinput-new"><i class="fa fa-paperclip" aria-hidden="true"></i></span>
             <span class="fileinput-exists">Change</span>
-            <input type="file" name="files" class="form-control form-control-sm" #uploads
+            <input type="file" name="files" class="form-control form-control-sm" #uploads formControlName="attachment"
               (change)="attachFile(uploads.files)" value="process" />
           </span>
         </div>
+        <div class="text-primary">Allowed formats are 'txt', 'pdf', 'png', 'jpg', 'jpeg', 'gif','docx','doc'</div>
       </div>
     </div>
 
-    <angular-editor formControlName="message" [config]="editorConfig"></angular-editor>
+    <angular-editor id="message" formControlName="message" [config]="editorConfig"></angular-editor>
     <div *ngIf="sendMailToAllForm.get('message').invalid && sendMailToAllForm.get('message').touched">
       <small *ngIf="sendMailToAllForm.get('message').errors?.required" class="text-danger">Message body is
         required</small>
     </div>
   </form>
-  <button class="mt-2 float-right" type="submit" (click)="createCampaign(sendMailToAllForm.value)"
-    [disabled]="!sendMailToAllForm.valid || createCampaignInProcess" mat-raised-button color="accent">Create
-    Campaign</button>
+  <div class="float-right">
+    <button class="mt-2 mr-2" [disabled]="!sendMailToAllForm.valid || createCampaignInProcess" mat-raised-button
+      color="accent" (click)="previewHtmlCode();createCampaign(sendMailToAllForm.value)">Create Campign Using
+      Html</button>
+    <button class="mt-2" type="submit" (click)="createCampaign(sendMailToAllForm.value)"
+      [disabled]="!sendMailToAllForm.valid || createCampaignInProcess" mat-raised-button color="accent">Create
+      Campaign</button>
+  </div>
 </div>

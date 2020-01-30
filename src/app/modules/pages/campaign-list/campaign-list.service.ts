@@ -20,11 +20,13 @@ export class CampaignListService {
     return this.http.delete(`${environment.mailsystembaseapiurl}/delete_campaign/${body._id}`).toPromise();
   }
 
-  updateCampaign(body, id): Promise<any> {
-    return this.http.put(`${environment.mailsystembaseapiurl}/update_campaign/${id}`, {
+  updateCampaign(body, campaignDetail): Promise<any> {
+    return this.http.put(`${environment.mailsystembaseapiurl}/update_campaign/${campaignDetail._id}`, {
       campaign_name: body.campaignName,
       campaign_description: body.campaignDescription,
-      active: true
+      status: campaignDetail.status,
+      message: campaignDetail.message,
+      message_subject: campaignDetail.message_subject
     }).toPromise();
   }
 

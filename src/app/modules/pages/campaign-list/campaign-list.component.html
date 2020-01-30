@@ -19,7 +19,7 @@
                 </td>
                 <td class="cursor-pointer" (click)="openCampaign(campaign)">{{ campaign.Campaign_description }}</td>
                 <td>{{campaign.creation_date | date:'short'}}</td>
-                <td *ngIf="(campaign.status === 'Idle') || (campaign.status === 'Completed') || (campaign.status === 'Error spawned')"
+                <td *ngIf="(campaign.status === 'Idle') || (campaign.status === 'Completed') || (campaign.status === 'SMTP OVER') || (campaign.status === 'Smtp is not available')"
                     class="text-center" [ngClass]="{'text-danger':campaign.status === 'Error spawned'}">
                     {{campaign.status}}
                 </td>

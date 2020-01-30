@@ -1,6 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Inject } from '@angular/core';
 import { FormBuilder, Validators, FormControl, FormArray } from '@angular/forms';
-import { MatDialogRef } from '@angular/material';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { ManageSmtpService } from '../../pages/manage-smtp/manage-smtp.service';
 import { CommonService } from 'src/app/services/common.service';
 import * as _ from "lodash";
@@ -15,7 +15,8 @@ export class SendMailConfigurationComponent implements OnInit {
   constructor(private fb: FormBuilder,
     private dialogRef: MatDialogRef<any>,
     private manageSmtpService: ManageSmtpService,
-    private commonService: CommonService) { }
+    private commonService: CommonService,
+    @Inject(MAT_DIALOG_DATA) public data, ) { }
 
   sendMailConfiguration: any;
   smtpList: any;
