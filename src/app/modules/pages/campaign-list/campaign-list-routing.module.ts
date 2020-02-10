@@ -2,6 +2,8 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { CampaignListComponent } from './campaign-list.component';
 import { CampaignDetailComponent } from './campaign-detail/campaign-detail.component';
+import { TitleResolverService } from 'src/app/resolver/title-resolver.service';
+import { ClickDetailsComponent } from './click-details/click-details.component';
 
 
 const routes: Routes = [
@@ -10,9 +12,18 @@ const routes: Routes = [
     component: CampaignListComponent
   },
   {
-    path: 'campaign-detail/:id',
+    path: 'campaign-detail/:id/:name',
     component: CampaignDetailComponent,
-    data: { title: "Campaign Details" }
+    resolve: {
+      title: TitleResolverService
+    },
+  },
+  {
+    path: 'click-details/:id/:name',
+    component: ClickDetailsComponent,
+    resolve: {
+      title: TitleResolverService
+    }
   }
 ];
 

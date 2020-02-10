@@ -1,9 +1,7 @@
-import { Component, EventEmitter, OnInit, ElementRef, Output, OnChanges, OnDestroy, ChangeDetectorRef, Input } from '@angular/core';
-import { Router, NavigationEnd, ActivatedRoute } from '@angular/router';
+import { Component, EventEmitter, OnInit, ElementRef, Output, OnChanges, OnDestroy, Input } from '@angular/core';
+import { Router, NavigationEnd } from '@angular/router';
 import { AppConfig, ADMIN } from 'src/app/app.config';
-import { EmitEventsService } from 'src/app/services/emit-events.service';
 import { CommonService } from 'src/app/services/common.service';
-import { MatDialog } from '@angular/material';
 import { Subscription } from 'rxjs';
 import { LocalStorageService } from 'src/app/services/local-storage.service';
 import { JwtHelperService } from '@auth0/angular-jwt';
@@ -45,12 +43,8 @@ export class HeaderComponent implements OnInit, OnDestroy, OnChanges {
     el: ElementRef,
     config: AppConfig,
     router: Router,
-    private emitEventsService: EmitEventsService,
-    private dialog: MatDialog,
     private commonService: CommonService,
     public localStorageService: LocalStorageService,
-    private activatedRoute: ActivatedRoute,
-    private cd: ChangeDetectorRef,
     private campaignListService: CampaignListService,
   ) {
     this.token = this.localStorageService.getToken();
@@ -99,7 +93,6 @@ export class HeaderComponent implements OnInit, OnDestroy, OnChanges {
 
 
   ngOnInit(): void {
-
     let root = this.router.routerState.snapshot.root;
     while (root) {
       if (root['_routerState'].url.includes('campaign-detail')) {
@@ -118,7 +111,6 @@ export class HeaderComponent implements OnInit, OnDestroy, OnChanges {
         return;
       }
     }
-    // }
     const username = localStorage.getItem("username");
     this.username = username && username.slice(1, username.indexOf('@'));
   }
@@ -162,28 +154,8 @@ export class HeaderComponent implements OnInit, OnDestroy, OnChanges {
     }
   }
 
-  showCampaign() {
-    this.campaignListService.setEventValue('show');
-  }
-
-  updateCampaign() {
-    this.campaignListService.setEventValue('update');
-  }
-
-  openUploadCsv() {
-    this.campaignListService.setEventValue('openCsv');
-  }
-
-  sendMailToUsers() {
-    this.campaignListService.setEventValue('sendMail');
-  }
-
-  sendTestMail() {
-    this.campaignListService.setEventValue('sendTestMail');
-  }
-
-  addUser() {
-    this.campaignListService.setEventValue('addUser');
+  emitEvent(eventVal) {
+    this.campaignListService.setEventValue(eventVal);
   }
 
 }

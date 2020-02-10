@@ -19,6 +19,7 @@ export class UpdateCampaignComponent implements OnInit {
   templateId: any;
   templateOptions = new Array(3);
   popUpValue: any;
+  updateEmailFrom: any;
 
   constructor(private fb: FormBuilder,
     @Inject(MAT_DIALOG_DATA) public data,
@@ -34,7 +35,9 @@ export class UpdateCampaignComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.getTemplateList();
+    if (this.data.campaign.generated_from_recruit)
+      this.getTemplateList();
+    this.getUpdateEmailFrom();
   }
 
   getUpdateCampaignForm() {
@@ -52,7 +55,7 @@ export class UpdateCampaignComponent implements OnInit {
   async getTemplateList() {
     this.apiInProcess = true
     try {
-      const campaignDetail = await this.campaignListService.campaignDetails(this.data.campaignId);
+      const campaignDetail = await this.campaignListService.campaignDetails(this.data.campaign._id);
       const res = await this.campaignListService.getTemplateList();
       this.templateList = res;
       if (campaignDetail.Template) {
@@ -78,33 +81,34 @@ export class UpdateCampaignComponent implements OnInit {
     }
   }
 
+  getUpdateEmailFrom() {
+    this.updateEmailFrom = this.fb.group({
+      subject: [null, Validators.required],
+      message: [null, Validators.required]
+    })
+  }
+
   getFormValue(formField) {
     return this.updateCampaignForm.get(formField);
   }
 
   sendDataToParent(formValue) {
+    let messageDetails = new Array();
     for (let i = 0; i < this.templateOptions.length; i++) {
-      if (formValue['template' + (i + 1)]) {
-        if ((formValue['message' + (i + 1)] !== formValue['template' + (i + 1)].message) ||
-          (formValue['subject' + (i + 1)] !== formValue['template' + (i + 1)].message_subject)) {
-          this.updateTemplate({
-            "message": formValue['message' + (i + 1)],
-            "message_subject": formValue['subject' + (i + 1)]
-          }, formValue['template' + (i + 1)]._id);
-        }
+      if (formValue['message' + (i + 1)]) {
+        messageDetails.push({
+          "message": formValue['message' + (i + 1)],
+          "message_subject": formValue['subject' + (i + 1)]
+        })
       }
     }
-    setTimeout(() => {
-      this.dialogRef.close(formValue);
-    });
+    this.dialogRef.close(messageDetails);
   }
 
-  async updateTemplate(body, id) {
-    try {
-      await this.composeEmailService.editTemplate(body, id);
-    } catch (error) {
-      this.commonService.handleError(error);
-    }
+  assignSingleEmail(formValue) {
+    this.dialogRef.close(
+      [{ "message": formValue.message, "message_subject": formValue.subject }]
+    )
   }
 
   close() {

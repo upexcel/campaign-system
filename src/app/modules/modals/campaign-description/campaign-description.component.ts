@@ -24,7 +24,7 @@ export class CampaignDescriptionComponent implements OnInit {
   }
 
   editCampaignForm: any
-  templateList: [];
+  emailList: any;
   apiInProcess: any;
   campaignDetails: any;
   formData = new FormData();
@@ -45,10 +45,7 @@ export class CampaignDescriptionComponent implements OnInit {
       this.campaignDetails = res.find(item => {
         return item._id == this.data.campaignDetail._id;
       })
-      if (!this.campaignDetails.Campaign_description) {
-        this.campaignDetails.Campaign_description = this.data.campaignDetail.Campaign_description
-      }
-      this.templateList = this.campaignDetails.Template;
+      this.emailList = this.campaignDetails.message_detail;
       this.getEditCampaignForm();
       this.apiInProcess = false
     } catch (error) {
@@ -61,50 +58,23 @@ export class CampaignDescriptionComponent implements OnInit {
     this.editCampaignForm = this.fb.group({
       campaignName: [this.campaignDetails.Campaign_name, Validators.required],
       campaignDescription: [this.campaignDetails.Campaign_description || null],
-      templates: [null],
+      attachment: [null],
+      emails: [null],
       subject: [null],
-      message: [null],
-      attachment: [null]
+      message: [null]
     })
   }
 
-
-  getTemplatePreview() {
-    if (this.getFromValue('templates')) {
-      const templateValue = this.getFromValue('templates').value;
-      this.getFromValue('message').setValue(templateValue.message);
-      this.getFromValue('subject').setValue(templateValue.message_subject);
-    }
+  getEmailPreview(email) {
+    this.editCampaignForm.controls['subject'].setValidators([Validators.required]);
+    this.editCampaignForm.controls['message'].setValidators([Validators.required]);
+    this.getFromValue('emails').setValue(email)
+    this.getFromValue('message').setValue(email.message);
+    this.getFromValue('subject').setValue(email.message_subject);
   }
 
   getFromValue(formField) {
     return this.editCampaignForm.get(formField);
-  }
-
-  sendDataToParent(formValue) {
-    if (formValue['templates']) {
-      if ((formValue['message'] !== formValue.templates.message) ||
-        (formValue['subject'] !== formValue.templates.message_subject)) {
-        this.updateTemplate({
-          "message": formValue['message'],
-          "message_subject": formValue['subject']
-        }, formValue.templates._id);
-      }
-    }
-    if (formValue.attachment) {
-      this.addAttachment();
-    }
-    setTimeout(() => {
-      this.dialogRef.close(formValue);
-    });
-  }
-
-  async updateTemplate(body, id) {
-    try {
-      await this.composeEmailService.editTemplate(body, id);
-    } catch (error) {
-      this.commonService.handleError(error);
-    }
   }
 
   async removeAttachment(id) {
@@ -129,6 +99,25 @@ export class CampaignDescriptionComponent implements OnInit {
 
   attachFile(files: File[]) {
     this.formData.append('attachment_file', files[0]);
+  }
+
+  async deleteEmail(email) {
+    try {
+      await this.campaignListService.deleteEmail({
+        campaignId: this.campaignDetails._id,
+        messageId: email.message_id
+      })
+      this.emailList = this.emailList.filter(item => item.message_id !== email.message_id);
+    } catch (error) {
+      this.commonService.handleError(error);
+    }
+  }
+
+  sendDataToParent(formValue) {
+    if (formValue.attachment) {
+      this.addAttachment();
+    }
+    this.dialogRef.close(formValue);
   }
 
   close() {

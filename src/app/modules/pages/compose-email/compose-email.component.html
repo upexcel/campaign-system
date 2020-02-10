@@ -26,14 +26,6 @@
         </div>
       </div>
     </div>
-    <!-- <div class="row form-group">
-      <div class="col-md-2"><label class="control-label">Template</label></div>
-      <div class="col-md-5">
-        <select formControlName="template" class="form-control form-control-sm" (change)="getTemplatePreview()">
-          <option *ngFor="let item of templateList" [ngValue]="item">{{ item.message_key }}</option>
-        </select>
-      </div>
-    </div> -->
     <div class="row form-group">
       <div class="col-md-2"><label class="control-label">Subject</label></div>
       <div class="col-md-5">
@@ -67,9 +59,6 @@
     </div>
   </form>
   <div class="float-right">
-    <button class="mt-2 mr-2" [disabled]="!sendMailToAllForm.valid || createCampaignInProcess" mat-raised-button
-      color="accent" (click)="previewHtmlCode();createCampaign(sendMailToAllForm.value)">Create Campign Using
-      Html</button>
     <button class="mt-2" type="submit" (click)="createCampaign(sendMailToAllForm.value)"
       [disabled]="!sendMailToAllForm.valid || createCampaignInProcess" mat-raised-button color="accent">Create
       Campaign</button>

@@ -8,6 +8,8 @@
             <tr>
                 <th>Campaign Name</th>
                 <th>Campaign Description</th>
+                <th class="text-center">User Count</th>
+                <th class="text-center">Bounce Rate</th>
                 <th>Creation Date</th>
                 <th class="text-center">Status</th>
                 <th class="text-center">Delete</th>
@@ -18,9 +20,11 @@
                 <td class="campaign-name cursor-pointer" (click)="openCampaign(campaign)">{{ campaign.Campaign_name }}
                 </td>
                 <td class="cursor-pointer" (click)="openCampaign(campaign)">{{ campaign.Campaign_description }}</td>
+                <td class="cursor-pointer text-center" (click)="openCampaign(campaign)">{{ campaign.users }}</td>
+                <td class="cursor-pointer text-center">{{ campaign.bounce_rate || '0' }}</td>
                 <td>{{campaign.creation_date | date:'short'}}</td>
-                <td *ngIf="(campaign.status === 'Idle') || (campaign.status === 'Completed') || (campaign.status === 'SMTP OVER') || (campaign.status === 'Smtp is not available')"
-                    class="text-center" [ngClass]="{'text-danger':campaign.status === 'Error spawned'}">
+                <td *ngIf="(campaign.status !== 'Paused') && (campaign.status !== 'Running')" class="text-center"
+                    [ngClass]="{'text-danger':campaign.status === 'Error spawned'}">
                     {{campaign.status}}
                 </td>
                 <td class="cursor-pointer text-center "

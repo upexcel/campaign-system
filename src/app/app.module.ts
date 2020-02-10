@@ -23,6 +23,7 @@ import { PopUpMessageModule } from './modules/components/popup-message/pop-up-me
 import { AddUserComponent } from './modules/modals/add-user/add-user.component';
 import { TestMailComponent } from './modules/modals/test-mail/test-mail.component';
 import { SendMailConfigurationComponent } from './modules/modals/send-mail-configuration/send-mail-configuration.component';
+import { TitleResolverService } from './resolver/title-resolver.service';
 
 @NgModule({
   declarations: [

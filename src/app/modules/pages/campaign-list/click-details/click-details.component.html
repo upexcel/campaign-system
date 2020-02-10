@@ -1,0 +1,28 @@
+<div *ngIf="apiInProcess" class="spinner-border" role="status">
+    <span class="sr-only">Loading...</span>
+</div>
+<div *ngIf="!apiInProcess" class="campaignList mt-5">
+    <app-popup-message [message]="popUpValue"></app-popup-message>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Sr No.</th>
+                <th>Date</th>
+                <th>Morning</th>
+                <th>Noon</th>
+                <th>Evening</th>
+                <th>Night</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let clickDetail of clickDetails;index as i">
+                <td>{{ i+1 }}</td>
+                <td>{{ clickDetail.date | date:'fullDate'}}</td>
+                <td>{{ clickDetail.morning || '0'}}</td>
+                <td>{{ clickDetail.noon || '0'}}</td>
+                <td>{{ clickDetail.evening || '0'}}</td>
+                <td>{{ clickDetail.night || '0' }}</td>
+            </tr>
+        </tbody>
+    </table>
+</div>

@@ -8,7 +8,7 @@
   </div>
   <div mat-dialog-content class="mt-4">
     <app-popup-message [message]="popUpValue"></app-popup-message>
-    <form [formGroup]="updateCampaignForm">
+    <form [formGroup]="updateCampaignForm" *ngIf="data.campaign.generated_from_recruit">
       <div *ngFor="let item of templateOptions; index as i">
         <div class="row form-group">
           <div class="col-md-2"><label class="control-label">Template {{i+1}}</label></div>
@@ -31,9 +31,23 @@
         </angular-editor><br />
       </div>
     </form>
+    <form *ngIf="!data.campaign.generated_from_recruit" [formGroup]="updateEmailFrom">
+      <div class="row form-group">
+        <div class="col-md-2"><label class="control-label">Subject</label></div>
+        <div class="col-md-5">
+          <input type="text" class="form-control" formControlName="subject">
+        </div>
+      </div>
+      <angular-editor formControlName="message" [config]="editorConfig">
+      </angular-editor>
+    </form>
   </div>
   <div mat-dialog-actions align="end">
-    <button type="submit" (click)="sendDataToParent(updateCampaignForm.value)" [disabled]="!updateCampaignForm.valid"
-      mat-raised-button color="accent">Update</button>
+    <button *ngIf="data.campaign.generated_from_recruit" type="submit"
+      (click)="sendDataToParent(updateCampaignForm.value)" [disabled]="!updateCampaignForm.valid" mat-raised-button
+      color="accent">Update</button>
+    <button *ngIf="!data.campaign.generated_from_recruit" type="submit"
+      (click)="assignSingleEmail(updateEmailFrom.value)" [disabled]="!updateEmailFrom.valid" mat-raised-button
+      color="accent">Update</button>
   </div>
 </div>

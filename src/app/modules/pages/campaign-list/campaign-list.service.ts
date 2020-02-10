@@ -20,14 +20,12 @@ export class CampaignListService {
     return this.http.delete(`${environment.mailsystembaseapiurl}/delete_campaign/${body._id}`).toPromise();
   }
 
-  updateCampaign(body, campaignDetail): Promise<any> {
-    return this.http.put(`${environment.mailsystembaseapiurl}/update_campaign/${campaignDetail._id}`, {
-      campaign_name: body.campaignName,
-      campaign_description: body.campaignDescription,
-      status: campaignDetail.status,
-      message: campaignDetail.message,
-      message_subject: campaignDetail.message_subject
-    }).toPromise();
+  editCampaignDetails(body): Promise<any> {
+    return this.http.post(`${environment.mailsystembaseapiurl}/update_campaign/${body.id}`, body.campaignDetails).toPromise();
+  }
+
+  deleteEmail(body): Promise<any> {
+    return this.http.delete(`${environment.mailsystembaseapiurl}/update_campaign/${body.campaignId}/${body.messageId}`).toPromise();
   }
 
   campaignDetails(body): Promise<any> {
@@ -44,10 +42,6 @@ export class CampaignListService {
 
   getTemplateList(): Promise<any> {
     return this.http.get(`${environment.mailsystembaseapiurl}/message/get_email_template/CAMPAIGN`).toPromise();
-  }
-
-  deleteTemplate(body): Promise<any> {
-    return this.http.delete(`${environment.mailsystembaseapiurl}/assign_template/${body.campaign_id}/${body.template_id}`).toPromise();
   }
 
   assignTemplate(body): Promise<any> {

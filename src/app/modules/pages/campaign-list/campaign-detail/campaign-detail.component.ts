@@ -3,7 +3,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { CampaignDescriptionComponent } from 'src/app/modules/modals/campaign-description/campaign-description.component';
 import { CampaignListService } from '../campaign-list.service';
 import { CommonService } from 'src/app/services/common.service';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { UpdateCampaignComponent } from 'src/app/modules/modals/update-campaign/update-campaign.component';
 import { Subscription } from 'rxjs';
 import { UploadCsvComponent } from 'src/app/modules/modals/upload-csv/upload-csv.component';
@@ -24,7 +24,7 @@ export class CampaignDetailComponent implements OnInit, OnDestroy {
   popUpValue: any;
   dialogSubs: Subscription;
   apiInProcess: boolean;
-  templateList: any;
+
   sendMailInProcess: any;
   sendMailError: any;
   errorMsg: any;
@@ -32,10 +32,11 @@ export class CampaignDetailComponent implements OnInit, OnDestroy {
   constructor(public dialog: MatDialog,
     private campaignListService: CampaignListService,
     private commonService: CommonService,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private router: Router
   ) {
     this.dialogSubs = this.campaignListService.getEventValue().subscribe(item => {
-      if (item === 'show') {
+      if (item === 'edit') {
         this.editCampaignDialog();
       } else if (item === 'update') {
         this.updateCampaign();
@@ -49,129 +50,28 @@ export class CampaignDetailComponent implements OnInit, OnDestroy {
       else if (item === 'sendTestMail') {
         this.openSendTestMail();
       }
-      else {
+      else if (item === 'openCsv') {
         this.assignUsersWithCsv()
+      }
+      else {
+        this.openClickDetails();
       }
     })
   }
 
   ngOnInit() {
-    this.getCampaignDetails();
+    this.getUserDetails(true);
   }
 
-  editCampaignDialog() {
-    const dialogRef = this.dialog.open(CampaignDescriptionComponent, {
-      width: '700px',
-      minHeight: '300px',
-      data: {
-        campaignDetail: this.campaignDetails
-      }
-    })
-    dialogRef.afterClosed().subscribe(campaignDetails => {
-      if (campaignDetails)
-        this.editCampaign(campaignDetails);
-    })
-  }
-
-  updateCampaign() {
-    const dialog = this.dialog.open(UpdateCampaignComponent, {
-      width: '700px',
-      minHeight: '300px',
-      data: {
-        campaignId: this.campaignDetails._id
-      }
-    });
-    dialog.afterClosed().subscribe(campaignDetails => {
-      if (campaignDetails) {
-        this.updateCampaignDetails(campaignDetails);
-      }
-    })
-  }
-
-  assignUsersWithCsv() {
-    const dialog = this.dialog.open(UploadCsvComponent, {
-      width: '500px',
-    });
-    dialog.afterClosed().subscribe(userData => {
-      if (userData) {
-        this.assignUsers({
-          "users": userData,
-          "campaign": this.campaignDetails._id
-        })
-      }
-    })
-  }
-
-  async assignUsers(body) {
-    this.sendMailInProcess = true;
+  async getUserDetails(isFirstCall) {
+    this.apiInProcess = isFirstCall;
     try {
-      const res = await this.campaignListService.assignUser(body);
-      this.getUserDetails();
-      this.sendMailInProcess = false;
-    } catch (error) {
-      this.sendMailInProcess = false;
-      this.commonService.handleError(error);
-    }
-  }
-
-  async editCampaign(campaignDetail) {
-    try {
-      const res = await this.campaignListService.updateCampaign(campaignDetail, this.campaignDetails);
-      this.popUpValue = [res.message, false];
-      this.campaignDetails.Campaign_name = campaignDetail.campaignName;
-      this.campaignDetails.Campaign_description = campaignDetail.campaignDescription || 'No Description Provided';
-    } catch (error) {
-      this.commonService.handleError(error);
-    }
-  }
-
-  async updateCampaignDetails(campaignDetail) {
-    let templateList = [];
-    let templateIds = [];
-    templateList.push(campaignDetail.template1);
-    templateList.push(campaignDetail.template2);
-    templateList.push(campaignDetail.template3);
-    templateList.forEach((item) => {
-      if (item)
-        templateIds.push(item._id);
-    })
-    this.updateTemplate(templateIds);
-  }
-
-  async updateTemplate(templateIds) {
-    try {
-      const res = await this.campaignListService.assignTemplate({
-        campaign_id: this.campaignDetails._id,
-        template: { templates: templateIds }
-      });
-      this.popUpValue = [res.message, false];
-    } catch (error) {
-      this.commonService.handleError(error);
-    }
-  }
-
-  async getCampaignDetails() {
-    this.apiInProcess = true
-    try {
-      const res = await this.campaignListService.getCampaignList();
-      this.campaignDetails = res.find(item => {
-        return item._id == this.route.snapshot.paramMap.get('id')
-      })
-      if (!this.campaignDetails.Campaign_description)
-        this.campaignDetails.Campaign_description = 'No Description Provided';
-      this.getUserDetails();
-    } catch (error) {
-      this.commonService.handleError(error);
-      this.apiInProcess = false
-    }
-  }
-
-  async getUserDetails() {
-    try {
-      const res = await this.campaignListService.campaignDetails(this.campaignDetails._id);
+      const res = await this.campaignListService.campaignDetails(this.route.snapshot.paramMap.get('id'));
+      this.campaignDetails = res;
       this.userDetails = res.users;
       if (this.userDetails.length === 0) {
-        this.popUpValue = ['Do not have any assign users.', true]
+        this.userDetails = null;
+        this.popUpValue = ['Do not have any assign users.', true];
       }
       else {
         this.userDetails.forEach((item) => {
@@ -199,6 +99,100 @@ export class CampaignDetailComponent implements OnInit, OnDestroy {
     }
   }
 
+  editCampaignDialog() {
+    const dialogRef = this.dialog.open(CampaignDescriptionComponent, {
+      width: '700px',
+      minHeight: '300px',
+      data: {
+        campaignDetail: this.campaignDetails
+      }
+    })
+    dialogRef.afterClosed().subscribe(campaignDetails => {
+      if (campaignDetails) {
+        this.editCampaign(campaignDetails);
+      }
+    })
+  }
+
+  async editCampaign(campaignDetail) {
+    const defaultEmail = this.campaignDetails.message_detail[0];
+    try {
+      const res = await this.campaignListService.editCampaignDetails({
+        id: this.campaignDetails._id,
+        campaignDetails: {
+          "campaign_name": campaignDetail.campaignName,
+          "campaign_description": campaignDetail.campaignDescription,
+          "status": this.campaignDetails.status,
+          "message": campaignDetail.message || defaultEmail.message,
+          "message_subject": campaignDetail.subject || defaultEmail.message_subject,
+          "message_id": (campaignDetail.message && campaignDetail.emails.message_id) || defaultEmail.message_id
+        },
+      });
+      this.popUpValue = [res.message, false];
+      this.campaignDetails.Campaign_name = campaignDetail.campaignName;
+      this.campaignDetails.Campaign_description = campaignDetail.campaignDescription;
+    } catch (error) {
+      this.commonService.handleError(error);
+    }
+  }
+
+  updateCampaign() {
+    const dialog = this.dialog.open(UpdateCampaignComponent, {
+      width: '700px',
+      minHeight: '300px',
+      data: {
+        campaign: this.campaignDetails
+      }
+    });
+    dialog.afterClosed().subscribe(campaignDetails => {
+      if (campaignDetails) {
+        this.updateCampaignDetails(campaignDetails);
+      }
+    })
+  }
+
+  async updateCampaignDetails(campaignDetail) {
+    try {
+      const res = await this.campaignListService.editCampaignDetails({
+        id: this.campaignDetails._id,
+        campaignDetails: {
+          "campaign_name": this.campaignDetails.Campaign_name,
+          "campaign_description": this.campaignDetails.Campaign_description,
+          "status": this.campaignDetails.status,
+          "message_detail": campaignDetail
+        }
+      });
+      this.popUpValue = [res.message, false];
+    } catch (error) {
+      this.commonService.handleError(error);
+    }
+  }
+
+  assignUsersWithCsv() {
+    const dialog = this.dialog.open(UploadCsvComponent, {
+      width: '500px',
+    });
+    dialog.afterClosed().subscribe(userData => {
+      if (userData) {
+        this.assignUsers({
+          "users": userData,
+          "campaign": this.campaignDetails._id
+        })
+      }
+    })
+  }
+
+  async assignUsers(body) {
+    this.sendMailInProcess = true;
+    try {
+      const res = await this.campaignListService.assignUser(body);
+      this.getUserDetails(false);
+      this.sendMailInProcess = false;
+    } catch (error) {
+      this.sendMailInProcess = false;
+      this.commonService.handleError(error);
+    }
+  }
 
   openSendMailConfiguration() {
     const dialog = this.dialog.open(SendMailConfigurationComponent, {
@@ -223,22 +217,21 @@ export class CampaignDetailComponent implements OnInit, OnDestroy {
       this.sendMailInProcess = true;
       try {
         this.userDetails.forEach((item) => {
-          sendMailConfig.ids.push(item._id);
+          if (item.send_status !== true)
+            sendMailConfig.ids.push(item._id);
         })
         if (sendMailConfig.ids.length === 0) {
-          const res = await this.campaignListService.sendMail(sendMailConfig, this.campaignDetails._id);
           this.sendMailInProcess = false;
           this.popUpValue = ['Please add users to send mail', true];
         }
         else {
           const res = await this.campaignListService.sendMail(sendMailConfig, this.campaignDetails._id);
-          this.getUserDetails();
+          this.getUserDetails(false);
           this.sendMailInProcess = false;
           this.popUpValue = [res['message'], false];
         }
       } catch (error) {
         this.sendMailInProcess = false;
-        console.log(error);
         this.sendMailError = error.error;
         this.errorMsg = `${error.error.message} of ${error.error.mail}`;
       }
@@ -248,14 +241,28 @@ export class CampaignDetailComponent implements OnInit, OnDestroy {
     }
   }
 
-  openHitDetails(userDetails) {
-    const dialog = this.dialog.open(HitDetailsComponent, {
-      width: '680px',
-      data: {
-        campaignDetail: userDetails
-      }
-    });
+  openSendTestMail() {
+    const dialog = this.dialog.open(TestMailComponent, {
+      width: '400px'
+    })
+    dialog.afterClosed().subscribe((email) => {
+      if (email)
+        this.sendTestMail(email);
+    })
+  }
 
+  async sendTestMail(testMail) {
+    const randomNum = Math.floor(Math.random() * this.campaignDetails.message_detail.length);
+    try {
+      const res = await this.campaignListService.sendTestMail({
+        email: testMail.email,
+        message: this.campaignDetails.message_detail[randomNum].message,
+        message_subject: this.campaignDetails.message_detail[randomNum].message_subject
+      });
+      this.popUpValue = [res['message'], false];
+    } catch (error) {
+      this.popUpValue = [`${error.error.message} of ${error.error.mail}`, true]
+    }
   }
 
   addUser() {
@@ -272,23 +279,17 @@ export class CampaignDetailComponent implements OnInit, OnDestroy {
     })
   }
 
-  openSendTestMail() {
-    const dialog = this.dialog.open(TestMailComponent, {
-      width: '400px'
-    })
-    dialog.afterClosed().subscribe((email) => {
-      if (email)
-        this.sendTestMail(email);
-    })
+  openHitDetails(userDetails) {
+    this.dialog.open(HitDetailsComponent, {
+      width: '680px',
+      data: {
+        campaignDetail: userDetails
+      }
+    });
   }
 
-  async sendTestMail(email) {
-    try {
-      const res = await this.campaignListService.sendTestMail(email);
-      this.popUpValue = [res['message'], false];
-    } catch (error) {
-      this.popUpValue = [`${error.error.message} of ${error.error.mail}`, true]
-    }
+  openClickDetails() {
+    this.router.navigate(['settings/campaign-list/click-details', this.campaignDetails._id, this.campaignDetails.Campaign_name]);
   }
 
   ngOnDestroy() {

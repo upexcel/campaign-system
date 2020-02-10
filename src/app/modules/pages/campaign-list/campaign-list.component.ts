@@ -28,9 +28,6 @@ export class CampaignListComponent implements OnInit {
       const res = await this.campaignListService.getCampaignList();
       this.campaignList = res;
       this.campaignList.forEach((item) => {
-        if (!item.Campaign_description) {
-          item.Campaign_description = 'No description provided';
-        }
         if (item.status.includes('Exception')) {
           item.status = item.status.split("'")[1];
         }
@@ -47,7 +44,7 @@ export class CampaignListComponent implements OnInit {
   }
 
   openCampaign(campaign) {
-    this.router.navigate(['settings/campaign-list/campaign-detail', campaign._id]);
+    this.router.navigate(['settings/campaign-list/campaign-detail', campaign._id, campaign.Campaign_name]);
   }
 
   async removeCampaign(campaign) {

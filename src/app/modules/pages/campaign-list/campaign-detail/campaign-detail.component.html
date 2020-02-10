@@ -2,8 +2,8 @@
     <span class="sr-only">Loading...</span>
 </div>
 <div *ngIf="!apiInProcess" class="mt-5">
-    <h6><b>Name: </b> {{campaignDetails.Campaign_name}}</h6>
-    <h6><b>Description: </b>{{campaignDetails.Campaign_description}}</h6>
+    <h6><b>Description: </b> {{campaignDetails.Campaign_description}}</h6>
+    <h6><b>Total expected time of completion: </b>{{campaignDetails.total_expected_time_of_completion || 'Mail not sended yet'}}</h6>
 </div>
 <div *ngIf="sendMailInProcess" class="spinner-border" role="status">
     <span class="sr-only">Loading...</span>
@@ -13,12 +13,14 @@
     <div *ngIf="errorMsg" class="alert alert-danger" role="alert">
         {{errorMsg}}
     </div>
-    <table class="table">
+    <table class="table" *ngIf="userDetails">
         <thead>
             <tr>
                 <th>Sr. No</th>
                 <th>Name</th>
                 <th>Email</th>
+                <th *ngIf="userDetails[0].mobile">Mobile</th>
+                <th *ngIf="userDetails[0].website">Website</th>
                 <th>Sent On</th>
                 <th class="text-center">Seen</th>
             </tr>
@@ -28,8 +30,11 @@
                 <td>{{ i+1 }}</td>
                 <td (click)="openHitDetails(userDetail)" class="cursor-pointer">{{ userDetail.name }}</td>
                 <td (click)="openHitDetails(userDetail)" class="cursor-pointer"> {{ userDetail.email }}</td>
+                <td *ngIf="userDetail.mobile" (click)="openHitDetails(userDetail)" class="cursor-pointer"> {{ userDetail.mobile }}</td>
+                <td *ngIf="userDetail.website" (click)="openHitDetails(userDetail)" class="cursor-pointer"> {{ userDetail.website }}</td>
                 <td *ngIf="userDetail.send_status != true">{{ userDetail.send_status }}</td>
-                <td *ngIf="userDetail.send_status == true">{{ userDetail.hit_details && userDetail.hit_details.sending_time | date:'short'}}</td>
+                <td *ngIf="userDetail.send_status == true">
+                    {{ userDetail.hit_details && userDetail.hit_details.sending_time | date:'short'}}</td>
                 <td class="text-center">
                     <span *ngIf="userDetail.seen">
                         {{ userDetail.hit_details && userDetail.hit_details.seen_date | date:'short' }}</span>

@@ -10,8 +10,9 @@ import * as Papa from 'papaparse';
 })
 export class UploadCsvComponent implements OnInit {
 
-  dataList: any
-  uploaded:any
+  dataList: any;
+  uploaded: any;
+  fileInvalid: boolean;
 
   constructor(
     @Inject(MAT_DIALOG_DATA) public data,
@@ -22,7 +23,8 @@ export class UploadCsvComponent implements OnInit {
   }
 
   onChange(files: File[]) {
-    if (files[0]) {
+    if (files[0] && files[0].name.endsWith('.csv')) {
+      this.fileInvalid = false;
       Papa.parse(files[0], {
         header: true,
         skipEmptyLines: true,
@@ -30,6 +32,9 @@ export class UploadCsvComponent implements OnInit {
           this.dataList = result.data;
         }
       });
+    } else {
+      this.fileInvalid = true;
+      this.uploaded = false
     }
   }
 

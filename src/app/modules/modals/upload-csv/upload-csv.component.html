@@ -6,13 +6,13 @@
     <pre class="userDataFormat text-danger py-3">
      Upload .csv file having format given below:-
      
-     name , email
-    'abc' , 'abc@gmail.com'
+     name , email , mobile (optional) , website (optional)
+    'abc' , 'abc@gmail.com' , 9999999999 , www.abc.com
     'xyz' , 'xyz@yahoo.com'</pre>
 </div>
 <div class="form-group row">
     <div class="col-md-12 ">
-        <div class="fileinput fileinput-new input-group" data-provides="fileinput">
+        <div class="fileinput fileinput-new input-group mb-0" data-provides="fileinput">
             <div class="form-control" data-trigger="fileinput">
                 <i class="glyphicon glyphicon-file fileinput-exists"></i>
                 <span class="fileinput-filename"></span>
@@ -20,9 +20,12 @@
             <span class="input-group-addon btn btn-default btn-file">
                 <span class="fileinput-new">Select file</span>
                 <span class="fileinput-exists">Change</span>
-                <input type="file" name="files" class="form-control" #uploads [(ngModel)]="uploaded"
+                <input type="file" name="files" class="form-control" #uploads [(ngModel)]="uploaded" accept=".csv"
                     (change)="onChange(uploads.files)" value="process" />
             </span>
+        </div>
+        <div *ngIf="fileInvalid">
+            <small class="text-danger">Please select valid file</small>
         </div>
     </div>
 </div>

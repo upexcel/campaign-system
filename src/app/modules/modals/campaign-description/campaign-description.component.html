@@ -47,23 +47,29 @@
                                     formControlName="attachment" (change)="attachFile(uploads.files)" value="process" />
                             </span>
                         </div>
+                        <div class="text-primary">Allowed formats are 'txt', 'pdf', 'png', 'jpg', 'jpeg',
+                            'gif','docx','doc'</div>
                     </div>
                     <div *ngIf="campaignDetails.attachment_file_name">
                         <div>{{campaignDetails.attachment_file_name}} <button
-                                (click)="removeAttachment(campaignDetails._id)" class="btn btn-danger btn-sm">Remove</button>
+                                (click)="removeAttachment(campaignDetails._id)"
+                                class="btn btn-danger btn-sm">Remove</button>
                         </div>
                     </div>
                 </div>
             </div>
             <div class="row form-group">
-                <div class="col-md-2"><label class="control-label">Assigned Templates</label></div>
-                <div *ngIf="templateList" class="col-md-5">
-                    <select formControlName="templates" class="form-control" (change)="getTemplatePreview()">
-                        <option *ngFor="let item of templateList" [ngValue]="item">{{ item.message_key }}</option>
-                    </select>
-                </div>
-                <div *ngIf="!templateList" class="alert alert-default col-md-5 ml-3">
-                    <strong>Do not have any assigned template</strong>
+                <div class="col-md-2"><label class="control-label">Emails</label></div>
+                <div class="col-md-10">
+                    <div *ngFor="let email of emailList;index as i" class="clearfix" [ngClass]="{'mt-2':i != 0}">
+                        <span class="float-left">{{ email.message_subject }}</span>
+                        <div class="float-right">
+                            <span (click)="getEmailPreview(email)" class="cursor-pointer">Edit <i
+                                    class="fa fa-edit mr-4"></i></span>
+                            <span (click)="deleteEmail(email)" class="cursor-pointer">Delete <i
+                                    class="fa fa-trash text-danger"></i></span>
+                        </div>
+                    </div>
                 </div>
             </div>
             <div class="row form-group" [ngClass]="{'d-none':this.editCampaignForm.get('message').value === null}">
