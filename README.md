@@ -2,25 +2,34 @@
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 8.3.20.
 
-## Development server
+## Requirements
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+Node version: 10 and above.
 
-## Code scaffolding
+## Installation
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+First clone this repository , change branch to develpoment and run `npm install`.
 
 ## Build
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `--prod` flag for a production build.
+Run `ng build` to build the project.
+Run `ng build --prod` for production build.
+The build artifacts will be stored in the `dist/` directory.
 
-## Running unit tests
+## Modifiction
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+For turning AUTOMATION on/off. Use `app.config.ts` and set `AUTOMATION = true/false`.
+For any changes in apibase go to `environment.prod.ts` for production mode.
 
-## Running end-to-end tests
+```typescript
+export const environment = {
+  production: true,
+  mailsystembaseapiurl: 'https://campaignapi.excellencetechnologies.in/',
+  apibase: 'http://stagingapi.recruit.excellencetechnologies.in',
+};
 
-Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
+```
+
 
 ## Further help
 
