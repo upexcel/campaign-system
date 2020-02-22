@@ -117,6 +117,10 @@ export class CampaignDescriptionComponent implements OnInit {
     if (formValue.attachment) {
       this.addAttachment();
     }
+    if (formValue.message.includes('&lt;') && formValue.message.includes('&gt;')) {
+      const templateCode = document.getElementsByClassName('angular-editor-textarea')[0] as HTMLElement;
+      formValue.message = templateCode.innerText;
+    }
     this.dialogRef.close(formValue);
   }
 

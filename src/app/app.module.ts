@@ -11,7 +11,6 @@ import { MaterialModule } from './material/angular-material.module';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { CKEditorModule } from 'ng2-ckeditor';
 import { DatePipe } from '@angular/common';
-import { TextMaskModule } from 'angular2-text-mask';
 import { AuthGuardService } from './services/auth-Guard/auth-guard.service';
 import { AngularEditorModule } from '@kolkov/angular-editor';
 import { CampaignDescriptionComponent } from './modules/modals/campaign-description/campaign-description.component';
@@ -23,7 +22,7 @@ import { PopUpMessageModule } from './modules/components/popup-message/pop-up-me
 import { AddUserComponent } from './modules/modals/add-user/add-user.component';
 import { TestMailComponent } from './modules/modals/test-mail/test-mail.component';
 import { SendMailConfigurationComponent } from './modules/modals/send-mail-configuration/send-mail-configuration.component';
-import { TitleResolverService } from './resolver/title-resolver.service';
+import { HashLocationStrategy, LocationStrategy } from '@angular/common';
 
 @NgModule({
   declarations: [
@@ -47,7 +46,6 @@ import { TitleResolverService } from './resolver/title-resolver.service';
     FormsModule,
     ReactiveFormsModule,
     CKEditorModule,
-    TextMaskModule,
     AngularEditorModule,
     PopUpMessageModule
   ],
@@ -60,7 +58,8 @@ import { TitleResolverService } from './resolver/title-resolver.service';
       useClass: InterceptorService,
       multi: true
     },
-    Title
+    Title,
+    { provide: LocationStrategy, useClass: HashLocationStrategy }
   ],
   entryComponents: [
     CampaignDescriptionComponent,

@@ -20,7 +20,7 @@ export class ClickDetailsComponent implements OnInit {
     private route: ActivatedRoute) { }
 
   ngOnInit() {
-    // this.getUserDetails();
+    this.getUserDetails();
   }
 
   async getUserDetails() {
