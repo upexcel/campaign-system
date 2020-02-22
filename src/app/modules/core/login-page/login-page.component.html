@@ -7,7 +7,7 @@
                 </div>
                 <form [formGroup]="loginForm" (ngSubmit)='onLogin(loginForm.value)' ngNativeValidate>
                     <p>Welcome to</p>
-                    <h5>Recruitment Management System (RMS) </h5>
+                    <h5>Campaign Management System (CMS) </h5>
                     <input type="email" [class.is-invalid]='email.invalid && email.touched' placeholder="Email"
                         formControlName="email">
                     <div *ngIf="email.invalid && email.touched">
@@ -36,28 +36,27 @@
         </div>
         <div class="col-sm-6 column-2">
             <div class="right">
-                <h4>About Excellence RMS</h4>
-                <p class="para"> Add jobs, review applications, schedule interview and hire, all at one place -
-                    Excellence RMS. More then Application tracking system.
-                    A Recruitment Management System (RMS) is a set of tools designed to automate and manage your
-                    organization's recruiting and staffing operations.
-                    From adding your jobs to keeping application connected and engaged throughout, Excellence RMS lets
-                    you manage your entire recruiting process.
+                <h4>About Excellence CMS</h4>
+                <p class="para">
+                    A Campaign Management System (CMS) is a set of tools designed to handle the various components of a
+                    marketing campaign.
+                    It usually provides a user-friendly dashboard that allows business/marketing leaders to create
+                    campaign along with adding bulk users , checking status of sent mails , click rates
+                    and smtp management. From creating campaign to keeping track of all details,
+                    Excellence CMS lets you manage your entire campaignign process.
                 </p>
                 <h4 class="features">Features</h4>
                 <ul>
-                    <li><i class="fa fa-circle text-grey"></i>Extensive integration: Recruit Straight from portal or
-                        inbox </li>
-                    <li><i class="fa fa-circle text-grey"></i>Automated Workflow: Post jobs, View Resumes, Send
-                        Notification & more </li>
-                    <li><i class="fa fa-circle text-grey"></i>Application Tracking: Search, Screen & Select Candidate
-                        easily</li>
-                    <li><i class="fa fa-circle text-grey"></i>Database Management: organize all candidates data & files
+                    <li><i class="fa fa-circle text-grey"></i>Extensive Integration: Create campaign straight from
+                        portal</li>
+                    <li><i class="fa fa-circle text-grey"></i>Automated Workflow: Send mail to all candidates based on
+                        interval</li>
+                    <li><i class="fa fa-circle text-grey"></i>Campaign Tracking: Check seen status, click rates, send
+                        mail status</li>
+                    <li><i class="fa fa-circle text-grey"></i>Database Management: Organize all campaign data & files
                         securely</li>
-                    <li><i class="fa fa-circle text-grey"></i>Smart Automation: Define automation rules for every job
-                    </li>
-                    <li><i class="fa fa-circle text-grey"></i>Interview Scheduler</li>
-                    <li><i class="fa fa-circle text-grey"></i>Integrated E-mail conversations</li>
+                    <li><i class="fa fa-circle text-grey"></i>Add bulk user from csv files to campaign</li>
+                    <li><i class="fa fa-circle text-grey"></i>Integrated SMTP management</li>
                 </ul>
             </div>
         </div>

@@ -1,5 +1,5 @@
 export const environment = {
   production: true,
-  mailsystembaseapiurl: 'http://176.9.137.77:8005',
+  mailsystembaseapiurl: 'https://campaignapi.excellencetechnologies.in/',
   apibase: 'http://stagingapi.recruit.excellencetechnologies.in',
 };

@@ -1,7 +1,7 @@
 import { Component, OnInit, ElementRef, AfterViewInit, OnDestroy, EventEmitter, Output } from '@angular/core';
 import { Router, NavigationEnd } from '@angular/router';
 import { Location } from '@angular/common';
-import { AppConfig, HR, config, SPAM } from 'src/app/app.config';
+import { AppConfig } from 'src/app/app.config';
 import { EmitEventsService } from 'src/app/services/emit-events.service';
 import { Subscription } from 'rxjs';
 declare let jQuery: any;
@@ -20,7 +20,7 @@ export class SidenavComponent implements OnInit, AfterViewInit, OnDestroy {
   triggerRefreshSub: Subscription;
   currentRoute: any;
   jobChangesSubs: Subscription;
-  
+
   @Output() errorEvent = new EventEmitter<string>();
   @Output() loading: any = new EventEmitter<any>();
   @Output() openSideNav: EventEmitter<any> = new EventEmitter<any>();

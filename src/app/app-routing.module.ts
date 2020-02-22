@@ -11,12 +11,12 @@ const routes: Routes = [
   {
     path: "login",
     loadChildren: () => import('./modules/core/login-page/login-page.module').then(m => m.LoginPageModule),
-    canActivate: [AuthGuardService]
+    // canActivate: [AuthGuardService]
   },
   {
     path: 'settings',
     loadChildren: () => import('./modules/core/settings/settings.module').then(m => m.SettingsModule),
-    canActivate: [AuthGuardService]
+    // canActivate: [AuthGuardService]
   },
   {
     path: "**",

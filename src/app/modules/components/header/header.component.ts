@@ -116,7 +116,7 @@ export class HeaderComponent implements OnInit, OnDestroy, OnChanges {
   }
 
   ngOnChanges() {
-    this.getUserDetails();
+    // this.getUserDetails();
   }
 
   async getUserDetails() {

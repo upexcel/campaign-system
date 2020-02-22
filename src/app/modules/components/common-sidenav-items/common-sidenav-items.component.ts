@@ -24,7 +24,7 @@ export class CommonSidenavItemsComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.getUserAccountInfo()
+    // this.getUserAccountInfo()
   }
 
   async getUserAccountInfo() {
