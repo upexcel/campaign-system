@@ -19,9 +19,9 @@ export class ComposeEmailService {
     return this.http.post(`${environment.mailsystembaseapiurl}/create_campaign`, body).toPromise();
   }
 
-  assignTemplate(body): Promise<any> {
-    return this.http.put(`${environment.mailsystembaseapiurl}/assign_template/${body.campaign_id}`, body.template).toPromise();
-  }
+  // assignTemplate(body): Promise<any> {
+  //   return this.http.put(`${environment.mailsystembaseapiurl}/assign_template/${body.campaign_id}`, body.template).toPromise();
+  // }
 
   assignUser(body): Promise<any> {
     return this.http.post(`${environment.mailsystembaseapiurl}/user_list_campaign`, body).toPromise();
@@ -32,11 +32,11 @@ export class ComposeEmailService {
   }
 
   addAttachment(body) {
-    return this.http.post(`${environment.mailsystembaseapiurl}/attached_file/${body.id}`, body.file).toPromise();
+    return this.http.post(`${environment.mailsystembaseapiurl}/attached_file/${body.campaign_id}/${body.message_id}`, body.file).toPromise();
   }
 
-  delAttachment(id) {
-    return this.http.delete(`${environment.mailsystembaseapiurl}/attached_file/${id}`).toPromise();
+  delAttachment(body) {
+    return this.http.delete(`${environment.mailsystembaseapiurl}/attached_file/${body.campaign_id}/${body.message_id}`).toPromise();
   }
 
 }

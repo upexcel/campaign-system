@@ -57,11 +57,11 @@ export class ComposeEmailComponent implements OnInit {
         "campaign_description": body.campaignDescription || 'No description provided',
         "message": body.message,
         "message_subject": body.subject,
-        // "active": true
       });
       if (body.attachment) {
         await this.composeEmailService.addAttachment({
-          id: res,
+          campaign_id: res.campaign_id,
+          message_id: res.message_id,
           file: this.formData
         })
       }

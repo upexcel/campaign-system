@@ -29,9 +29,9 @@ export class ClickDetailsComponent implements OnInit {
       const res = await this.campaignListService.campaignDetails(this.route.snapshot.paramMap.get('id'));
       res.clicking_details.forEach(item => {
         let temp = {};
-        temp['date'] = item[0]._id.date;
+        temp['date'] = item[0].clicking_date;
         item.forEach(intervals => {
-          temp[intervals._id.interval] = intervals.myCount;
+          temp[intervals._id.interval] = intervals.myCount/2;
         })
         this.clickDetails.push(temp);
       })

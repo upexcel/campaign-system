@@ -33,6 +33,7 @@ export class UpdateCampaignComponent implements OnInit {
     height: '230px',
     editable: true,
   }
+  formData = new FormData();
 
   ngOnInit() {
     if (this.data.campaign.generated_from_recruit)
@@ -84,7 +85,8 @@ export class UpdateCampaignComponent implements OnInit {
   getUpdateEmailFrom() {
     this.updateEmailFrom = this.fb.group({
       subject: [null, Validators.required],
-      message: [null, Validators.required]
+      message: [null, Validators.required],
+      attachment: [null]
     })
   }
 
@@ -107,8 +109,12 @@ export class UpdateCampaignComponent implements OnInit {
 
   assignSingleEmail(formValue) {
     this.dialogRef.close(
-      [{ "message": formValue.message, "message_subject": formValue.subject }]
+      [{ "message": formValue.message, "message_subject": formValue.subject, "attachment": formValue.attachment, "formData": this.formData }]
     )
+  }
+
+  attachFile(files: File[]) {
+    this.formData.append('attachment_file', files[0]);
   }
 
   close() {

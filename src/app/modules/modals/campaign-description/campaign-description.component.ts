@@ -28,6 +28,8 @@ export class CampaignDescriptionComponent implements OnInit {
   apiInProcess: any;
   campaignDetails: any;
   formData = new FormData();
+  attachedFile: any;
+  messageId: any;
 
   editorConfig: AngularEditorConfig = {
     height: '230px',
@@ -44,7 +46,7 @@ export class CampaignDescriptionComponent implements OnInit {
       const res = await this.campaignListService.getCampaignList();
       this.campaignDetails = res.find(item => {
         return item._id == this.data.campaignDetail._id;
-      })
+      });
       this.emailList = this.campaignDetails.message_detail;
       this.getEditCampaignForm();
       this.apiInProcess = false
@@ -68,19 +70,25 @@ export class CampaignDescriptionComponent implements OnInit {
   getEmailPreview(email) {
     this.editCampaignForm.controls['subject'].setValidators([Validators.required]);
     this.editCampaignForm.controls['message'].setValidators([Validators.required]);
-    this.getFromValue('emails').setValue(email)
+    this.getFromValue('emails').setValue(email);
     this.getFromValue('message').setValue(email.message);
     this.getFromValue('subject').setValue(email.message_subject);
+    this.attachedFile = null;
+    this.messageId = email.message_id;
+    if (email.attachment_file_name) {
+      this.attachedFile = email.attachment_file_name;
+    }
   }
 
   getFromValue(formField) {
     return this.editCampaignForm.get(formField);
   }
 
-  async removeAttachment(id) {
+  async removeAttachment() {
     try {
-      await this.composeEmailService.delAttachment(id);
-      this.campaignDetails.attachment_file_name = null;
+      await this.composeEmailService.delAttachment({ campaign_id: this.campaignDetails._id, message_id: this.messageId });
+      this.attachedFile = null;
+      this.emailList.find(item => item.message_id === this.messageId).attachment_file_name = null;
     } catch (error) {
       this.commonService.handleError(error);
     }
@@ -89,7 +97,8 @@ export class CampaignDescriptionComponent implements OnInit {
   async addAttachment() {
     try {
       await this.composeEmailService.addAttachment({
-        id: this.campaignDetails._id,
+        campaign_id: this.campaignDetails._id,
+        message_id: this.messageId,
         file: this.formData
       })
     } catch (error) {
@@ -107,6 +116,7 @@ export class CampaignDescriptionComponent implements OnInit {
         campaignId: this.campaignDetails._id,
         messageId: email.message_id
       })
+
       this.emailList = this.emailList.filter(item => item.message_id !== email.message_id);
     } catch (error) {
       this.commonService.handleError(error);
@@ -117,9 +127,11 @@ export class CampaignDescriptionComponent implements OnInit {
     if (formValue.attachment) {
       this.addAttachment();
     }
-    if (formValue.message.includes('&lt;') && formValue.message.includes('&gt;')) {
-      const templateCode = document.getElementsByClassName('angular-editor-textarea')[0] as HTMLElement;
-      formValue.message = templateCode.innerText;
+    if (formValue.message) {
+      if (formValue.message.includes('&lt;') && formValue.message.includes('&gt;')) {
+        const templateCode = document.getElementsByClassName('angular-editor-textarea')[0] as HTMLElement;
+        formValue.message = templateCode.innerText;
+      }
     }
     this.dialogRef.close(formValue);
   }

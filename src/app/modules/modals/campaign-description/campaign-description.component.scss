@@ -28,3 +28,8 @@
     border-radius: 0 $border-radius-lg $border-radius-lg 0;
   }
 }
+
+.fileinput-filename{
+  white-space: nowrap;
+  overflow: hidden;
+}

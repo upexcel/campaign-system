@@ -11,6 +11,7 @@ import { HitDetailsComponent } from 'src/app/modules/modals/hit-details/hit-deta
 import { AddUserComponent } from 'src/app/modules/modals/add-user/add-user.component';
 import { TestMailComponent } from 'src/app/modules/modals/test-mail/test-mail.component';
 import { SendMailConfigurationComponent } from 'src/app/modules/modals/send-mail-configuration/send-mail-configuration.component';
+import { ComposeEmailService } from '../../compose-email/compose-email.service';
 
 @Component({
   selector: 'app-campaign-detail',
@@ -33,29 +34,53 @@ export class CampaignDetailComponent implements OnInit, OnDestroy {
     private campaignListService: CampaignListService,
     private commonService: CommonService,
     private route: ActivatedRoute,
-    private router: Router
+    private router: Router,
+    private composeEmailService: ComposeEmailService
   ) {
     this.dialogSubs = this.campaignListService.getEventValue().subscribe(item => {
-      if (item === 'edit') {
-        this.editCampaignDialog();
-      } else if (item === 'update') {
-        this.updateCampaign();
+      switch (item) {
+        case 'edit':
+          this.editCampaignDialog();
+          break;
+        case 'update':
+          this.updateCampaign();
+          break;
+        case 'sendMail':
+          this.openSendMailConfiguration();
+          break;
+        case 'addUser':
+          this.addUser();
+          break;
+        case 'sendTestMail':
+          this.openSendTestMail();
+          break;
+        case 'openCsv':
+          this.assignUsersWithCsv();
+          break;
+        default:
+          this.openClickDetails();
+
       }
-      else if (item === 'sendMail') {
-        this.openSendMailConfiguration();
-      }
-      else if (item === 'addUser') {
-        this.addUser();
-      }
-      else if (item === 'sendTestMail') {
-        this.openSendTestMail();
-      }
-      else if (item === 'openCsv') {
-        this.assignUsersWithCsv()
-      }
-      else {
-        this.openClickDetails();
-      }
+      // if (item === 'edit') {
+      //   this.editCampaignDialog();
+      // } else if (item === 'update') {
+      //   this.updateCampaign();
+      // }
+      // else if (item === 'sendMail') {
+      //   this.openSendMailConfiguration();
+      // }
+      // else if (item === 'addUser') {
+      //   this.addUser();
+      // }
+      // else if (item === 'sendTestMail') {
+      //   this.openSendTestMail();
+      // }
+      // else if (item === 'openCsv') {
+      //   this.assignUsersWithCsv()
+      // }
+      // else {
+      //   this.openClickDetails();
+      // }
     })
   }
 
@@ -159,9 +184,16 @@ export class CampaignDetailComponent implements OnInit, OnDestroy {
           "campaign_name": this.campaignDetails.Campaign_name,
           "campaign_description": this.campaignDetails.Campaign_description,
           "status": this.campaignDetails.status,
-          "message_detail": campaignDetail
+          "message_detail": [{ message_subject: campaignDetail[0].message_subject, message: campaignDetail[0].message }]
         }
       });
+      if (campaignDetail[0].attachment) {
+        await this.composeEmailService.addAttachment({
+          campaign_id: this.campaignDetails._id,
+          message_id: res.message_id,
+          file: campaignDetail[0].formData
+        })
+      }
       this.popUpValue = [res.message, false];
     } catch (error) {
       this.commonService.handleError(error);
@@ -290,6 +322,18 @@ export class CampaignDetailComponent implements OnInit, OnDestroy {
 
   openClickDetails() {
     this.router.navigate(['settings/campaign-list/click-details', this.campaignDetails._id, this.campaignDetails.Campaign_name]);
+  }
+
+  async  removeUser(userId) {
+    try {
+      const res = await this.campaignListService.deleteUser({
+        campaignId: this.campaignDetails._id,
+        userId: userId
+      });
+      this.userDetails = this.userDetails.filter(item => item._id != userId);
+    } catch (error) {
+      this.commonService.handleError(error);
+    }
   }
 
   ngOnDestroy() {

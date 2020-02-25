@@ -32,33 +32,6 @@
                 </div>
             </div>
             <div class="row form-group">
-                <div class="col-md-2"><label class="control-label">Attachment</label></div>
-                <div class="col-md-10">
-                    <div *ngIf="!campaignDetails.attachment_file_name">
-                        <div class="fileinput fileinput-new input-group" data-provides="fileinput">
-                            <div class="form-control" data-trigger="fileinput">
-                                <i class="glyphicon glyphicon-file fileinput-exists"></i>
-                                <span class="fileinput-filename"></span>
-                            </div>
-                            <span class="input-group-addon btn btn-default btn-file">
-                                <span class="fileinput-new"><i class="fa fa-paperclip" aria-hidden="true"></i></span>
-                                <span class="fileinput-exists">Change</span>
-                                <input type="file" name="files" class="form-control form-control-sm" #uploads
-                                    formControlName="attachment" (change)="attachFile(uploads.files)" value="process" />
-                            </span>
-                        </div>
-                        <div class="text-primary">Allowed formats are 'txt', 'pdf', 'png', 'jpg', 'jpeg',
-                            'gif','docx','doc'</div>
-                    </div>
-                    <div *ngIf="campaignDetails.attachment_file_name">
-                        <div>{{campaignDetails.attachment_file_name}} <button
-                                (click)="removeAttachment(campaignDetails._id)"
-                                class="btn btn-danger btn-sm">Remove</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="row form-group">
                 <div class="col-md-2"><label class="control-label">Emails</label></div>
                 <div class="col-md-10">
                     <div *ngFor="let email of emailList;index as i" class="clearfix" [ngClass]="{'mt-2':i != 0}">
@@ -72,15 +45,43 @@
                     </div>
                 </div>
             </div>
-            <div class="row form-group" [ngClass]="{'d-none':this.editCampaignForm.get('message').value === null}">
-                <div class="col-md-2"><label class="control-label">Subject</label></div>
-                <div class="col-md-5">
-                    <input type="text" class="form-control" formControlName="subject">
+            <hr />
+            <div [ngClass]="{'d-none':this.editCampaignForm.get('message').value === null}">
+                <div class="row form-group">
+                    <div class="col-md-2"><label class="control-label">Subject</label></div>
+                    <div class="col-md-10">
+                        <input type="text" class="form-control" formControlName="subject">
+                    </div>
                 </div>
+                <div class="row form-group">
+                    <div class="col-md-2"><label class="control-label">Attachment</label></div>
+                    <div class="col-md-5">
+                        <div *ngIf="!attachedFile">
+                            <div class="fileinput fileinput-new input-group" data-provides="fileinput">
+                                <div class="form-control" data-trigger="fileinput">
+                                    <i class="glyphicon glyphicon-file fileinput-exists mr-2"></i>
+                                    <span class="fileinput-filename w-75"></span>
+                                </div>
+                                <span class="input-group-addon btn btn-default btn-file">
+                                    <span class="fileinput-new"><i class="fa fa-paperclip"
+                                            aria-hidden="true"></i></span>
+                                    <span class="fileinput-exists">Change</span>
+                                    <input type="file" name="files" class="form-control form-control-sm" #uploads
+                                        formControlName="attachment" (change)="attachFile(uploads.files)"
+                                        value="process" />
+                                </span>
+                            </div>
+                            <div class="text-primary">Allowed formats are 'txt', 'pdf', 'png', 'jpg', 'jpeg',
+                                'gif','docx','doc'</div>
+                        </div>
+                        <div *ngIf="attachedFile">{{attachedFile}} <button (click)="removeAttachment()"
+                                class="btn btn-danger btn-sm">Remove</button>
+                        </div>
+                    </div>
+                </div>
+                <angular-editor formControlName="message" [config]="editorConfig">
+                </angular-editor>
             </div>
-            <angular-editor formControlName="message"
-                [ngClass]="{'d-none':this.editCampaignForm.get('message').value === null}" [config]="editorConfig">
-            </angular-editor>
         </form>
     </div>
     <div mat-dialog-actions align="end">

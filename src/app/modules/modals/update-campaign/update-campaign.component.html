@@ -34,10 +34,30 @@
     <form *ngIf="!data.campaign.generated_from_recruit" [formGroup]="updateEmailFrom">
       <div class="row form-group">
         <div class="col-md-2"><label class="control-label">Subject</label></div>
-        <div class="col-md-5">
+        <div class="col-md-10">
           <input type="text" class="form-control" formControlName="subject">
         </div>
       </div>
+
+      <div class="row form-group">
+        <div class="col-md-2"><label class="control-label">Attachment</label></div>
+        <div class="col-md-5">
+          <div class="fileinput fileinput-new input-group" data-provides="fileinput">
+            <div class="form-control" data-trigger="fileinput">
+              <i class="glyphicon glyphicon-file fileinput-exists mr-2"></i>
+              <span class="fileinput-filename w-75"></span>
+            </div>
+            <span class="input-group-addon btn btn-default btn-file">
+              <span class="fileinput-new"><i class="fa fa-paperclip" aria-hidden="true"></i></span>
+              <span class="fileinput-exists">Change</span>
+              <input type="file" name="files" class="form-control form-control-sm" #uploads formControlName="attachment"
+                (change)="attachFile(uploads.files)" value="process" />
+            </span>
+          </div>
+          <div class="text-primary">Allowed formats are 'txt', 'pdf', 'png', 'jpg', 'jpeg', 'gif','docx','doc'</div>
+        </div>
+      </div>
+
       <angular-editor formControlName="message" [config]="editorConfig">
       </angular-editor>
     </form>
