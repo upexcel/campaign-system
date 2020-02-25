@@ -1,0 +1,31 @@
+<div class="clearfix">
+    <h2 class="float-left">Add User</h2>
+    <a class="float-right" (click)="close()"><i class="glyphicon glyphicon-remove text-secondary"></i></a>
+</div>
+<div mat-dialog-content class="mt-2">
+    <form [formGroup]="addUserForm">
+        <div class="row form-group">
+            <div class="col-md-2"><label class="control-label">Name</label></div>
+            <div class="col-md-10">
+                <input type="text" class="form-control form-control-sm" formControlName="name">
+                <div *ngIf="addUserForm.get('name').invalid && addUserForm.get('name').touched">
+                    <small *ngIf="addUserForm.get('name').errors?.required" class="text-danger">Name is required</small>
+                </div>
+            </div>
+        </div>
+        <div class="row form-group">
+            <div class="col-md-2"><label class="control-label">Email</label></div>
+            <div class="col-md-10">
+                <input type="text" class="form-control form-control-sm" formControlName="email">
+                <div *ngIf="addUserForm.get('email').invalid && addUserForm.get('email').touched">
+                    <small *ngIf="addUserForm.get('email').errors?.required" class="text-danger">Email is
+                        required</small>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+<div mat-dialog-actions align="end">
+    <button type="submit" [mat-dialog-close]="addUserForm.value" [disabled]="!addUserForm.valid" mat-raised-button
+        color="accent">Add</button>
+</div>

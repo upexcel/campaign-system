@@ -1,0 +1,35 @@
+@import '../../../../global.scss';
+@import "../../../styles/helpers";
+@import "../../../../../node_modules/jasny-bootstrap/dist/css/jasny-bootstrap";
+
+.spinner-border {
+  display: block;
+  position: fixed;
+  z-index: 1031;
+  top: calc(50% - (2rem / 2));
+  right: calc(50% - (2rem / 2));
+}
+
+.create-campaign{
+  background: $background;
+}
+
+.fileinput.input-group {
+  display: flex;
+}
+.fileinput-new.input-group .btn-file,
+.fileinput-new .input-group .btn-file {
+  border-radius: 0 $border-radius $border-radius 0;
+  &.btn-xs,
+  &.btn-sm {
+    border-radius: 0 $border-radius-sm $border-radius-sm 0;
+  }
+  &.btn-lg {
+    border-radius: 0 $border-radius-lg $border-radius-lg 0;
+  }
+}
+
+.fileinput-filename{
+  white-space: nowrap;
+  overflow: hidden;
+}

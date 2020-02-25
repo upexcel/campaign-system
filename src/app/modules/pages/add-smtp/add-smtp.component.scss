@@ -1,0 +1,31 @@
+@import "../../../../global.scss";
+
+.alert {
+  background-color: $alert;
+  color: $alertText;
+  margin-bottom: 5px;
+}
+
+.userInfo {
+  background-color: $background;
+}
+
+.background{
+    background-color: $background
+}
+
+.button:disabled{
+  cursor: not-allowed;
+}
+
+.warning{
+  background-color: $warningAlert;
+  color: $warningText;
+  margin-bottom: 5px;
+}
+
+.danger{
+  background-color: $danger;
+  color: $background;
+  margin-bottom: 5px;
+}

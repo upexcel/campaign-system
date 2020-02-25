@@ -1,0 +1,108 @@
+<div>
+  <div class="alert mt-3">
+    <strong>Info!</strong> We're here to help you! Follow the steps for effective and efficient posting.
+  </div>
+  <div class="mt-4">
+    <app-popup-message [message]="popUpValue"></app-popup-message>
+    <form [formGroup]="fetchForm" (ngSubmit)="onSubmit(fetchForm.value)">
+      <div class="background p-3 rounded">
+        <strong>Sending Mails</strong>
+        <br>
+        <p class="mt-2">Excellence RMS automatically sends email to candidate according to there status.</p>
+        <div>
+          <div>
+            <div class="row">
+              <div class="col-4 col-sm-4 col-md-2 col-lg-2">
+                <label>Email</label>
+              </div>
+              <div class="col-8 col-sm-8 col-md-6 col-lg-6">
+                <div class="input-group mb-3">
+                  <input placeholder="Email" autocomplete="off" (blur)="changeIcon()" class="form-control"
+                    formControlName="email">
+                  <div class="input-group-append">
+                    <span class="input-group-text" id="basic-addon2"><img height="20px" width="20px" [src]="src"></span>
+                  </div>
+                </div>
+                <div *ngIf="getFormControl('email').invalid && getFormControl('email').touched">
+                  <small *ngIf="getFormControl('email').errors?.required" class="text-danger">Email is Required</small>
+                </div>
+              </div>
+            </div>
+
+            <div class="row mt-3">
+              <div class="col-4 col-sm-4 col-md-2 col-lg-2">
+                <label>Password</label>
+              </div>
+              <div class="col-8 col-sm-8 col-md-6 col-lg-6">
+                <input placeholder="Password" autocomplete="off" type="password" formControlName="password"
+                  class="form-control">
+                <div *ngIf="getFormControl('password').invalid && getFormControl('password').touched">
+                  <small *ngIf="getFormControl('password').errors?.required" class="text-danger">Password is
+                    Required</small>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div *ngIf="existEmail">
+
+            <div *ngIf="alertMessage" class="alert danger mt-3 w-75" role="alert">
+              <p>{{message}}</p>
+            </div>
+
+            <div class="row mt-3">
+              <div class="col-4 col-sm-4 col-md-2 col-lg-2">
+                <label>SMTP</label>
+              </div>
+              <div class="col-8 col-sm-8 col-md-6 col-lg-6">
+                <input class="form-control" placeholder="Smtp Server" formControlName="smtp_server" type="text">
+                <div *ngIf="getFormControl('smtp_server').invalid && getFormControl('smtp_server').touched">
+                  <small *ngIf="getFormControl('smtp_server').errors?.required" class="text-danger">Smtp is
+                    Required</small>
+                </div>
+              </div>
+            </div>
+
+            <div class="row mt-3">
+              <div class="col-4 col-sm-4 col-md-2 col-lg-2">
+                <label>Require Server</label>
+              </div>
+              <div class="col-6 col-sm-6 col-md-3 col-lg-3">
+                <select class="form-control" formControlName="type">
+                  <option value="tls">TLS</option>
+                  <option value="ssl">SSL</option>
+                  <option [disabled]="getFormControl('email') && !getFormControl('email').value.includes('outlook.com')"
+                    value="starttls">STARTTLS</option>
+                </select>
+                <div *ngIf="getFormControl('type').invalid && getFormControl('type').touched">
+                  <small *ngIf="getFormControl('type').errors?.required" class="text-danger">Type is Required</small>
+                </div>
+              </div>
+            </div>
+
+            <div class="row mt-3">
+              <div class="col-4 col-sm-4 col-md-2 col-lg-2">
+                <label>Port</label>
+              </div>
+              <div class="col-4 col-sm-4 col-md-2 col-lg-2">
+                <input class="form-control" placeholder="Server Port" type="number" formControlName="server_port"
+                  type="text">
+                <div *ngIf="getFormControl('server_port').invalid && getFormControl('server_port').touched">
+                  <small *ngIf="getFormControl('server_port').errors?.required" class="text-danger">Port is
+                    Required</small>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="text-right mt-5">
+            <button type="submit" [disabled]="!fetchForm.valid || apiInProgress" class="btn btn-primary">
+              <span>Next ></span>
+            </button>
+          </div>
+
+        </div>
+      </div>
+    </form>
+  </div>
+</div>

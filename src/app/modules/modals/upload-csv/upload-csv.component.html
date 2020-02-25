@@ -1,0 +1,35 @@
+<div class="clearfix">
+    <h3 class="float-left">Assign users to campaign</h3>
+    <a class="float-right" (click)="close()"><i class="glyphicon glyphicon-remove text-secondary"></i></a>
+</div><br />
+<div>
+    <pre class="userDataFormat text-danger py-3">
+     Upload .csv file having format given below:-
+     
+     name , email , mobile (optional) , website (optional)
+    'abc' , 'abc@gmail.com' , 9999999999 , www.abc.com
+    'xyz' , 'xyz@yahoo.com'</pre>
+</div>
+<div class="form-group row">
+    <div class="col-md-12 ">
+        <div class="fileinput fileinput-new input-group mb-0" data-provides="fileinput">
+            <div class="form-control" data-trigger="fileinput">
+                <i class="glyphicon glyphicon-file fileinput-exists"></i>
+                <span class="fileinput-filename"></span>
+            </div>
+            <span class="input-group-addon btn btn-default btn-file">
+                <span class="fileinput-new">Select file</span>
+                <span class="fileinput-exists">Change</span>
+                <input type="file" name="files" class="form-control" #uploads [(ngModel)]="uploaded" accept=".csv"
+                    (change)="onChange(uploads.files)" value="process" />
+            </span>
+        </div>
+        <div *ngIf="fileInvalid">
+            <small class="text-danger">Please select valid file</small>
+        </div>
+    </div>
+</div>
+<div mat-dialog-actions align="end">
+    <button type="submit" [mat-dialog-close]="dataList" mat-raised-button color="accent" [disabled]="!uploaded">Assign
+        Users</button>
+</div>

@@ -1,0 +1,40 @@
+<div class="js-sidebar-content d-flex flex-column">
+  <header class="d-flex">
+    <img src="assets/img/company-logo.png" alt="Excellece Technologies" class="full-logo py-3 px-4 p-md-2" />
+    <img src="assets/img/compact-logo.png" alt="Excellece Technologies" class="compact-logo p-2">
+  </header>
+  <div class="d-flex flex-column flex-grow-1 mt-4">
+    <ul class="sidebar-nav pb-0 mb-0">
+      <li [ngClass]="{'active' : (settingRoute1.isActive) || (settingRoute2.isActive) || (settingRoute2.isActive)}">
+        <ul id="sidebar-settings" class="p-0">
+          <li>
+            <a class="d-flex justify-content-between pr-0 text-dark" routerLink="/settings/campaign-list"
+              routerLinkActive="route-active" #settingRoute1="routerLinkActive">
+              <span class="icon"><i class="fa fa-list" aria-hidden="true"></i></span>
+              Campaign List
+            </a>
+          </li>
+          <li>
+            <a class="d-flex justify-content-between pr-0 text-dark" routerLink="/settings/create-campaign"
+              routerLinkActive="route-active" #settingRoute2="routerLinkActive">
+              <span class="icon"><i class="fa fa-plus-square-o" aria-hidden="true"></i>
+              </span>
+              Create Campaign
+            </a>
+          </li>
+          <li>
+            <a class="d-flex justify-content-between pr-0 text-dark" routerLink="/settings/manage-smtp"
+              routerLinkActive="route-active" #settingRoute3="routerLinkActive">
+              <span class="icon"><i class="fa fa-envelope-o" aria-hidden="true"></i>
+              </span>
+              Manage Smtp
+            </a>
+          </li>
+        </ul>
+      </li>
+    </ul>
+    <div class="mt-auto">
+      <app-common-sidenav-items (openSideNav)="openSideNavEmitter()"></app-common-sidenav-items>
+    </div>
+  </div>
+</div>

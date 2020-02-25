@@ -1,1 +1,166 @@
-/* You can add global styles to this file, and also import other style files */
+@import "~@angular/material/prebuilt-themes/deeppurple-amber.css";
+@import "./global.scss";
+
+/********* Snackbar Scss Start *********/
+
+@mixin snackbar($bgcolor) {
+  width: 50vw !important;
+  color: $background;
+  background: $bgcolor;
+  margin: 1em auto !important;
+
+  simple-snack-bar {
+    justify-content: center;
+  }
+}
+
+.snackbar {
+  &-error {
+    @include snackbar($errorSnackbar);
+  }
+
+  &-success {
+    @include snackbar($successSnackbar);
+  }
+}
+
+/********* Snackbar Scss End *********/
+
+.paginationButton {
+  background-color: transparent;
+  border: none;
+}
+
+html {
+  top: 0px !important; // to fix a bug caused by confirmation material dialog
+}
+
+.custom-scrollbar::-webkit-scrollbar-track {
+  box-shadow: inset 0 0 6px $scrollbarBoxShadow;
+  background-color: $scrollbarBG;
+}
+
+.custom-scrollbar::-webkit-scrollbar {
+  width: 4px;
+  height: 4px;
+  background-color: $scrollbarBG;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  box-shadow: inset 0 0 6px $scrollbarBoxShadow;
+  background-color: $scrollbarThumbBG;
+}
+
+.fileinput-preview {
+  & img {
+    height: 100px;
+    width: 100px;
+    border-radius: 50%;
+  }
+}
+
+.missed {
+  color: $missed !important;
+}
+
+.success,
+.scheduledSuccess {
+  color: $success !important;
+}
+
+.error {
+  color: $error !important;
+}
+
+.again {
+  color: $again !important;
+}
+
+.caret-off::before {
+  display: none;
+}
+
+.caret-off::after {
+  display: none;
+}
+
+.more-menu {
+  color: $grey;
+}
+
+.more-menu:hover {
+  color: $grey;
+  text-decoration: none;
+}
+
+.custom-dropdown-styles {
+  border-radius: 10px;
+}
+
+.first-round-color {
+  .progress-bar {
+    background-color: $firstRoundProgress !important;
+  }
+}
+
+.second-round-color {
+  .progress-bar {
+    background-color: $secondRoundProgress !important;
+  }
+}
+
+.third-round-color {
+  .progress-bar {
+    background-color: $thirdRoundProgress !important;
+  }
+}
+
+.custom-loader-styles {
+  margin: 0 auto;
+}
+
+.loader {
+  height: 80vh;
+}
+
+.cursor-pointer {
+  cursor: pointer;
+}
+
+.cursor-default {
+  cursor: default;
+}
+
+.angular-editor-toolbar .angular-editor-toolbar-set {
+  border: none !important;
+  margin-right: 2px !important;
+}
+
+.angular-editor-button {
+  display: none;
+}
+
+.angular-editor-button[title="Bold"],
+.angular-editor-button[title="Italic"],
+.angular-editor-button[title="Underline"] {
+  display: inline-block;
+}
+
+.spinner-border {
+  display: block;
+  position: fixed;
+  z-index: 1031;
+  top: calc(50% - (2rem / 2));
+  right: calc(50% - (2rem / 2));
+}
+
+.custom-dialog-container .mat-dialog-container {
+  position: relative;
+}
+
+@media screen and (max-width: $xs_max_width) {
+
+  html {
+    font-size: 10px;
+  }
+}

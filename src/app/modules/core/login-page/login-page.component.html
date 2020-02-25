@@ -1,0 +1,64 @@
+<div *ngIf="loginForm" class="container-fluid">
+    <div class="row">
+        <div class="col-sm-6 column-1">
+            <div class="left">
+                <div class="recruit-logo">
+                    <img src="assets/img/company-logo.png" alt="Excellece Technologies">
+                </div>
+                <form [formGroup]="loginForm" (ngSubmit)='onLogin(loginForm.value)' ngNativeValidate>
+                    <p>Welcome to</p>
+                    <h5>Campaign Management System (CMS) </h5>
+                    <input type="email" [class.is-invalid]='email.invalid && email.touched' placeholder="Email"
+                        formControlName="email">
+                    <div *ngIf="email.invalid && email.touched">
+                        <small *ngIf="email.errors?.required" class="text-danger">Email is required</small>
+                    </div>
+                    <input type="password" [class.is-invalid]='password.invalid && password.touched'
+                        placeholder="Password" formControlName="password">
+                    <div *ngIf="password.invalid && password.touched">
+                        <small *ngIf="password.errors?.required" class="text-danger">Password is required</small>
+                    </div>
+                    <div class="forget">
+                        <label class="lab">
+                            <input type="checkbox" class="check-custom radio" formControlName="remember_me" hidden>
+                            <span class="check-toggle"></span> Remember me
+                        </label>
+                        <span class="recruit-forget" (click)="forgetPassword()">Forget password?</span>
+                    </div>
+                    <button class='btn' type="submit" [disabled]="!loginForm.valid || apiInProgress"><span
+                            *ngIf="!apiInProgress">Login</span><span *ngIf="apiInProgress">Logging In...</span></button>
+                    <small *ngIf="loginError" class="alert alert-danger">Invalid Details</small>
+                </form>
+                <div class="errorMsg">
+                    <app-popup-message [message]="popUpValue"></app-popup-message>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-6 column-2">
+            <div class="right">
+                <h4>About Excellence CMS</h4>
+                <p class="para">
+                    A Campaign Management System (CMS) is a set of tools designed to handle the various components of a
+                    marketing campaign.
+                    It usually provides a user-friendly dashboard that allows business/marketing leaders to create
+                    campaign along with adding bulk users , checking status of sent mails , click rates
+                    and smtp management. From creating campaign to keeping track of all details,
+                    Excellence CMS lets you manage your entire campaignign process.
+                </p>
+                <h4 class="features">Features</h4>
+                <ul>
+                    <li><i class="fa fa-circle text-grey"></i>Extensive Integration: Create campaign straight from
+                        portal</li>
+                    <li><i class="fa fa-circle text-grey"></i>Automated Workflow: Send mail to all candidates based on
+                        interval</li>
+                    <li><i class="fa fa-circle text-grey"></i>Campaign Tracking: Check seen status, click rates, send
+                        mail status</li>
+                    <li><i class="fa fa-circle text-grey"></i>Database Management: Organize all campaign data & files
+                        securely</li>
+                    <li><i class="fa fa-circle text-grey"></i>Add bulk user from csv files to campaign</li>
+                    <li><i class="fa fa-circle text-grey"></i>Integrated SMTP management</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>

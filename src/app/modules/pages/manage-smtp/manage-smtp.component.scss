@@ -1,0 +1,52 @@
+@import "../../../../global.scss";
+
+.smtptable {
+  background-color: $background;
+  margin-top: 30px;
+}
+
+.test {
+  border: 0px;
+  background-color: inherit;
+  color: $danger
+}
+
+.cursor {
+  color: $red;
+  border: none;
+  background-color: inherit
+}
+
+.cursor:disabled {
+  cursor: not-allowed;
+  color: $grey;
+}
+
+.firstLatter {
+  height: 30px;
+  width: 30px;
+  border-radius: 50%;
+  margin-right: 10px;
+  background-color: $warningText;
+  display: inline-block;
+  color: $background;
+  padding-top: 5px;
+}
+
+.changePriority{
+  cursor: pointer;
+}
+
+.align-center{
+  text-align: center;
+}
+
+@media only screen and (max-width:$max-width) {
+ .heading h1{
+    font-size: 1.8rem;
+ }
+ .btn{
+    font-size: 12px;
+ }
+
+ }

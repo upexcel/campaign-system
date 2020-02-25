@@ -1,0 +1,39 @@
+<ul class="navbar-nav flex-row" (click)="$event.preventDefault()">
+  <li class="nav-item">
+    <a (click)="toggleSidebar('static')" class="nav-link d-none ml-3 d-md-flex toggleIcon" placement="bottom">
+      <i class="la la-bars la-lg"></i>
+    </a>
+    <a (click)="toggleSidebar('collapse')" class="d-md-none nav-link toggleIcon" data-html="true"
+      title="Show/hide<br>sidebar" data-placement="bottom">
+      <i class="la la-bars la-lg "></i>
+    </a>
+  </li>
+</ul>
+
+<h2 class="mr-auto">{{headingTitle}}</h2>
+
+<button *ngIf="campDetailPage" class="btn btn-transparent btn-hover d-flex align-items-center"
+  (click)="emitEvent('update')">
+  <i class="fa fa-plus"></i><span class="font-weight-bold">Update Email</span></button>
+<button *ngIf="campDetailPage" class="btn btn-transparent btn-hover d-flex align-items-center"
+  (click)="emitEvent('edit')"><i class="fa fa-edit"></i><span class="font-weight-bold">Edit</span></button>
+<button *ngIf="campDetailPage" class="btn btn-transparent btn-hover d-flex align-items-center"
+  (click)="emitEvent('openCsv')"><i class="fa fa-users"></i><span class="font-weight-bold">Add Bulk User</span></button>
+<button *ngIf="campDetailPage" class="btn btn-transparent btn-hover d-flex align-items-center"
+  (click)="emitEvent('addUser')">
+  <i class="fa fa-user"></i><span class="font-weight-bold">Add User</span></button>
+<button *ngIf="campDetailPage" class="btn btn-transparent btn-hover d-flex align-items-center"
+  (click)="emitEvent('sendMail')"><i class="fa fa-share"></i> <span class="font-weight-bold">Send
+    Mail</span></button>
+<button *ngIf="campDetailPage" class="btn btn-transparent btn-hover d-flex align-items-center"
+  (click)="emitEvent('sendTestMail')"><i class="fa fa-paper-plane"></i><span class="font-weight-bold">Send Test
+    Mail</span></button>
+<button *ngIf="campDetailPage" class="btn btn-transparent btn-hover d-flex align-items-center"
+  (click)="emitEvent('clickRate')"><i class="fa fa-mouse-pointer"></i><span class="font-weight-bold">Click
+    Details</span></button>
+
+<ul class="navbar-nav mr-3 flex-row align-items-center" (click)="$event.preventDefault()">
+  <li>
+    <app-router-button [pageTitle]="headingTitle"></app-router-button>
+  </li>
+</ul>

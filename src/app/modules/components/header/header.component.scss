@@ -1,0 +1,39 @@
+@import '../../../../global.scss';
+
+.avatar img{
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+}
+
+@media only screen and (max-width:$max-width) {
+     .header-image{
+        padding-right: 0px!important;
+    }
+    .toggleIcon{
+        padding-left: 5px !important;
+    }
+}
+
+.head{
+    background-color: $background;
+}
+
+.btn-hover {
+  vertical-align: middle;
+  white-space: nowrap;
+  display: inline-block;
+  max-width: 36px;
+  height: 36px;
+  transition: 1s max-width;
+  overflow: hidden;
+  i {
+    margin-right: 13px;
+  }
+  &:hover {
+    border-radius: 50px !important;
+    max-width: 250px;
+    color: $headerButtonColor;
+    background-color: $headerBackground;
+  }
+}

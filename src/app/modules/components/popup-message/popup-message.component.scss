@@ -1,0 +1,13 @@
+.heading {
+  margin: 0px !important;
+}
+
+.alert {
+  opacity: 0.8;
+}
+
+:host-context(.errorMessage) {
+  .alert {
+    margin: 4rem 3rem;
+  }
+}

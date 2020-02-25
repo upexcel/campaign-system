@@ -1,0 +1,42 @@
+<div *ngIf="apiInProcess" class="spinner-border" role="status">
+    <span class="sr-only">Loading...</span>
+</div>
+<div *ngIf="!apiInProcess" class="campaignList mt-5">
+    <app-popup-message [message]="popUpValue"></app-popup-message>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Campaign Name</th>
+                <th>Campaign Description</th>
+                <th class="text-center">User Count</th>
+                <th class="text-center">Bounce Rate</th>
+                <th>Creation Date</th>
+                <th class="text-center">Status</th>
+                <th class="text-center">Delete</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let campaign of campaignList">
+                <td class="campaign-name cursor-pointer" (click)="openCampaign(campaign)">{{ campaign.Campaign_name }}
+                </td>
+                <td class="cursor-pointer" (click)="openCampaign(campaign)">{{ campaign.Campaign_description }}</td>
+                <td class="cursor-pointer text-center" (click)="openCampaign(campaign)">{{ campaign.users }}</td>
+                <td class="cursor-pointer text-center">{{ campaign.bounce_rate || '0' }}</td>
+                <td>{{campaign.creation_date | date:'short'}}</td>
+                <td *ngIf="(campaign.status !== 'Paused') && (campaign.status !== 'Running')" class="text-center"
+                    [ngClass]="{'text-danger':campaign.status === 'Error spawned'}">
+                    {{campaign.status}}
+                </td>
+                <td class="cursor-pointer text-center "
+                    *ngIf="(campaign.status === 'Running') || (campaign.status === 'Paused')">
+                    <i *ngIf="campaign.status === 'Running'" class="fa fa-stop-circle"
+                        (click)="changeStatus(campaign)"></i>
+                    <i *ngIf="campaign.status === 'Paused'" class="fa fa-play-circle"
+                        (click)="changeStatus(campaign)"></i>
+                </td>
+                <td class="text-center"><button class="cursor" (click)="removeCampaign(campaign)"><i
+                            class="fa fa-trash"></i></button></td>
+            </tr>
+        </tbody>
+    </table>
+</div>

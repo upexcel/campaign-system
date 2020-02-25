@@ -1,0 +1,22 @@
+.mat-dialog-actions {
+  margin-top: 20px;
+  position: relative;
+}
+
+.mat-dialog-actions a,
+button {
+  position: absolute;
+}
+
+.mat-dialog-actions a {
+  left: 0;
+  text-decoration: none;
+}
+
+.mat-dialog-actions button {
+  right: 0;
+}
+
+.mat-button-focus-overlay {
+  background-color: transparent !important;
+}
