@@ -27,14 +27,8 @@ export class ClickDetailsComponent implements OnInit {
     this.apiInProcess = true
     try {
       const res = await this.campaignListService.campaignDetails(this.route.snapshot.paramMap.get('id'));
-      res.clicking_details.forEach(item => {
-        let temp = {};
-        temp['date'] = item[0].clicking_date;
-        item.forEach(intervals => {
-          temp[intervals._id.interval] = intervals.myCount/2;
-        })
-        this.clickDetails.push(temp);
-      })
+      this.clickDetails = res.clicking_details;
+      this.clickDetails.reverse();
       if (this.clickDetails.length === 0) {
         this.popUpValue = ['Do not have any available click detail', true];
       }

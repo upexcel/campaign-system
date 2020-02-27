@@ -21,7 +21,7 @@
                 </td>
                 <td class="cursor-pointer" (click)="openCampaign(campaign)">{{ campaign.Campaign_description }}</td>
                 <td class="cursor-pointer text-center" (click)="openCampaign(campaign)">{{ campaign.users }}</td>
-                <td class="cursor-pointer text-center">{{ campaign.bounce_rate || '0' }}</td>
+                <td class="cursor-pointer text-center">{{ campaign.bounce_rate || '0' }}%</td>
                 <td>{{campaign.creation_date | date:'short'}}</td>
                 <td *ngIf="(campaign.status !== 'Paused') && (campaign.status !== 'Running')" class="text-center"
                     [ngClass]="{'text-danger':campaign.status === 'Error spawned'}">
