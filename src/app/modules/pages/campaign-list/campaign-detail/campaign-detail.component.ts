@@ -80,7 +80,7 @@ export class CampaignDetailComponent implements OnInit, OnDestroy {
       else {
         let errorMessage: String;
         this.userDetails.forEach((item) => {
-          if (item.successful === true) {
+          if (item.successful) {
             const [seenDetail] = item.hit_details;
             if (seenDetail.seen) {
               item.hit_details = seenDetail;
@@ -233,7 +233,7 @@ export class CampaignDetailComponent implements OnInit, OnDestroy {
       this.sendMailInProcess = true;
       try {
         this.userDetails.forEach((item) => {
-          if (item.successful !== true)
+          if (!item.successful)
             sendMailConfig.ids.push(item._id);
         })
         if (sendMailConfig.ids.length === 0) {

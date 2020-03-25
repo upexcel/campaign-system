@@ -25,8 +25,8 @@
                 <td class="cursor-pointer" (click)="openCampaign(campaign)">{{ campaign.Campaign_description }}</td>
                 <td class="cursor-pointer" (click)="openCampaign(campaign)">{{ campaign.users }}</td>
                 <td class="cursor-pointer">{{ campaign.bounce_rate || '0' }}%</td>
-                <td class="cursor-pointer">{{ campaign.seen_rate.toFixed(2) || '0' }}%</td>
-                <td class="cursor-pointer">{{ campaign.open_rate.toFixed(2) || '0' }}%</td>
+                <td class="cursor-pointer">{{ campaign.seen_rate && campaign.seen_rate.toFixed(2) || '0' }}%</td>
+                <td class="cursor-pointer">{{ campaign.open_rate && campaign.open_rate.toFixed(2) || '0' }}%</td>
                 <td class="cursor-pointer">{{ campaign.unsubscribed_users || '0' }}</td>
                 <td>{{campaign.creation_date | date:'short'}}</td>
                 <td *ngIf="(campaign.status !== 'Paused') && (campaign.status !== 'Running')"
