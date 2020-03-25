@@ -26,6 +26,7 @@
                 <th>Bounce</th>
                 <th>Seen</th>
                 <th>Click</th>
+                <th>Unsubscribe</th>
                 <th>Delete</th>
             </tr>
         </thead>
@@ -55,6 +56,10 @@
                     <i *ngIf="userDetail.hit_details.clicked" class="fa fa-check"></i>
                     <i *ngIf="!userDetail.send_status || !userDetail.hit_details.clicked" class="fa fa-times"
                         aria-hidden="true"></i>
+                </td>
+                <td>
+                    <i *ngIf="userDetail.unsubscribe" class="fa fa-check"></i>
+                    <i *ngIf="!userDetail.unsubscribe" class="fa fa-times" aria-hidden="true"></i>
                 </td>
                 <td><i (click)="removeUser(userDetail._id)" class="fa fa-trash text-danger cursor-pointer"></i></td>
             </tr>

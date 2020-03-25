@@ -59,28 +59,7 @@ export class CampaignDetailComponent implements OnInit, OnDestroy {
           break;
         default:
           this.openClickDetails();
-
       }
-      // if (item === 'edit') {
-      //   this.editCampaignDialog();
-      // } else if (item === 'update') {
-      //   this.updateCampaign();
-      // }
-      // else if (item === 'sendMail') {
-      //   this.openSendMailConfiguration();
-      // }
-      // else if (item === 'addUser') {
-      //   this.addUser();
-      // }
-      // else if (item === 'sendTestMail') {
-      //   this.openSendTestMail();
-      // }
-      // else if (item === 'openCsv') {
-      //   this.assignUsersWithCsv()
-      // }
-      // else {
-      //   this.openClickDetails();
-      // }
     })
   }
 
@@ -99,8 +78,9 @@ export class CampaignDetailComponent implements OnInit, OnDestroy {
         this.popUpValue = ['Do not have any assign users.', true];
       }
       else {
+        let errorMessage: String;
         this.userDetails.forEach((item) => {
-          if (item.send_status === true) {
+          if (item.successful) {
             const [seenDetail] = item.hit_details;
             if (seenDetail.seen) {
               item.hit_details = seenDetail;
@@ -109,13 +89,17 @@ export class CampaignDetailComponent implements OnInit, OnDestroy {
             else {
               item['seen'] = false;
               item.hit_details = seenDetail;
-              item.hit_details.seen_date = 'Pending'
+            }
+          } else {
+            item.send_status = 'Not Sended Yet';
+            if (item.error_message && !errorMessage) {
+              errorMessage = item.error_message;
             }
           }
-          else {
-            item.send_status = 'Not Sended Yet';
-          }
         })
+        if (errorMessage) {
+          this.popUpValue = [errorMessage, true];
+        }
       }
       this.apiInProcess = false;
     } catch (error) {
@@ -249,7 +233,7 @@ export class CampaignDetailComponent implements OnInit, OnDestroy {
       this.sendMailInProcess = true;
       try {
         this.userDetails.forEach((item) => {
-          if (item.send_status !== true)
+          if (!item.successful)
             sendMailConfig.ids.push(item._id);
         })
         if (sendMailConfig.ids.length === 0) {
