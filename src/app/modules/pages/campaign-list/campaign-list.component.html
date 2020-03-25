@@ -5,25 +5,31 @@
     <app-popup-message [message]="popUpValue"></app-popup-message>
     <table class="table">
         <thead>
-            <tr>
+            <tr class="text-center">
                 <th>Campaign Name</th>
                 <th>Campaign Description</th>
-                <th class="text-center">User Count</th>
-                <th class="text-center">Bounce Rate</th>
+                <th>User Count</th>
+                <th>Bounce Rate</th>
+                <th>Open Rate</th>
+                <th>Click Rate</th>
+                <th>Unsubscribe Count</th>
                 <th>Creation Date</th>
-                <th class="text-center">Status</th>
-                <th class="text-center">Delete</th>
+                <th>Status</th>
+                <th>Delete</th>
             </tr>
         </thead>
         <tbody>
-            <tr *ngFor="let campaign of campaignList">
+            <tr *ngFor="let campaign of campaignList" class="text-center">
                 <td class="campaign-name cursor-pointer" (click)="openCampaign(campaign)">{{ campaign.Campaign_name }}
                 </td>
                 <td class="cursor-pointer" (click)="openCampaign(campaign)">{{ campaign.Campaign_description }}</td>
-                <td class="cursor-pointer text-center" (click)="openCampaign(campaign)">{{ campaign.users }}</td>
-                <td class="cursor-pointer text-center">{{ campaign.bounce_rate || '0' }}%</td>
+                <td class="cursor-pointer" (click)="openCampaign(campaign)">{{ campaign.users }}</td>
+                <td class="cursor-pointer">{{ campaign.bounce_rate || '0' }}%</td>
+                <td class="cursor-pointer">{{ campaign.seen_rate.toFixed(2) || '0' }}%</td>
+                <td class="cursor-pointer">{{ campaign.open_rate.toFixed(2) || '0' }}%</td>
+                <td class="cursor-pointer">{{ campaign.unsubscribed_users || '0' }}</td>
                 <td>{{campaign.creation_date | date:'short'}}</td>
-                <td *ngIf="(campaign.status !== 'Paused') && (campaign.status !== 'Running')" class="text-center"
+                <td *ngIf="(campaign.status !== 'Paused') && (campaign.status !== 'Running')"
                     [ngClass]="{'text-danger':campaign.status === 'Error spawned'}">
                     {{campaign.status}}
                 </td>
@@ -34,8 +40,7 @@
                     <i *ngIf="campaign.status === 'Paused'" class="fa fa-play-circle"
                         (click)="changeStatus(campaign)"></i>
                 </td>
-                <td class="text-center"><button class="cursor" (click)="removeCampaign(campaign)"><i
-                            class="fa fa-trash"></i></button></td>
+                <td><button class="cursor" (click)="removeCampaign(campaign)"><i class="fa fa-trash"></i></button></td>
             </tr>
         </tbody>
     </table>
