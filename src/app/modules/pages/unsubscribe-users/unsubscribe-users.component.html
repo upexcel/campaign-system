@@ -14,7 +14,7 @@
         <tbody *ngIf="unsubscribedUserList">
             <tr *ngFor="let user of unsubscribedUserList;index as i" class="text-center">
                 <td>{{i+1}}</td>
-                <td>{{'sachin'}}</td>
+                <td>{{user.name}}</td>
                 <td>{{user.email}}</td>
                 <td>{{user.unsubscribe_at | date:'short'}}</td>
             </tr>
