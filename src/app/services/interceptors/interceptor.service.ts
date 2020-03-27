@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpInterceptor, HttpRequest, HttpHandler, HttpEvent, HttpHeaders } from '@angular/common/http';
+import { HttpInterceptor, HttpRequest, HttpHandler, HttpEvent } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { LocalStorageService } from '../local-storage.service';
 
@@ -13,7 +13,7 @@ export class InterceptorService implements HttpInterceptor {
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     const accessToken = this.localStorageService.getToken();
 
-    if (accessToken && !req.url.includes('login') && !req.url.includes('notify')) {
+    if (accessToken && !req.url.includes('login') && !req.url.includes('notify') && !req.url.includes('unsub_status')) {
       req = req.clone({
         setParams: {
           accessToken
