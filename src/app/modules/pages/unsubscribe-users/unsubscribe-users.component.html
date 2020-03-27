@@ -1,0 +1,34 @@
+<div class="userList mt-5">
+    <table class="table">
+        <thead>
+            <tr class="text-center">
+                <th>Sr No.</th>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Unsubscribed Date</th>
+            </tr>
+        </thead>
+        <div *ngIf="apiInProcess" class="spinner-border" role="status">
+            <span class="sr-only">Loading...</span>
+        </div>
+        <tbody *ngIf="unsubscribedUserList">
+            <tr *ngFor="let user of unsubscribedUserList;index as i" class="text-center">
+                <td>{{i+1}}</td>
+                <td>{{'sachin'}}</td>
+                <td>{{user.email}}</td>
+                <td>{{user.unsubscribe_at | date:'short'}}</td>
+            </tr>
+        </tbody>
+    </table>
+    <div *ngIf="totalUsers" class="d-flex justify-content-end py-1">
+        <div *ngIf="page !== 1">
+            <a class="bg-transparent" (click)="previous()"><i class="fa fa-chevron-left"></i></a>
+        </div>
+        <div class="mx-2">
+            Showing {{page}} of {{lastPage}}
+        </div>
+        <div *ngIf="page !== lastPage" class="pr-4">
+            <a class=" bg-transparent" (click)="next()"><i class="fa fa-chevron-right"></i></a>
+        </div>
+    </div>
+</div>

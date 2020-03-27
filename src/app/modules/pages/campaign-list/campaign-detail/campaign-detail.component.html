@@ -58,8 +58,8 @@
                         aria-hidden="true"></i>
                 </td>
                 <td>
-                    <i *ngIf="userDetail.unsubscribe" class="fa fa-check"></i>
-                    <i *ngIf="!userDetail.unsubscribe" class="fa fa-times" aria-hidden="true"></i>
+                    <i *ngIf="userDetail.unsubscribe_status" class="fa fa-check"></i>
+                    <i *ngIf="!userDetail.unsubscribe_status" class="fa fa-times" aria-hidden="true"></i>
                 </td>
                 <td><i (click)="removeUser(userDetail._id)" class="fa fa-trash text-danger cursor-pointer"></i></td>
             </tr>

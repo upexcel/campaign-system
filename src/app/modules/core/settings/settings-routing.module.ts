@@ -32,6 +32,11 @@ const routes: Routes = [
         path: 'create-campaign',
         loadChildren: () => import('../../pages/compose-email/compose-email.module').then(m => m.ComposeEmailModule),
         data: { title: 'Create Campign' }
+      },
+      {
+        path: 'unsubscribed-users',
+        loadChildren: () => import('../../pages/unsubscribe-users/unsubscribe-users.module').then(m => m.UnsubscribeUsersModule),
+        data: { title: 'Unsubscribed Users List' }
       }
     ]
   }

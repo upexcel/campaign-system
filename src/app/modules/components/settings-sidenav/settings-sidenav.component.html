@@ -5,7 +5,8 @@
   </header>
   <div class="d-flex flex-column flex-grow-1 mt-4">
     <ul class="sidebar-nav pb-0 mb-0">
-      <li [ngClass]="{'active' : (settingRoute1.isActive) || (settingRoute2.isActive) || (settingRoute2.isActive)}">
+      <li
+        [ngClass]="{'active' : (settingRoute1.isActive) || (settingRoute2.isActive) || (settingRoute3.isActive) || (settingRoute4.isActive)}">
         <ul id="sidebar-settings" class="p-0">
           <li>
             <a class="d-flex justify-content-between pr-0 text-dark" routerLink="/settings/campaign-list"
@@ -28,6 +29,13 @@
               <span class="icon"><i class="fa fa-envelope-o" aria-hidden="true"></i>
               </span>
               Manage Smtp
+            </a>
+          </li>
+          <li>
+            <a class="d-flex justify-content-between pr-0 text-dark" routerLink="/settings/unsubscribed-users"
+              routerLinkActive="route-active" #settingRoute4="routerLinkActive">
+              <span class="icon"><i class="fa fa-users"></i></span>
+              Unsubscribed Users List
             </a>
           </li>
         </ul>
