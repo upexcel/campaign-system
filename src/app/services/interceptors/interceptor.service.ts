@@ -13,7 +13,7 @@ export class InterceptorService implements HttpInterceptor {
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     const accessToken = this.localStorageService.getToken();
 
-    if (accessToken && !req.url.includes('login') && !req.url.includes('notify') && !req.url.includes('unsub_status')) {
+    if (accessToken && !req.url.includes('login') && !req.url.includes('notify') && !req.url.includes('unsub_status') && !req.url.includes('update_settings')) {
       req = req.clone({
         setParams: {
           accessToken
