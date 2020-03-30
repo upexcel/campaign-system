@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { ManageSmtpService } from "./manage-smtp.service"
 import { CommonService } from 'src/app/services/common.service';
+import { MatDialog } from '@angular/material';
+import { SetPasswordComponent } from '../../modals/set-password/set-password.component';
 
 @Component({
   selector: 'app-manage-smtp',
@@ -10,10 +12,12 @@ import { CommonService } from 'src/app/services/common.service';
 export class ManageSmtpComponent implements OnInit {
   smtpList: any;
   apiInProgress: boolean;
+  popUpValue: Array<any>;
 
   constructor(
     private manageSmtpService: ManageSmtpService,
-    private commonService: CommonService
+    private commonService: CommonService,
+    private dialog: MatDialog
   ) { }
 
   ngOnInit() {
@@ -29,7 +33,7 @@ export class ManageSmtpComponent implements OnInit {
     }
   }
 
-  async removeUser(id:string) {
+  async removeUser(id: string) {
     try {
       const res = await this.commonService.openConfirmationBox("Are you sure ?");
       if (res == 'yes') {
@@ -56,6 +60,20 @@ export class ManageSmtpComponent implements OnInit {
     } catch (error) {
       this.commonService.handleError(error);
     }
+  }
+
+  updatePassword(smtpId) {
+    this.dialog.open(SetPasswordComponent, {
+      data: { id: smtpId }
+    }).afterClosed().subscribe(result => {
+      this.popUpValue = null;
+      if (result.message) {
+        this.popUpValue = [result.message, false];
+      }
+      if (result.error) {
+        this.popUpValue = [result.error.message, true];
+      }
+    })
   }
 
 }

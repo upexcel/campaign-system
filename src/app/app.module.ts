@@ -23,6 +23,7 @@ import { AddUserComponent } from './modules/modals/add-user/add-user.component';
 import { TestMailComponent } from './modules/modals/test-mail/test-mail.component';
 import { SendMailConfigurationComponent } from './modules/modals/send-mail-configuration/send-mail-configuration.component';
 import { HashLocationStrategy, LocationStrategy } from '@angular/common';
+import { SetPasswordComponent } from './modules/modals/set-password/set-password.component';
 
 @NgModule({
   declarations: [
@@ -34,7 +35,8 @@ import { HashLocationStrategy, LocationStrategy } from '@angular/common';
     HitDetailsComponent,
     AddUserComponent,
     TestMailComponent,
-    SendMailConfigurationComponent
+    SendMailConfigurationComponent,
+    SetPasswordComponent
   ],
 
   imports: [
@@ -69,7 +71,8 @@ import { HashLocationStrategy, LocationStrategy } from '@angular/common';
     HitDetailsComponent,
     AddUserComponent,
     TestMailComponent,
-    SendMailConfigurationComponent
+    SendMailConfigurationComponent,
+    SetPasswordComponent
   ],
   bootstrap: [AppComponent]
 })

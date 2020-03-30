@@ -1,4 +1,9 @@
 <div class="row">
+  <div class="col-12 p-0">
+    <app-popup-message *ngIf="popUpValue" [message]="popUpValue"></app-popup-message>
+  </div>
+</div>
+<div class="row">
   <div class="smtptable table-responsive">
     <table id="table" class="col-sm-12 table">
 
@@ -8,6 +13,7 @@
           <th>Server</th>
           <th>Port</th>
           <th class="align-center">Priority</th>
+          <th class="align-center">Edit</th>
           <th>Delete</th>
         </tr>
       </thead>
@@ -20,9 +26,12 @@
           <td>{{smtp.mail_server}}</td>
           <td>{{smtp.mail_port}}</td>
           <td class="align-center">
-            <button class="btn" [disabled]='first' (click)="changePriority(smtp,1,i)"><i class="fa fa-arrow-up text-success changePriority mr-3"></i></button>
-            <button class="btn" [disabled]='last' (click)="changePriority(smtp,0,i)"><i class="fa fa-arrow-down text-danger changePriority"></i></button>
+            <button class="btn" [disabled]='first' (click)="changePriority(smtp,1,i)"><i
+                class="fa fa-arrow-up text-success changePriority mr-3"></i></button>
+            <button class="btn" [disabled]='last' (click)="changePriority(smtp,0,i)"><i
+                class="fa fa-arrow-down text-danger changePriority"></i></button>
           </td>
+          <td mat-close class="cursor-pointer text-center text-danger" (click)='updatePassword(smtp._id)'>Edit</td>
           <td>
             <button class="cursor" (click)="removeUser(smtp._id)"> <i class="fa fa-trash"></i></button>
           </td>

@@ -19,8 +19,12 @@ export class ManageSmtpService {
     return this.http.delete(`${environment.mailsystembaseapiurl}/smtp/settings/CAMPAIGN/${id}`).toPromise();
   }
 
-  changePriorityOfSmtp(body) {
-    return this.http.post(`${environment.mailsystembaseapiurl}/smtp/smtp_priority/${body.id}/${body.position}`,'').toPromise();
+  changePriorityOfSmtp(body): Promise<any> {
+    return this.http.post(`${environment.mailsystembaseapiurl}/smtp/smtp_priority/${body.id}/${body.position}`, '').toPromise();
+  }
+
+  changePassword(body): Promise<any> {
+    return this.http.put(`${environment.mailsystembaseapiurl}/smtp/update_settings/CAMPAIGN/${body.smtpId}`, { new_password: body.password }).toPromise();
   }
 
 }
