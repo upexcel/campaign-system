@@ -1,0 +1,13 @@
+version: '3.7'
+
+services:
+    campaignapp:
+        image: xrecruit/campaignapp
+        build:
+            context: .
+            dockerfile: Dockerfile.dev
+        volumes: 
+            - ./src:/workspace/src
+        ports:
+            - "4302:4200"
+        init: true

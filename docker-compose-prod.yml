@@ -1,0 +1,12 @@
+version: '3.7'
+
+services:
+    campaignapp:
+        image: xrecruit/campaignapp:latest
+        build:
+            context: .
+            dockerfile: Dockerfile
+        volumes: 
+            - /var/log/nginx/recruitfrontend:/var/log/nginx
+        ports:
+            - "83:80"
