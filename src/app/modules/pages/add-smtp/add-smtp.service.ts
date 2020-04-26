@@ -16,7 +16,7 @@ export class AddSmtpService {
   }
 
   getDomain(email) {
-    return this.http.get(`${environment.apibase}/imap/checkEmail/${email}`).toPromise();
+    // return this.http.get(`${environment.apibase}/imap/checkEmail/${email}`).toPromise();
   }
 
 }

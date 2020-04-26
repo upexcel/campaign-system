@@ -49,22 +49,6 @@ export class LoginPageComponent implements OnInit {
 
   async onLogin(value) {
     this.router.navigate(['settings']);
-    // try {
-    //   this.apiInProgress = true;
-    //   let data = await this.loginServices.login(value);
-    //   if (!data['error']) {
-    //     this.localStorageService.setLoginDetails(data['token'], value.email);
-    //     if (this.localStorageService.getToken()) {
-    //       this.router.navigate(['settings']);
-    //     }
-    //   } else {
-    //     this.popUpValue = data['message'];
-    //   }
-    //   this.apiInProgress = false;
-    // } catch (error) {
-    //   this.popUpValue = [error.error.message, true];
-    //   this.apiInProgress = false;
-    // }
   }
 
   forgetPassword() {

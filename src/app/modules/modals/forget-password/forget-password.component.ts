@@ -31,14 +31,14 @@ export class ForgetPasswordComponent implements OnInit {
   }
 
   async forgetPassword(value) {
-    try {
-      this.apiInProgress = true;
-      const res = await this.loginService.forget(value);
-      this.apiInProgress = false;
-      if (res && res['message']) this.close(res['message'])
-    } catch (error) {
-      this.commonService.handleError(error);
-    }
+    // try {
+    //   this.apiInProgress = true;
+    //   const res = await this.loginService.forget(value);
+    //   this.apiInProgress = false;
+    //   if (res && res['message']) this.close(res['message'])
+    // } catch (error) {
+    //   this.commonService.handleError(error);
+    // }
   }
 
   close(data?) {

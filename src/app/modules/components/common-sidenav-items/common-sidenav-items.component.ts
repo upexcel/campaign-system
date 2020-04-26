@@ -27,11 +27,11 @@ export class CommonSidenavItemsComponent implements OnInit {
     // this.getUserAccountInfo()
   }
 
-  async getUserAccountInfo() {
-    const { userName, userAvatar } = await this.commonService.getUserNameAndImage();
-    this.userName = userName;
-    this.userAvatar = userAvatar;
-  }
+  // async getUserAccountInfo() {
+  //   const { userName, userAvatar } = await this.commonService.getUserNameAndImage();
+  //   this.userName = userName;
+  //   this.userAvatar = userAvatar;
+  // }
 
   logout() {
     this.router.navigate(['/login']);
