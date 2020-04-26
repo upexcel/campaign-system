@@ -1,10 +1,9 @@
-<app-settings-sidenav (openSideNav)="openSideNav()" id="settings-sidebar" role="navigation" class="sidebar">
+<app-settings-sidenav id="settings-sidebar" role="navigation" class="sidebar">
 </app-settings-sidenav>
 <app-header (toggleSidebarEvent)="toggleSidebarListener($event)" class="page-controls navbar navbar-dashboard">
 </app-header>
 
 <div class="content-wrap" id="content-wrap">
-  <ngx-loading-bar *ngIf="!apiInProgress"></ngx-loading-bar>
   <main id="content" class="content pt-0 h-100" role="main">
     <div class="loading-overlay" #spinnerElement>
       <div class="sk-fading-circle">
