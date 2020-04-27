@@ -9,4 +9,4 @@ services:
         volumes: 
             - /var/log/nginx/recruitfrontend:/var/log/nginx
         ports:
-            - "83:80"
+            - "9999:80"
