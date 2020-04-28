@@ -15,8 +15,8 @@ export class AddSmtpService {
     return this.http.post(`${environment.mailsystembaseapiurl}/smtp/settings/CAMPAIGN`, body).toPromise();
   }
 
-  getDomain(email) {
-    // return this.http.get(`${environment.apibase}/imap/checkEmail/${email}`).toPromise();
+  getDomain(body) {
+    return this.http.post (`${environment.mailsystembaseapiurl}/smtp/validate_smtp`, body).toPromise();
   }
 
 }
