@@ -18,38 +18,41 @@ export class AuthGuardService implements CanActivate {
   }
 
   canActivate(next: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean> | Promise<boolean> | boolean {
+    this.router.navigate(['login'])
+    return true;
 
-    if (!state.url.includes('login')) {
-      if (this.loginToken()) {
-        return true && this.checkAuth();
-      } else {
-        this.router.navigate(['login'])
-        return false;
-      }
-    } else {
-      if (this.loginToken()) {
-        this.router.navigate(['/settings'])
-        return false;
-      } else {
-        return true;
-      }
-    }
+
+    // if (!state.url.includes('login')) {
+    //   if (this.loginToken()) {
+    //     return true && this.checkAuth();
+    //   } else {
+    //     this.router.navigate(['login'])
+    //     return false;
+    //   }
+    // } else {
+    //   if (this.loginToken()) {
+    //     this.router.navigate(['/settings'])
+    //     return false;
+    //   } else {
+    //     return true;
+    //   }
+    // }
   }
 
-  loginToken() {
-    return this.localStorageService.getToken();
-  }
+  // loginToken() {
+  //   return this.localStorageService.getToken();
+  // }
 
-  async checkAuth() {
-    try {
-      const auth = await this.http.get(`${environment.apibase}/verify`).toPromise();
-      if (!auth['status']) this.router.navigate(['login']);
-      return auth['status'];
-    } catch (error) {
-      this.localStorageService.clearLocalStorage();
-      this.router.navigate(['login']);
-      return false;
-    }
-  }
+  // async checkAuth() {
+  //   try {
+  //     const auth = await this.http.get(`${environment.apibase}/verify`).toPromise();
+  //     if (!auth['status']) this.router.navigate(['login']);
+  //     return auth['status'];
+  //   } catch (error) {
+  //     this.localStorageService.clearLocalStorage();
+  //     this.router.navigate(['login']);
+  //     return false;
+  //   }
+  // }
 
 }

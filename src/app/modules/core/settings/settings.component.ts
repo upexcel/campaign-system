@@ -52,23 +52,12 @@ export class SettingsComponent implements OnInit {
     this.router = router;
   }
 
-  // @HostListener('mousemove', ['$event.clientX']) sidebarOnHover(clientX) {
-  //   clientX < 10 && !this.navStatic && this.toggleSidebarListener('static');
-  // }
-
   toggleSidebarListener(state): void {
     const toggleNavigation = state === 'static'
       ? this.toggleNavigationState
       : this.toggleNavigationCollapseState;
     toggleNavigation.apply(this);
     this.localStorageService.setNavStatic(this.navStatic);
-  }
-
-  openSideNav() {
-    // if (!this.navStatic) {
-    //   this.navStatic = !this.navStatic;
-    //   this.expandNavigation();
-    // }
   }
 
   toggleNavigationState(): void {
@@ -81,46 +70,18 @@ export class SettingsComponent implements OnInit {
   }
 
   expandNavigation(): void {
-    // this method only makes sense for non-static navigation state
-    // if (this.isNavigationStatic()
-    //   && (this.configFn.isScreen('lg') || this.configFn.isScreen('xl'))) { return; }
     jQuery('app-settings').removeClass('nav-collapsed');
     this.$sidebar.find('.active .active').closest('.collapse').collapse('show')
       .siblings('[data-toggle=collapse]').removeClass('collapsed');
   }
 
   collapseNavigation(): void {
-    // this method only makes sense for non-static navigation state
-    // if (this.isNavigationStatic()
-    // && (this.configFn.isScreen('lg') || this.configFn.isScreen('xl'))) { return; }
-
     jQuery('app-settings').addClass('nav-collapsed');
     this.$sidebar.find('.collapse.in').collapse('hide')
       .siblings('[data-toggle=collapse]').addClass('collapsed');
 
     !this.isNavigationStatic() && this.$sidebar.find('li.open.active').find('.collapse.show').removeClass('show')
   }
-
-  /**
-   * Check and set navigation collapse according to screen size and navigation state
-   */
-  // checkNavigationState(): void {
-  //   this.collapseNavigation();
-  // if (this.isNavigationStatic()) {
-  //   if (this.configFn.isScreen('sm')
-  //     || this.configFn.isScreen('xs') || this.configFn.isScreen('md')) {
-  //     this.collapseNavigation();
-  //   }
-  // } else {
-  //   // if (this.configFn.isScreen('lg') || this.configFn.isScreen('xl')) {
-  //   //   setTimeout(() => {
-  //   //     this.collapseNavigation();
-  //   //   }, this.config.settings.navCollapseTimeout);
-  //   // } else {
-  //     this.collapseNavigation();
-  //   // }
-  // }
-  // }
 
   isNavigationStatic(): boolean {
     return this.navStatic === true;
@@ -169,13 +130,6 @@ export class SettingsComponent implements OnInit {
     });
   }
 
-  // collapseNavIfSmallScreen(): void {
-  //   if (this.configFn.isScreen('xs')
-  //     || this.configFn.isScreen('sm') || this.configFn.isScreen('md')) {
-  //     this.collapseNavigation();
-  //   }
-  // }
-
   ngOnInit(): void {
 
     if (this.localStorageService.getNavStatic() === 'true') {
@@ -203,13 +157,6 @@ export class SettingsComponent implements OnInit {
     });
 
     this.collapseNavigation();
-
-    // this.$sidebar.on('click', () => {
-    //   if (jQuery('app-settings').is('.nav-collapsed')) {
-
-    //     this.expandNavigation();
-    //   }
-    // });
 
     this.router.events.subscribe((event) => {
       this._navigationInterceptor(event);

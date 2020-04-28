@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { MatSnackBar } from '@angular/material';
 import { HttpClient } from '@angular/common/http';
-import { environment } from 'src/environments/environment';
+// import { environment } from 'src/environments/environment';
 import { MatDialogRef, MatDialog } from '@angular/material';
 import { Title } from '@angular/platform-browser';
 import { Router } from '@angular/router';
@@ -90,21 +90,21 @@ export class CommonService {
     }
   }
 
-  async getUserNameAndImage() {
-    if (!this.userAvatar && this.userName !== 'My Account') {
-      try {
-        const { name, imageUrl } = await this.getUserDetails() as any;
-        this.userName = name ? name : 'My Account';
-        this.userAvatar = imageUrl ? `${environment.apibase}/${imageUrl}` : null;
-      } catch (error) {
-        this.handleError(error);
-      }
-    }
-    return { userAvatar: this.userAvatar, userName: this.userName };
-  }
+  // async getUserNameAndImage() {
+  //   if (!this.userAvatar && this.userName !== 'My Account') {
+  //     try {
+  //       const { name, imageUrl } = await this.getUserDetails() as any;
+  //       this.userName = name ? name : 'My Account';
+  //       this.userAvatar = imageUrl ? `${environment.apibase}/${imageUrl}` : null;
+  //     } catch (error) {
+  //       this.handleError(error);
+  //     }
+  //   }
+  //   return { userAvatar: this.userAvatar, userName: this.userName };
+  // }
 
-  getUserDetails() {
-    return this.http.get(`${environment.apibase}/user/myAccount/details`).toPromise();
-  }
+  // getUserDetails() {
+  //   return this.http.get(`${environment.apibase}/user/myAccount/details`).toPromise();
+  // }
 
 }

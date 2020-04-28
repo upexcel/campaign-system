@@ -68,18 +68,23 @@ export class AddSmtpComponent implements OnInit {
 
   async changeIcon() {
     try {
-      let email = this.getFormControl('email').value;
-      if (email) {
+      let userEmail = this.getFormControl('email').value;
+      let userPassword = this.getFormControl('password').value;
+      if (userEmail) {
         this.alertMessage = false;
         this.existEmail = true;
-        let domain = email && DomainsDetails.find(domain => email.includes(domain.name));
+        let domain = userEmail && DomainsDetails.find(domain => userEmail.includes(domain.name));
         if (domain) {
           this.src = domain.src;
           this.fetchForm.get("smtp_server").setValue(domain.smtp);
           this.fetchForm.get("type").setValue(domain.smtpType);
           this.fetchForm.get("server_port").setValue(domain.smtpPort);
         } else {
-          const res = await this.addSmtpService.getDomain(email);
+          const res = await this.addSmtpService.getDomain({
+            email: userEmail,
+            password: userPassword
+          });
+          if (res['message']) res['message'] = DomainsDetails[1].name;
           domain = res['message'] && DomainsDetails.find(domain => domain.name == res['message']);
           this.src = domain.src
           this.fetchForm.get("smtp_server").setValue(domain.smtp);
@@ -88,7 +93,6 @@ export class AddSmtpComponent implements OnInit {
         }
       }
     } catch (error) {
-      this.src = DomainsDetails.find(domain => domain.name = "email.com").src;
       this.popUpValue = ['Invalid email', true];
     }
   }

@@ -6,7 +6,7 @@ import { Subscription } from 'rxjs';
 import { LocalStorageService } from 'src/app/services/local-storage.service';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { CampaignListService } from '../../pages/campaign-list/campaign-list.service';
-import { environment } from 'src/environments/environment';
+// import { environment } from 'src/environments/environment';
 
 declare let jQuery: any;
 
@@ -119,16 +119,16 @@ export class HeaderComponent implements OnInit, OnDestroy, OnChanges {
     // this.getUserDetails();
   }
 
-  async getUserDetails() {
-    try {
-      const res = await this.commonService.getUserDetails();
-      this.Userimage = `${environment.apibase}/${res['imageUrl']}`;
-      this.name = res['name'];
-    }
-    catch (error) {
-      this.commonService.handleError(error);
-    }
-  }
+  // async getUserDetails() {
+  //   try {
+  //     const res = await this.commonService.getUserDetails();
+  //     this.Userimage = `${environment.apibase}/${res['imageUrl']}`;
+  //     this.name = res['name'];
+  //   }
+  //   catch (error) {
+  //     this.commonService.handleError(error);
+  //   }
+  // }
 
 
   logout() {
