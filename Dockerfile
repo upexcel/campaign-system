@@ -34,5 +34,13 @@ COPY --from=angular /workspace/dist/recruitment /usr/share/nginx/html
 # expose port 80
 EXPOSE 80
 
+ENV TZ=Asia/Kolkata
+RUN echo $TZ > /etc/timezone && \
+apt-get update && apt-get install -y tzdata && \
+rm /etc/localtime && \
+ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && \
+dpkg-reconfigure -f noninteractive tzdata && \
+apt-get clean
+
 # run nginx
 CMD ["nginx", "-g", "daemon off;"]
