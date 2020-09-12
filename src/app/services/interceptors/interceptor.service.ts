@@ -22,7 +22,7 @@ export class InterceptorService implements HttpInterceptor {
     }
     else {
       req = req.clone({
-        headers: req.headers.set('Authorization', `Bearer ${accessToken}`),
+        headers: req.headers.set('SecretKey', 'MBw[;Rv]-6M]&3P2Grb'),
       })
     }
 
