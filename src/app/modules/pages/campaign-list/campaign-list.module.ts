@@ -7,6 +7,7 @@ import { CampaignDetailComponent } from './campaign-detail/campaign-detail.compo
 import { MatButtonModule } from '@angular/material';
 import { PopUpMessageModule } from '../../components/popup-message/pop-up-message.module';
 import { ClickDetailsComponent } from './click-details/click-details.component';
+import { MaterialModule } from 'src/app/material/angular-material.module';
 
 @NgModule({
   declarations: [CampaignListComponent, CampaignDetailComponent, ClickDetailsComponent],
@@ -14,7 +15,8 @@ import { ClickDetailsComponent } from './click-details/click-details.component';
     CommonModule,
     CampaignListRoutingModule,
     MatButtonModule,
-    PopUpMessageModule 
+    PopUpMessageModule,
+    MaterialModule
   ]
 })
 export class CampaignListModule { }
