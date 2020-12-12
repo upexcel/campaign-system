@@ -107,9 +107,10 @@ input[type="checkbox"].check-custom:checked ~ .check-toggle {
 }
 
 .btn-primary {
+  font-family: roboto, sans-serif;
   background-color: rgb(0, 126, 255);
   border-color: rgb(0, 126, 255);
-  padding: 0.7rem;
+  padding: 0.6rem;
   &:disabled {
     background-color: rgb(0, 126, 255);
     border-color: rgb(0, 126, 255);

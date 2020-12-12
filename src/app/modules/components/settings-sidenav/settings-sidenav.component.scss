@@ -50,8 +50,8 @@
   color: #5e5e5e;
   text-transform: uppercase;
   font-size: 10px;
+  font-weight: 400;
   &.route-active {
-    font-weight: 600;
     border-left: 3px solid #007eff;
     color: #007eff;
     .fa {

@@ -22,11 +22,11 @@
     <div class="imap-action-buttons">
       <i (click)='updatePassword(smtp._id)' class="fa fa-pencil-square-o" aria-hidden="true"></i>
       <i (click)="removeUser(smtp._id)" class="fa fa-trash-o" aria-hidden="true"></i>
-      <div [ngClass]="{'not-allowed':first}">
+      <div class="d-flex" [ngClass]="{'not-allowed':first}">
         <i [ngClass]="{'pointer-event-none':first}" (click)="changePriority(smtp,1,i)" class=" fa fa-arrow-left"
           aria-hidden="true"></i>
       </div>
-      <div [ngClass]="{'not-allowed':first}">
+      <div class="d-flex" [ngClass]="{'not-allowed':first}">
         <i [ngClass]="{'pointer-event-none':first}" (click)="changePriority(smtp,0,i)" class="fa fa-arrow-right"
           aria-hidden="true"></i>
       </div>
