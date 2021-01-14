@@ -57,6 +57,9 @@ export class CampaignDetailComponent implements OnInit, OnDestroy {
         case 'openCsv':
           this.assignUsersWithCsv();
           break;
+        case 'validate':
+          this.validateUsers();
+          break;
         default:
           this.openClickDetails();
       }
@@ -73,6 +76,7 @@ export class CampaignDetailComponent implements OnInit, OnDestroy {
       const res = await this.campaignListService.campaignDetails(this.route.snapshot.paramMap.get('id'));
       this.campaignDetails = res;
       this.userDetails = res.users;
+      console.log(res);
       if (this.userDetails.length === 0) {
         this.userDetails = null;
         this.popUpValue = ['Do not have any assign users.', true];
@@ -316,6 +320,18 @@ export class CampaignDetailComponent implements OnInit, OnDestroy {
       });
       this.userDetails = this.userDetails.filter(item => item._id != userId);
     } catch (error) {
+      this.commonService.handleError(error);
+    }
+  }
+
+  async validateUsers() {
+    try {
+      this.apiInProcess = true;
+      await this.campaignListService.validateUser(this.campaignDetails);
+      this.apiInProcess = false;
+      this.getUserDetails(true);
+    } catch (error) {
+      this.apiInProcess = false;
       this.commonService.handleError(error);
     }
   }

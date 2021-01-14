@@ -68,4 +68,8 @@ export class CampaignListService {
     return this.http.delete(`${environment.mailsystembaseapiurl}/user_delete_campaign/${body.campaignId}/${body.userId}`).toPromise();
   }
 
+  validateUser(campaign): Promise<any> {
+    return this.http.post(`${environment.mailsystembaseapiurl}/validate_users/${campaign._id}`,'').toPromise();
+  }
+
 }

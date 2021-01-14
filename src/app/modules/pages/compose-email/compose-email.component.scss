@@ -21,6 +21,9 @@
     border-radius: 8px;
     border: 1px solid #a6aab4;
     height: 38px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
   .form-control:focus {
     border-color: #80bfff;

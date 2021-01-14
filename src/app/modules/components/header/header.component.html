@@ -11,7 +11,9 @@
 </ul>
 
 <h2 class="heading mr-auto">{{headingTitle}}</h2>
-
+<button *ngIf="campDetailPage" class="btn btn-transparent btn-hover d-flex align-items-center"
+  (click)="emitEvent('validate')">
+  <i class="fa fa-info"></i><span class="font-weight-bold">Validate Emails</span></button>
 <button *ngIf="campDetailPage" class="btn btn-transparent btn-hover d-flex align-items-center"
   (click)="emitEvent('update')">
   <i class="fa fa-plus"></i><span class="font-weight-bold">Update Email</span></button>
