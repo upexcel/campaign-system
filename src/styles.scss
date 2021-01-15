@@ -143,7 +143,9 @@ body {
 
 .angular-editor-button[title="Bold"],
 .angular-editor-button[title="Italic"],
-.angular-editor-button[title="Underline"] {
+.angular-editor-button[title="Underline"],
+.angular-editor-button[title="Text Color"],
+.angular-editor-button[title="Background Color"] {
   display: inline-block;
 }
 
