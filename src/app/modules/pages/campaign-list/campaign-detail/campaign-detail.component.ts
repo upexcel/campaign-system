@@ -336,6 +336,11 @@ export class CampaignDetailComponent implements OnInit, OnDestroy {
     }
   }
 
+  downloadUserList() {
+    let validUser = this.userDetails.filter(item => item.status);
+    this.campaignListService.downloadFile(validUser, 'validUserList')
+  }
+
   ngOnDestroy() {
     this.dialogSubs.unsubscribe();
   }
