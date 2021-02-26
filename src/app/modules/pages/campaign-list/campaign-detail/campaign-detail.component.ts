@@ -12,6 +12,7 @@ import { AddUserComponent } from 'src/app/modules/modals/add-user/add-user.compo
 import { TestMailComponent } from 'src/app/modules/modals/test-mail/test-mail.component';
 import { SendMailConfigurationComponent } from 'src/app/modules/modals/send-mail-configuration/send-mail-configuration.component';
 import { ComposeEmailService } from '../../compose-email/compose-email.service';
+import { ScrollingModule } from '@angular/cdk/scrolling';
 
 @Component({
   selector: 'app-campaign-detail',
@@ -76,7 +77,6 @@ export class CampaignDetailComponent implements OnInit, OnDestroy {
       const res = await this.campaignListService.campaignDetails(this.route.snapshot.paramMap.get('id'));
       this.campaignDetails = res;
       this.userDetails = res.users;
-      console.log(res);
       if (this.userDetails.length === 0) {
         this.userDetails = null;
         this.popUpValue = ['Do not have any assign users.', true];

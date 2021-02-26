@@ -8,6 +8,7 @@ import { MatButtonModule } from '@angular/material';
 import { PopUpMessageModule } from '../../components/popup-message/pop-up-message.module';
 import { ClickDetailsComponent } from './click-details/click-details.component';
 import { MaterialModule } from 'src/app/material/angular-material.module';
+import { ScrollingModule } from '@angular/cdk/scrolling';
 
 @NgModule({
   declarations: [CampaignListComponent, CampaignDetailComponent, ClickDetailsComponent],
@@ -16,7 +17,8 @@ import { MaterialModule } from 'src/app/material/angular-material.module';
     CampaignListRoutingModule,
     MatButtonModule,
     PopUpMessageModule,
-    MaterialModule
+    MaterialModule,
+    ScrollingModule
   ]
 })
 export class CampaignListModule { }
