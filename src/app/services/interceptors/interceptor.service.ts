@@ -14,6 +14,9 @@ export class InterceptorService implements HttpInterceptor {
     const accessToken = this.localStorageService.getToken();
 
     req = req.clone({
+      setParams: {
+        'account-name': 'devrecruit'
+      },
       headers: req.headers.set('SecretKey', 'MBw[;Rv]-6M]&3P2Grb'),
     });
 
